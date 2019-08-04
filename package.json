@@ -1,0 +1,18 @@
+{
+  "name": "converge-spa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:converge-app/converge-spa.git",
+  "author": "Hermansen <hermansendesigns@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^9.0.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+}
