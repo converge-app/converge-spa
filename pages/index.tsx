@@ -1,10 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
+import React from "react";
 
-function Home() {
-  return <div><Button>Hello</Button></div>;
-
+function Home(): JSX.Element{
+  return (
+    <div>
+      <p>Home page</p>
+    </div>
+  );
 }
 
 export default Home;
