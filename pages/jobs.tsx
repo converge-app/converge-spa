@@ -1,11 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 
-function Jobs() {
+function Jobs(): JSX.Element {
   return (
     <div>
-      <Button>Hello</Button>
+      <p>Jobs page</p>
     </div>
   );
 }

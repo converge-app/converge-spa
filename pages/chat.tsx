@@ -1,11 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 
-function Chat() {
+function Chat(): JSX.Element {
   return (
     <div>
-      <Button>Hello</Button>
+      <p>Chat page</p>
     </div>
   );
 }

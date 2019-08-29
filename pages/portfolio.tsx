@@ -1,11 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 
-function Portfolio() {
+function Portfolio(): JSX.Element {
   return (
     <div>
-      <Button>Hello</Button>
+      <p>Portfolio page</p>
     </div>
   );
 }

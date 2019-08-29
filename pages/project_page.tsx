@@ -1,11 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 
-function ProjectPage() {
+function ProjectPage(): JSX.Element {
   return (
     <div>
-      <Button>Hello</Button>
+      <p>Project page</p>
     </div>
   );
 }

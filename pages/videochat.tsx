@@ -1,11 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 
-function VideoChat() {
+function VideoChat(): JSX.Element {
   return (
     <div>
-      <Button>Hello</Button>
+      <p>Videochat page</p>
     </div>
   );
 }

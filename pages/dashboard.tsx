@@ -1,11 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 
-function DashBoard() {
+function DashBoard(): JSX.Element {
   return (
     <div>
-      <Button>Hello</Button>
+      <p>DashBoard page</p>
     </div>
   );
 }
