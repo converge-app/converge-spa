@@ -1,9 +1,12 @@
 import React from "react";
+import Header from "../components/header";
+import Main from "../components/maincontent";
 
-function Home(): JSX.Element{
+function Home(): JSX.Element {
   return (
     <div>
-      <p>Home page</p>
+      <Header></Header>
+      <Main></Main>
     </div>
   );
 }
