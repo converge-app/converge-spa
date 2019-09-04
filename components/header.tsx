@@ -67,6 +67,7 @@ export default function Header() {
         <Link href="Employers">
           <a style={linkStyle}>Employers</a>
         </Link>
+
         <Link href="login">
           <Button variant="outlined" style={loginButtonStyle}>
             Login
@@ -89,20 +90,23 @@ export default function Header() {
         div {
           margin-top: 25px;
           font-weight: "bold";
+          display: inline-block;
         }
         div a {
           font-weight: bold;
         }
       `}</style>
 
-      <style jsx global>{`
-        body {
-          background: #000;
-          color: #fff;
-          margin: 0 !important;
-          padding: 0 !important;
-        }
-      `}</style>
+      <style jsx global>
+        {`
+          body {
+            background: #000;
+            color: #fff;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+        `}
+      </style>
     </header>
   );
 }
