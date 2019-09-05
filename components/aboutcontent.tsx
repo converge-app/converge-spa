@@ -1,25 +1,14 @@
 import React from "react";
 
-export default function About() {
+const About = props => {
   return (
     <main>
       <div>
         <div className="aboutHeadline">
-          <a>About</a>
+          <a>{props.aboutHeadline}</a>
         </div>
         <div className="aboutBox">
-          <p>
-            Quis eiusmod aliqua id voluptate excepteur ipsum eu. Adipisicing sit
-            amet ullamco aliquip. In exercitation sint dolore pariatur cillum ut
-            dolore. Ut deserunt dolore officia excepteur. Amet excepteur do anim
-            esse ipsum irure sint culpa ipsum mollit fugiat. Esse commodo minim
-            in pariatur ad nulla do aliquip consequat eu consectetur proident.
-            Irure ut esse ad in labore dolore magna adipisicing. Nostrud
-            reprehenderit pariatur occaecat ad et qui pariatur nisi id laboris.
-            Ullamco irure exercitation nulla magna aliquip tempor deserunt ea
-            qui commodo commodo sint ipsum occaecat. Adipisicing sint elit
-            consectetur occaecat Lorem commodo velit nulla sit.
-          </p>
+          <p>{props.aboutBox}</p>
         </div>
 
         <style jsx>{`
@@ -35,7 +24,6 @@ export default function About() {
           }
           div.aboutBox {
             border: 1px solid;
-            padding: 10px;
             width: 35%;
             height: 300px;
             color: #dadada;
@@ -44,4 +32,6 @@ export default function About() {
       </div>
     </main>
   );
-}
+};
+
+export default About;

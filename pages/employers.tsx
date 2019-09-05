@@ -2,12 +2,12 @@ import React from "react";
 import Header from "../components/header";
 import About from "../components/aboutcontent";
 
-function AboutPage(): JSX.Element {
+function Employers(): JSX.Element {
   return (
     <div>
       <Header></Header>
       <About
-        aboutHeadline={"About"}
+        aboutHeadline={"Employers"}
         aboutBox={
           "Quis eiusmod aliqua id voluptate excepteur ipsum eu. Adipisicing sit amet ullamco aliquip. In exercitation sint dolore pariatur cillum utdolore. Ut deserunt dolore officia excepteur. Amet excepteur do anim"
         }
@@ -16,4 +16,4 @@ function AboutPage(): JSX.Element {
   );
 }
 
-export default AboutPage;
+export default Employers;

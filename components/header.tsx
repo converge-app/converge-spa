@@ -62,10 +62,10 @@ export default function Header() {
           <Link href="about">
             <a style={linkStyle}>About</a>
           </Link>
-          <Link href="Freelancers">
+          <Link href="freelancers">
             <a style={linkStyle}>Freelancers</a>
           </Link>
-          <Link href="Employers">
+          <Link href="employers">
             <a style={linkStyle}>Employers</a>
           </Link>
         </div>
