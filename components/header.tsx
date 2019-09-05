@@ -16,7 +16,6 @@ const loginButtonStyle = {
   color: "#ffffff",
   left: 0,
   fontSize: 12,
-
   width: 80
 };
 
@@ -34,21 +33,21 @@ const signupButtonStyle = {
 const linestyle = {
   padding: 0,
   marginTop: 0,
-  height: 5,
-  display: "block"
+  height: 5
 };
 
 export default function Header() {
   return (
     <header>
       <hr color="#13A8FE" style={linestyle}></hr>
-      <div>
-        <img src="static\logo.png" />
-        <Link href="/">
+
+      <div className="gridcontainer">
+        <div className="convergeLogo">
+          <img src="static\logo.png" />
+        </div>
+        <div className="logo_text_block">
           <a
             style={{
-              marginRight: 25,
-              marginLeft: 10,
               fontSize: 18,
               color: "#FFFFFF",
               textDecoration: "none",
@@ -57,43 +56,67 @@ export default function Header() {
           >
             Converge
           </a>
-        </Link>
-        <Link href="About">
-          <a style={linkStyle}>About</a>
-        </Link>
-        <Link href="Freelancers">
-          <a style={linkStyle}>Freelancers</a>
-        </Link>
-        <Link href="Employers">
-          <a style={linkStyle}>Employers</a>
-        </Link>
+        </div>
 
-        <Link href="login">
-          <Button variant="outlined" style={loginButtonStyle}>
-            Login
-          </Button>
-        </Link>
-        <Link href="signup">
-          <Button variant="outlined" style={signupButtonStyle}>
-            Signup
-          </Button>
-        </Link>
+        <div className="links">
+          <Link href="about">
+            <a style={linkStyle}>About</a>
+          </Link>
+          <Link href="Freelancers">
+            <a style={linkStyle}>Freelancers</a>
+          </Link>
+          <Link href="Employers">
+            <a style={linkStyle}>Employers</a>
+          </Link>
+        </div>
+
+        <div className="BTN">
+          <Link href="login">
+            <Button variant="outlined" style={loginButtonStyle}>
+              Login
+            </Button>
+          </Link>
+          <Link href="signup">
+            <Button variant="outlined" style={signupButtonStyle}>
+              Signup
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <style jsx>{`
-        img {
-          float: left;
-          margin-left: 10px;
-          width: 30px;
-          height: 30px;
-        }
-        div {
-          margin-top: 25px;
-          font-weight: "bold";
-          display: inline-block;
-        }
         div a {
           font-weight: bold;
+        }
+
+        div.gridcontainer {
+          display: grid;
+
+          grid-template-columns: auto auto;
+          grid-template-areas: "img txtBlock lnk a a a a a a a a a a buttons";
+          align-items: start;
+          margin-top: 20px;
+          margin-left: 20px;
+          align-items: center;
+        }
+        div.links {
+          grid-area: lnk;
+        }
+        div.BTN {
+          grid-area: buttons;
+          margin-left: 400px;
+        }
+
+        img {
+          grid-area: img;
+          width: 30px;
+          height: 30px;
+          margin-left: 10px;
+        }
+
+        div.logo_text_block {
+          grid-area: txtBlock;
+          margin-left: -40px;
         }
       `}</style>
 
