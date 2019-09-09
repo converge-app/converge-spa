@@ -1,9 +1,11 @@
 import React from "react";
+import Header from "../components/header";
 
 function Login(): JSX.Element {
   return (
-    <div>
-      <p>Login Page</p>
+    <div className="header">
+      <Header></Header>
+      <p>Login page</p>
     </div>
   );
 }
