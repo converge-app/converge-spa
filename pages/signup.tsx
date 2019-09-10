@@ -6,17 +6,16 @@ import {
   Button,
   Link,
   Container,
-  Typography,
-  Box
+  Typography
 } from "@material-ui/core";
 
 function Signup(): JSX.Element {
-  const textfield = {
+  const signup_textfield = {
     background: "#fff",
     borderRadius: 4
   };
 
-  const btn = {
+  const signup_btn = {
     marginTop: 20,
     background: "#13A8FE"
   };
@@ -37,7 +36,7 @@ function Signup(): JSX.Element {
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    style={textfield}
+                    style={signup_textfield}
                     autoComplete="fname"
                     name="firstName"
                     variant="filled"
@@ -51,7 +50,7 @@ function Signup(): JSX.Element {
 
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    style={textfield}
+                    style={signup_textfield}
                     variant="filled"
                     required
                     fullWidth
@@ -63,7 +62,7 @@ function Signup(): JSX.Element {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    style={textfield}
+                    style={signup_textfield}
                     variant="filled"
                     required
                     fullWidth
@@ -75,7 +74,7 @@ function Signup(): JSX.Element {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    style={textfield}
+                    style={signup_textfield}
                     variant="filled"
                     required
                     fullWidth
@@ -87,7 +86,7 @@ function Signup(): JSX.Element {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    style={textfield}
+                    style={signup_textfield}
                     variant="filled"
                     required
                     fullWidth
@@ -103,7 +102,7 @@ function Signup(): JSX.Element {
 
             <div className="Button">
               <Button
-                style={btn}
+                style={signup_btn}
                 type="submit"
                 fullWidth
                 variant="contained"

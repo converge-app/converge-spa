@@ -8,12 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
 function Login(): JSX.Element {
-  const textfield = {
+  const login_textfield = {
     background: "#ffffff",
     borderRadius: 10
   };
 
-  const btn = {
+  const login_btn = {
     marginTop: 20,
     background: "#13A8FE"
   };
@@ -31,7 +31,7 @@ function Login(): JSX.Element {
           <form noValidate>
             <div className="txtfield">
               <TextField
-                style={textfield}
+                style={login_textfield}
                 margin="normal"
                 variant="filled"
                 required
@@ -43,7 +43,7 @@ function Login(): JSX.Element {
                 autoFocus
               />
               <TextField
-                style={textfield}
+                style={login_textfield}
                 variant="filled"
                 margin="normal"
                 required
@@ -60,7 +60,7 @@ function Login(): JSX.Element {
               type="submit"
               fullWidth
               variant="contained"
-              style={btn}
+              style={login_btn}
               color="primary"
             >
               Login
