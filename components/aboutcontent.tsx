@@ -1,6 +1,6 @@
 import React from "react";
 
-const About = props => {
+const Aboutcomponent = props => {
   return (
     <main>
       <div className="aboutWrapper">
@@ -13,7 +13,7 @@ const About = props => {
 
         <style jsx>{`
           div.aboutWrapper {
-            width: 35%;
+            width: 500px;
             margin-left: auto;
             margin-right: auto;
           }
@@ -23,10 +23,8 @@ const About = props => {
             font-weight: bold;
           }
           div.aboutBox {
-            border: 1px solid;
-
+            border: 1px solid #dadada;
             height: 300px;
-            color: #dadada;
           }
         `}</style>
       </div>
@@ -34,4 +32,4 @@ const About = props => {
   );
 };
 
-export default About;
+export default Aboutcomponent;

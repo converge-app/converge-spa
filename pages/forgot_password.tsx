@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
 import { TextField, Button, Container, Typography } from "@material-ui/core";
 
 function ForgotPassword(): JSX.Element {
@@ -20,9 +20,7 @@ function ForgotPassword(): JSX.Element {
       </div>
       <Container maxWidth="xs">
         <div className="forgot_password">
-          <Typography component="h1" variant="h5">
-            Forgot password
-          </Typography>
+          <Typography variant="h5">Forgot password</Typography>
           <form>
             <div className="txtfield">
               <TextField

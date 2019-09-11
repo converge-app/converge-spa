@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -25,10 +25,8 @@ function Login(): JSX.Element {
       </div>
       <Container component="main" maxWidth="xs">
         <div className="login">
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <form noValidate>
+          <Typography variant="h5">Login</Typography>
+          <form>
             <div className="txtfield">
               <TextField
                 style={login_textfield}

@@ -76,6 +76,7 @@ export default function Header() {
               Login
             </Button>
           </Link>
+
           <Link href="signup">
             <Button variant="outlined" style={signupButtonStyle}>
               Signup

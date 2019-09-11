@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/header";
-import About from "../components/aboutcontent";
+import Header from "../components/Header";
+import About from "../components/Aboutcontent";
 
 function Employers(): JSX.Element {
   return (

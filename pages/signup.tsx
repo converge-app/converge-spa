@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
 import {
   Grid,
   TextField,
@@ -28,10 +28,10 @@ function Signup(): JSX.Element {
 
       <Container component="main" maxWidth="xs">
         <div className="formTag">
-          <Typography component="h1" variant="h5" style={{ marginBottom: 15 }}>
+          <Typography variant="h5" style={{ marginBottom: 15 }}>
             Sign up
           </Typography>
-          <form noValidate>
+          <form>
             <div className="txtfield">
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={6}>

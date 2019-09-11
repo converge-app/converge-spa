@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/header";
-import Main from "../components/maincontent";
+import Header from "../components/Header";
+import Main from "../components/Maincontent";
 
 function Home(): JSX.Element {
   return (
