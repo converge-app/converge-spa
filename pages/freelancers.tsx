@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
-import About from "../components/Aboutcontent";
+import About from "../components/About-component";
 
 function Freelancer(): JSX.Element {
   return (
