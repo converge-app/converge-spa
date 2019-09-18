@@ -125,13 +125,21 @@ export default function Dashboardheader() {
               }}
             />
             <List>
-              {["Inbox", "Starred", "Send email", "Drafts"].map(
-                (text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                )
-              )}
+              {[
+                "Inbox",
+                "Starred",
+                "Send email",
+                <a
+                  style={{ textDecoration: "none", color: "#FFF" }}
+                  href="Settings"
+                >
+                  Settings
+                </a>
+              ].map((text, index) => (
+                <ListItem>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
             </List>
             <Divider
               style={{
