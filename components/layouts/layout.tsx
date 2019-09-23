@@ -1,9 +1,15 @@
-import Next, { NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import Header from '../NavBar';
 
-const Layout: any = ({ children, title = 'Converge' }) => (
+interface LayoutProps {
+  title?: string;
+}
+
+const Layout: React.FunctionComponent<LayoutProps> = ({
+  children,
+  title = 'Converge',
+}) => (
   <div>
     <Head>
       <title>{title}</title>
