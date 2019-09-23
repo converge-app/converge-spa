@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IconButton,
   useTheme,
@@ -10,14 +10,14 @@ import {
   Link,
   makeStyles,
   Theme,
-  createStyles
-} from "@material-ui/core";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import MenuIcon from "@material-ui/icons/Menu";
-import Arrow_back from "@material-ui/icons/ArrowBack";
-import Chat from "@material-ui/icons/ChatBubbleOutline";
-import Email from "@material-ui/icons/EmailOutlined";
+  createStyles,
+} from '@material-ui/core';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import MenuIcon from '@material-ui/icons/Menu';
+import Arrow_back from '@material-ui/icons/ArrowBack';
+import Chat from '@material-ui/icons/ChatBubbleOutline';
+import Email from '@material-ui/icons/EmailOutlined';
 
 const drawerWidth = 240;
 
@@ -25,16 +25,16 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     drawer: {
       width: drawerWidth,
-      flexShrink: 0
+      flexShrink: 0,
     },
     drawerPaper: {
       width: drawerWidth,
 
-      whiteSpace: "nowrap",
-      background: "#000",
-      color: "#fff"
-    }
-  })
+      whiteSpace: 'nowrap',
+      background: '#000',
+      color: '#fff',
+    },
+  }),
 );
 
 export default function Dashboardheader() {
@@ -51,90 +51,90 @@ export default function Dashboardheader() {
 
   const linkStyle = {
     marginRight: 30,
-    color: "#fff",
-    textDecoration: "none"
+    color: '#fff',
+    textDecoration: 'none',
   };
 
   return (
     <nav>
-      <hr className="topLine" color="#13A8FE"></hr>
+      <hr className='topLine' color='#13A8FE'></hr>
 
-      <div className="grid-container">
-        <Arrow_back style={{ color: "#666666", width: 42 }}></Arrow_back>
-        <div className="logo_text_block">
+      <div className='grid-container'>
+        <Arrow_back style={{ color: '#666666', width: 42 }}></Arrow_back>
+        <div className='logo_text_block'>
           <a
             style={{
               fontSize: 24,
-              color: "#FFFFFF",
-              textDecoration: "none",
-              fontWeight: "bold"
+              color: '#FFFFFF',
+              textDecoration: 'none',
+              fontWeight: 'bold',
             }}
           >
             Converge
           </a>
         </div>
 
-        <div className="search-field">
+        <div className='search-field'>
           <form>
             <input
-              className="input-search"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
+              className='input-search'
+              type='search'
+              placeholder='Search'
+              aria-label='Search'
             ></input>
           </form>
         </div>
-        <div className="navbar-items">
-          <Link href="Chat">
+        <div className='navbar-items'>
+          <Link href='Chat'>
             <Chat style={linkStyle}></Chat>
           </Link>
-          <Link href="#">
+          <Link href='#'>
             <Email style={linkStyle}></Email>
           </Link>
-          <Link href="Portfolio">
-            <img className="user-avatar" src="static/default.png"></img>
+          <Link href='Portfolio'>
+            <img className='user-avatar' src='static/default.png'></img>
           </Link>
         </div>
-        <div className="burger-bar-icon">
+        <div className='burger-bar-icon'>
           <IconButton
-            color="inherit"
+            color='inherit'
             onClick={handleDrawerOpen}
-            aria-label="open drawer"
-            edge="start"
+            aria-label='open drawer'
+            edge='start'
           >
             <MenuIcon></MenuIcon>
           </IconButton>
           <Drawer
             open={open}
-            anchor="right"
+            anchor='right'
             className={classes.drawer}
             classes={{
-              paper: classes.drawerPaper
+              paper: classes.drawerPaper,
             }}
           >
             <div>
               <IconButton onClick={handleDrawerClose}>
                 <ChevronRightIcon
-                  style={{ color: "#666666" }}
+                  style={{ color: '#666666' }}
                 ></ChevronRightIcon>
               </IconButton>
             </div>
             <Divider
               style={{
-                background: "#666666"
+                background: '#666666',
               }}
             />
             <List>
               {[
-                "Inbox",
-                "Starred",
-                "Send email",
+                'Inbox',
+                'Starred',
+                'Send email',
                 <a
-                  style={{ textDecoration: "none", color: "#FFF" }}
-                  href="Settings"
+                  style={{ textDecoration: 'none', color: '#FFF' }}
+                  href='Settings'
                 >
                   Settings
-                </a>
+                </a>,
               ].map((text, index) => (
                 <ListItem>
                   <ListItemText primary={text} />
@@ -143,7 +143,7 @@ export default function Dashboardheader() {
             </List>
             <Divider
               style={{
-                background: "#666666"
+                background: '#666666',
               }}
             />
           </Drawer>
@@ -154,7 +154,7 @@ export default function Dashboardheader() {
         .grid-container {
           display: grid;
           grid-template-columns: auto auto;
-          grid-template-areas: "img logo-area search-area a a a a a a a a a a portfolio burgerbar";
+          grid-template-areas: 'img logo-area search-area a a a a a a a a a a portfolio burgerbar';
           margin-top: 20px;
           margin-left: 20px;
           align-items: center;

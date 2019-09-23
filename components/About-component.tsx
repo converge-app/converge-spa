@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
 const Aboutcomponent = props => {
   return (
     <main>
-      <div className="aboutWrapper">
-        <div className="aboutHeadline">
+      <div className='aboutWrapper'>
+        <div className='aboutHeadline'>
           <a>{props.aboutHeadline}</a>
         </div>
-        <div className="aboutBox">
+        <div className='aboutBox'>
           <p>{props.aboutBox}</p>
         </div>
 
