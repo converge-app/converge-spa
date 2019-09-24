@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import Header from '../NavBar';
+import NavBar from '../nav-bar';
 
 interface LayoutProps {
   title?: string;
@@ -13,11 +13,9 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
   <div>
     <Head>
       <title>{title}</title>
-      <meta charSet='utf-8' />
-      <meta name='viewport' content='initial-scale=1.0, width=device-width' />
     </Head>
     <header>
-      <Header></Header>
+      <NavBar></NavBar>
     </header>
 
     {children}

@@ -11,13 +11,15 @@
     "axios": "^0.19.0",
     "next": "^9.0.3",
     "next-images": "^1.1.2",
-    "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
+    "raw-loader": "^3.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-markdown": "^4.2.2",
     "react-material-ui-form-validator": "^2.0.9",
-    "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "webpack": "^4.41.0"
   },
   "scripts": {
     "dev": "next",
@@ -30,7 +32,6 @@
     "@types/next": "^8.0.6",
     "@types/node": "^12.7.5",
     "@types/react": "^16.9.2",
-    "@types/styled-components": "^4.1.19",
     "babel-plugin-styled-components": "^1.10.6",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
