@@ -2,9 +2,9 @@ import {LinearProgress, Typography} from '@material-ui/core';
 import {Form} from 'formik';
 import React from 'react';
 import NavBarLink from '../../styles/links/nav-bar.link';
-import {ForgotPassword, LoginInputs, SubmitButton} from './login.content';
+import {ForgotPassword} from './login.content';
 
-export const BoxFormContent = (props: { classes: any, title: string, disabled: boolean, onClick: () => void, buttonText: string, inputFields: (Fields: any) => any, submitButton: (Fields: any) => any }) =>
+export const BoxFormContent = (props: { classes: any, title: string, disabled: boolean,  inputFields: (Fields: any) => any, submitButton: (Fields: any) => any }) =>
     <div className={props.classes.wrapper}>
         <Form>
             <div className={props.classes.box}>
@@ -18,9 +18,7 @@ export const BoxFormContent = (props: { classes: any, title: string, disabled: b
                 </div>
                 <div className={props.classes.buttonsContainer}>
                     <br/>
-                    <SubmitButton className={props.classes.submitButton} disabled={props.disabled}
-                                  onClick={props.onClick}
-                                  buttonText={props.buttonText}/>
+                    {props.submitButton}
                     <NavBarLink href={'/forgot-password'}
                     >
                         {props.submitButton}
