@@ -1,29 +1,12 @@
-import { ServerStyleSheets } from '@material-ui/styles';
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import {ServerStyleSheets} from '@material-ui/styles';
+import Document from 'next/document';
 import React from 'react';
-import theme from '../styles/theme/theme';
+import {HtmlRoot} from '../components/layouts/html-root';
 
 class RootDocument extends Document {
   public render() {
     return (
-      <html lang='en'>
-        <Head>
-          <meta charSet='utf-8' />
-          <meta
-            name='viewport'
-            content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no'
-          />
-          <meta name='theme-color' content={theme.palette.primary.main} />
-          <link
-            href='https://fonts.googleapis.com/css?family=Montserrat&display=swap'
-            rel='stylesheet'
-          ></link>
-        </Head>
-        <body>
-          <Main></Main>
-          <NextScript></NextScript>
-        </body>
-      </html>
+        <HtmlRoot/>
     );
   }
 }
@@ -34,7 +17,7 @@ RootDocument.getInitialProps = async ctx => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props}></App>),
+      enhanceApp: App => props => sheets.collect(<App {...props}/>),
     });
 
   const initialProps = await Document.getInitialProps(ctx);

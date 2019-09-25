@@ -3,7 +3,7 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import App from 'next/app';
 import Head from 'next/head';
 import React from 'react';
-import theme from '../styles/theme/theme';
+import theme from '../components/styles/theme/theme';
 
 export default class RootApp extends App {
   public componentDidMount() {
@@ -17,13 +17,13 @@ export default class RootApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <React.Fragment>
+      <React.Fragment >
         <Head>
           <title>Converge</title>
         </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline></CssBaseline>
-          <Component {...pageProps}></Component>
+        <ThemeProvider theme={theme} >
+          <CssBaseline />
+          <Component {...pageProps} />
         </ThemeProvider>
       </React.Fragment>
     );

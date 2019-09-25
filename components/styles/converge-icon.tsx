@@ -11,7 +11,7 @@ const ConvergeIcon: React.FunctionComponent<IconPropTypes> = (
   return (
     <div>
       <img
-        src='/static/converge-icon.svg'
+        src='/static/images/converge-icon.svg'
         width={props.width}
         height={props.height}
         alt='Converge icon'
