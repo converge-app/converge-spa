@@ -25,7 +25,7 @@ const NavBarLink: React.FunctionComponent<INavBarLinkProps> = props => {
         <div className={className}>
             <div className={classes.link}>
                 <Link href={href} as={hrefAs}>
-                    <a>{children}</a>
+                    {children}
                 </Link>
             </div>
         </div>

@@ -1,12 +1,9 @@
-import {
-    Button,
-    LinearProgress,
-    makeStyles,
-    Typography,
-} from '@material-ui/core';
-import {Field, Form, Formik} from 'formik';
+import {Button, makeStyles, Typography,} from '@material-ui/core';
+import {Field} from 'formik';
 import {TextField} from 'formik-material-ui';
 import React from 'react';
+import {BoxForm} from './box-form';
+import {BoxFormContent} from './box.content';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -19,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     box: {
         width: 400,
+        minHeight: 500,
         padding: theme.spacing(6, 4),
         borderWidth: 2,
         borderStyle: 'solid',
@@ -32,19 +30,22 @@ const useStyles = makeStyles((theme) => ({
     },
     titleContainer: {
         gridArea: 'title',
+        justifySelf: 'start',
+        alignSelf: 'start'
     },
     inputContainer: {
         gridArea: 'input',
+        justifySelf: 'stretch',
+        alignSelf: 'center',
     },
     buttonsContainer: {
         gridArea: 'buttons',
+        justifySelf: 'stretch',
+        alignSelf: 'end',
     },
     root: {
         '& label.Mui-focused': {
             color: theme.palette.primary.main,
-        },
-        '& .MuiInput-underline:after': {
-            borderBottomColor: theme.palette.primary.main,
         },
         '& .MuiInput-underline:before': {
             borderBottomColor: theme.palette.secondary.main,
@@ -56,22 +57,74 @@ const useStyles = makeStyles((theme) => ({
             borderBottomColor: theme.palette.error.main,
         },
     },
+    field: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+    },
+    submitButton: {
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+    forgotPassword: {
+        textAlign: 'center',
+        marginTop: 10,
+    }
 }))
 
-interface IValues {
+export interface IFormValues {
     email: string
+    password: string
+}
+
+export function LoginInputs(props: { className: any }) {
+    return <>
+        <Field className={props.className}
+               name='email'
+               type='email'
+               label='Email'
+               fullWidth
+               component={TextField}
+        />
+        <br/>
+        <Field className={props.className}
+               type='password'
+               label='Password'
+               name='password'
+               fullWidth
+               component={TextField}
+        />
+    </>;
+}
+
+export function SubmitButton(props: { className?: any, disabled: boolean, onClick: () => void, buttonText: string }) {
+    return <Button
+        variant='outlined'
+        color='secondary'
+        size="large"
+        className={props.className}
+        disabled={props.disabled}
+        onClick={props.onClick}
+    >
+        {props.buttonText.toUpperCase()}
+    </Button>;
+}
+
+export function ForgotPassword(props: { className: any }) {
+    return <Typography variant="body1" className={props.className}>
+        Forgot Password?
+    </Typography>;
 }
 
 export const LoginContent: React.FunctionComponent = () => {
     const classes = useStyles()
 
-    const initialValues: { password: string; email: string } = {
+    const initialValues: IFormValues = {
         email: '',
         password: '',
     }
 
-    function validateForm(values: any) {
-        const errors: Partial<IValues> = {}
+    const validateEmail = (values: any, errors: Partial<IFormValues>) => {
         if (!values.email) {
             errors.email = 'Required'
         } else if (
@@ -79,63 +132,36 @@ export const LoginContent: React.FunctionComponent = () => {
         ) {
             errors.email = 'Invalid email address'
         }
+    };
+
+    const validatePassword = (values: any, errors: Partial<IFormValues>) => {
+        if (!values.password) {
+            errors.password = 'Required'
+        }
+    }
+
+    function validateForm(values: any) {
+        const errors: Partial<IFormValues> = {}
+        validateEmail(values, errors);
+        validatePassword(values, errors);
         return errors
     }
 
-    return (<Formik initialValues={initialValues}
-                    validate={validateForm}
-                    onSubmit={(values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            setSubmitting(false)
-                            alert(JSON.stringify(values, null, 2))
-                        }, 500)
-                    }
-                    }
-                    render={({submitForm, isSubmitting}) => (
+    const [title] = React.useState('Login')
+    const [buttonText] = React.useState('login')
 
-                        <div className={classes.wrapper}>
-                            <Form>
-                                <div className={classes.box}>
-                                    <div className={classes.titleContainer}>
-                                        <Typography variant='h3' component='h2'>LOGIN</Typography>
-                                    </div>
-                                    <div className={classes.inputContainer}>
-                                        <div className={classes.root}>
+    const getOnSubmit = () => () => {
+        // todo
+    };
 
-                                            <Field
-                                                name='email'
-                                                type='email'
-                                                label='Email'
-                                                component={TextField}
-                                            />
-                                            <br/>
-                                            <Field
-                                            type='password'
-                                            label='Password'
-                                            name='password'
-                                            component={TextField}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={classes.buttonsContainer}>
-                                        {isSubmitting && <LinearProgress/>}
-                                        <br/>
-                                        <Button
-                                            variant='contained'
-                                            color='primary'
-                                            disabled={isSubmitting}
-                                            onClick={submitForm}
-                                        >
-                                            Submit
-                                        </Button>
-                                    </div>
-                                </div>
-                            </Form>
-                        </div>
 
-                    )}
-    >
-
-    </Formik>)
+    return (<BoxForm initialValues={initialValues} validate={validateForm} onSubmit={getOnSubmit()}
+                 render={({submitForm, isSubmitting}) => (
+                     <BoxFormContent classes={classes} title={title} disabled={isSubmitting} onClick={submitForm}
+                                     buttonText={buttonText} inputFields={
+                     <LoginInputs className={classes.field}/>
+                 }/>
+                 }
+                 )}/>)
 
 }
