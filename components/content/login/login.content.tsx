@@ -1,4 +1,11 @@
-import {FormControl, Input, InputLabel, makeStyles, Typography} from '@material-ui/core';
+import {
+    Button,
+    LinearProgress,
+    makeStyles,
+    Typography,
+} from '@material-ui/core';
+import {Field, Form, Formik} from 'formik';
+import {TextField} from 'formik-material-ui';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,29 +58,84 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+interface IValues {
+    email: string
+}
+
 export const LoginContent: React.FunctionComponent = () => {
     const classes = useStyles()
 
-    // @ts-ignore
-    const [email, setEmail] = React.useState('');
-
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setEmail(event.target.value);
+    const initialValues: { password: string; email: string } = {
+        email: '',
+        password: '',
     }
 
-    return <div className={classes.wrapper}>
-        <div className={classes.box}>
-            <div className={classes.titleContainer}>
-                <Typography variant='h3' component='h2'>LOGIN</Typography>
-            </div>
-            <div className={classes.inputContainer}>
-                    <FormControl fullWidth={true} className={classes.root}>
-                        <InputLabel htmlFor='email'>Email</InputLabel>
-                        <Input id='email' value={email} onChange={handleChange} fullWidth={true} required type="email"/>
-                    </FormControl>
-            </div>
-            <div className={classes.buttonsContainer}>
-            </div>
-        </div>
-    </div>;
+    function validateForm(values: any) {
+        const errors: Partial<IValues> = {}
+        if (!values.email) {
+            errors.email = 'Required'
+        } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+        ) {
+            errors.email = 'Invalid email address'
+        }
+        return errors
+    }
+
+    return (<Formik initialValues={initialValues}
+                    validate={validateForm}
+                    onSubmit={(values, {setSubmitting}) => {
+                        setTimeout(() => {
+                            setSubmitting(false)
+                            alert(JSON.stringify(values, null, 2))
+                        }, 500)
+                    }
+                    }
+                    render={({submitForm, isSubmitting}) => (
+
+                        <div className={classes.wrapper}>
+                            <Form>
+                                <div className={classes.box}>
+                                    <div className={classes.titleContainer}>
+                                        <Typography variant='h3' component='h2'>LOGIN</Typography>
+                                    </div>
+                                    <div className={classes.inputContainer}>
+                                        <div className={classes.root}>
+
+                                            <Field
+                                                name='email'
+                                                type='email'
+                                                label='Email'
+                                                component={TextField}
+                                            />
+                                            <br/>
+                                            <Field
+                                            type='password'
+                                            label='Password'
+                                            name='password'
+                                            component={TextField}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className={classes.buttonsContainer}>
+                                        {isSubmitting && <LinearProgress/>}
+                                        <br/>
+                                        <Button
+                                            variant='contained'
+                                            color='primary'
+                                            disabled={isSubmitting}
+                                            onClick={submitForm}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </div>
+                            </Form>
+                        </div>
+
+                    )}
+    >
+
+    </Formik>)
+
 }
