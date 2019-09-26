@@ -17,11 +17,11 @@ export default class RootApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <React.Fragment >
+      <React.Fragment>
         <Head>
           <title>Converge</title>
         </Head>
-        <ThemeProvider theme={theme} >
+        <ThemeProvider theme={theme}>
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>

@@ -7,7 +7,7 @@ const AboutPage: NextPage = () => {
   const content = require('../articles/about.md').default;
   return (
     <Layout>
-      <InfoPage headline={'About'} content={content}/>
+      <InfoPage headline={'About'} content={content} />
     </Layout>
   );
 };

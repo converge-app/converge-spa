@@ -1,16 +1,14 @@
-import {Button} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import React from 'react';
 import NavBarLink from '../../../styles/links/nav-bar.link';
-import {INavBarLinkProps} from './nav-bar-link.props';
+import { INavBarLinkProps } from './nav-bar-link.props';
 
 export function NavBarLinkSignup(props: INavBarLinkProps) {
-    return <NavBarLink href='/signup'>
-        <Button
-            variant='contained'
-            color='secondary'
-            className={props.className}
-        >
-            Sign up
-        </Button>
-    </NavBarLink>;
+  return (
+    <NavBarLink href='/signup'>
+      <Button variant='contained' color='secondary' className={props.className}>
+        Sign up
+      </Button>
+    </NavBarLink>
+  );
 }

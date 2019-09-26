@@ -7,7 +7,7 @@ const FreelancerPage: NextPage = () => {
   const content = require('../articles/freelancers.md').default;
   return (
     <Layout>
-      <InfoPage headline={'Freelancers'} content={content}/>
+      <InfoPage headline={'Freelancers'} content={content} />
     </Layout>
   );
 };

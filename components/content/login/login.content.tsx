@@ -1,213 +1,137 @@
-import {Button, makeStyles, Typography} from '@material-ui/core';
-import {Field} from 'formik';
-import {TextField} from 'formik-material-ui';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import NavBarLink from '../../styles/links/nav-bar.link';
-import {BoxForm} from './box-form';
-import {BoxFormContent} from './box.content';
+import { BoxForm } from '../../layouts/forms/box-form';
+import { BoxFormContent } from '../../layouts/forms/box.content';
+import { ProgressBar } from '../../styles/utility/progress-bar';
+import { SubmitButton } from './button.submit';
+import { validateEmail } from './email.form.validation';
+import { ForgotPassword } from './forgotpassword.link';
+import { IFormValues } from './login.form.values';
+import { LoginInputs } from './login.inputs';
+import { validatePassword } from './password.form.validation';
 
 const useStyles = makeStyles(theme => ({
-    wrapper: {
-        marginTop: 50,
-        marginBottom: 50,
-        flex: '100 100',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    box: {
-        width: 400,
-        minHeight: 500,
-        padding: theme.spacing(6, 4),
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderColor: theme.palette.text.primary,
-        display: 'grid',
-        gridTemplateAreas: `
+  wrapper: {
+    marginTop: 50,
+    marginBottom: 50,
+    flex: '100 100',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    width: 450,
+    minHeight: 600,
+    padding: theme.spacing(8, 6),
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: theme.palette.primary.light,
+    display: 'grid',
+    gridTemplateAreas: `
             'title'
             'input'
             'buttons'`,
-        gridGap: 40,
+    gridGap: 40,
+    boxShadow: '2px 2px 30px rgba(0,0,0,0.15)',
+  },
+  titleContainer: {
+    gridArea: 'title',
+    justifySelf: 'start',
+    alignSelf: 'start',
+  },
+  inputContainer: {
+    gridArea: 'input',
+    justifySelf: 'stretch',
+    alignSelf: 'center',
+  },
+  buttonsContainer: {
+    gridArea: 'buttons',
+    justifySelf: 'stretch',
+    alignSelf: 'end',
+  },
+  root: {
+    '& label.Mui-focused': {
+      color: theme.palette.primary.main,
     },
-    titleContainer: {
-        gridArea: 'title',
-        justifySelf: 'start',
-        alignSelf: 'start',
+    '& .MuiInput-underline:before': {
+      borderBottomColor: theme.palette.secondary.main,
     },
-    inputContainer: {
-        gridArea: 'input',
-        justifySelf: 'stretch',
-        alignSelf: 'center',
+    '& input:valid + fieldset': {
+      borderBottomColor: theme.palette.primary.main,
     },
-    buttonsContainer: {
-        gridArea: 'buttons',
-        justifySelf: 'stretch',
-        alignSelf: 'end',
+    '& input:invalid + fieldset': {
+      borderBottomColor: theme.palette.error.main,
     },
-    root: {
-        '& label.Mui-focused': {
-            color: theme.palette.primary.main,
-        },
-        '& .MuiInput-underline:before': {
-            borderBottomColor: theme.palette.secondary.main,
-        },
-        '& input:valid + fieldset': {
-            borderBottomColor: theme.palette.primary.main,
-        },
-        '& input:invalid + fieldset': {
-            borderBottomColor: theme.palette.error.main,
-        },
-    },
-    field: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-    },
-    submitButton: {
-        display: 'block',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    forgotPassword: {
-        textAlign: 'center',
-        marginTop: 10,
-    },
+  },
+  field: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  submitButton: {
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  forgotPassword: {
+    textAlign: 'center',
+    marginTop: 10,
+  },
 }));
 
-export interface IFormValues {
-    email: string;
-    password: string;
-}
-
-export function LoginInputs(props: { className: any }) {
-    return (
-        <>
-            <Field
-                className={props.className}
-                name='email'
-                type='email'
-                label='Email'
-                fullWidth
-                component={TextField}
-            />
-            <br/>
-            <Field
-                className={props.className}
-                type='password'
-                label='Password'
-                name='password'
-                fullWidth
-                component={TextField}
-            />
-        </>
-    );
-}
-
-export function SubmitButton(props: {
-    className?: any;
-    disabled: boolean;
-    onClick: () => void;
-    buttonText: string;
-}) {
-    return (
-        <Button
-            variant='outlined'
-            color='secondary'
-            size='large'
-            className={props.className}
-            disabled={props.disabled}
-            onClick={props.onClick}
-        >
-            {props.buttonText.toUpperCase()}
-        </Button>
-    );
-}
-
-export function ForgotPassword(props: { className: any }) {
-    return (
-        <Typography variant='body1' className={props.className}>
-            Forgot Password?
-        </Typography>
-    );
-}
-
 export const LoginContent: React.FunctionComponent = () => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const initialValues: IFormValues = {
-        email: '',
-        password: '',
-    };
+  const initialValues: IFormValues = {
+    email: '',
+    password: '',
+  };
 
-    const validateEmail = (values: any, errors: Partial<IFormValues>) => {
-        if (!values.email) {
-            errors.email = 'Required';
-        } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-        ) {
-            errors.email = 'Invalid email address';
-        }
-    };
+  function validateForm(values: any) {
+    const errors: Partial<IFormValues> = {};
+    validateEmail(values, errors);
+    validatePassword(values, errors);
+    return errors;
+  }
 
-    const validatePassword = (values: any, errors: Partial<IFormValues>) => {
-        if (!values.password) {
-            errors.password = 'Required';
-        }
-    };
+  const [title] = React.useState('Login');
+  const [buttonText] = React.useState('login');
 
-    function validateForm(values: any) {
-        const errors: Partial<IFormValues> = {};
-        validateEmail(values, errors);
-        validatePassword(values, errors);
-        return errors;
-    }
+  const getOnSubmit = () => () => {
+    // todo
+  };
 
-    const [title] = React.useState('Login');
-    //const [buttonText] = React.useState('login');
-
-    const getOnSubmit = () => () => {
-        // todo
-    };
-
-    return (
-        <BoxForm
-            initialValues={initialValues}
-            validate={validateForm}
-            onSubmit={getOnSubmit()}
-            render={({ isSubmitting}) => (
-                <BoxFormContent
-                    classes={classes}
-                    title={title}
-                    disabled={isSubmitting}>
-                    <div>
-                        <div className={classes.titleContainer}>
-                            <Typography variant='h2' component='h2'>{title.toUpperCase()}</Typography>
-                        </div>
-                        <div className={classes.inputContainer}>
-                            <div className={classes.root}>
-                                <LoginInputs className={classes.field}/>
-                            </div>
-                        </div>
-                        <div className={classes.buttonsContainer}>
-                            <br/>
-
-                            <NavBarLink href={'/forgot-password'}
-                            >
-
-                                {/*
-                                <SubmitButton
-                                    className={classes.submitButton}
-                                    disabled={isSubmitting}
-                                    onClick={submitForm}
-                                    buttonText={buttonText}
-                                />
-                                <ForgotPassword className={classes.forgotPassword}/>
-
-                            */}
-                            </NavBarLink>
-                        </div>
-                    </div>
-                </BoxFormContent>
-            )}
-        />
-    );
+  return (
+    <BoxForm
+      initialValues={initialValues}
+      validate={validateForm}
+      onSubmit={getOnSubmit()}
+      render={({ submitForm, isSubmitting }) => (
+        <BoxFormContent classes={classes} title={title} disabled={isSubmitting}>
+          <div className={classes.titleContainer}>
+            <Typography variant='h2' component='h2'>
+              {title.toUpperCase()}
+            </Typography>
+          </div>
+          <div className={classes.inputContainer}>
+            <div className={classes.root}>
+              <LoginInputs className={classes.field} />
+            </div>
+          </div>
+          <div className={classes.buttonsContainer}>
+            <div>
+              <br />
+              <SubmitButton
+                className={classes.submitButton}
+                disabled={isSubmitting}
+                onClick={submitForm}
+                buttonText={buttonText}
+              />
+              <ForgotPassword className={classes.forgotPassword} />
+              <ProgressBar submitting={isSubmitting} />
+            </div>
+          </div>
+        </BoxFormContent>
+      )}
+    />
+  );
 };

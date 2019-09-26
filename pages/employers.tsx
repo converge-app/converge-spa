@@ -7,7 +7,7 @@ const EmployerPage: NextPage = () => {
   const content = require('../articles/employers.md').default;
   return (
     <Layout>
-      <InfoPage headline={'Employers'} content={content}/>
+      <InfoPage headline={'Employers'} content={content} />
     </Layout>
   );
 };

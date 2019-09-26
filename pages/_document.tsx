@@ -1,13 +1,11 @@
-import {ServerStyleSheets} from '@material-ui/styles';
+import { ServerStyleSheets } from '@material-ui/styles';
 import Document from 'next/document';
 import React from 'react';
-import {HtmlRoot} from '../components/layouts/html-root';
+import { HtmlRoot } from '../components/layouts/html-root';
 
 class RootDocument extends Document {
   public render() {
-    return (
-        <HtmlRoot/>
-    );
+    return <HtmlRoot />;
   }
 }
 
@@ -17,7 +15,7 @@ RootDocument.getInitialProps = async ctx => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props}/>),
+      enhanceApp: App => props => sheets.collect(<App {...props} />),
     });
 
   const initialProps = await Document.getInitialProps(ctx);
