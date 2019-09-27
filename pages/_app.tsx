@@ -3,9 +3,11 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import App from 'next/app';
 import Head from 'next/head';
 import React from 'react';
+import {Provider} from 'react-redux'
 import theme from '../components/styles/theme/theme';
+import withReduxStore from '../lib/store/with-redux-store'
 
-export default class RootApp extends App {
+class RootApp extends App {
   public componentDidMount() {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
@@ -14,18 +16,23 @@ export default class RootApp extends App {
   }
 
   public render() {
-    const { Component, pageProps } = this.props;
+    // @ts-ignore
+      const { Component, pageProps, reduxStore } = this.props;
 
-    return (
+      return (
       <React.Fragment>
         <Head>
           <title>Converge</title>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component {...pageProps} />
+            <Provider store={reduxStore}>
+              <Component {...pageProps} />
+            </Provider>
         </ThemeProvider>
       </React.Fragment>
     );
   }
 }
+
+export default withReduxStore(RootApp)

@@ -1,5 +1,7 @@
 import {makeStyles, Typography} from '@material-ui/core';
-import React from 'react';
+import Router from 'next/router';
+import React, {Component} from 'react';
+import {login} from '../../../services/user.service';
 import {BoxFormContent} from '../../layouts/forms/box.content';
 import {validateEmail} from '../../layouts/forms/validation/email.form.validation';
 import {validatePassword} from '../../layouts/forms/validation/password.form.validation';
@@ -78,60 +80,71 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const LoginContent: React.FunctionComponent = () => {
-    const classes = useStyles();
+export class LoginContent extends Component {
+    public render() {
+        const classes = useStyles();
 
-    const initialValues: IFormValues = {
-        email: '',
-        password: '',
-    };
+        const initialValues: IFormValues = {
+            email: '',
+            password: '',
+        };
 
-    function validateForm(values: any) {
-        const errors: Partial<IFormValues> = {};
-        validateEmail(values, errors);
-        validatePassword(values, errors);
-        return errors;
+        function validateForm(values: any) {
+            const errors: Partial<IFormValues> = {};
+            validateEmail(values, errors);
+            validatePassword(values, errors);
+            return errors;
+        }
+
+        const [title] = React.useState('Login');
+        const [buttonText] = React.useState('login');
+
+        // @ts-ignore
+        const getOnSubmit = (values: IFormValues, {setSubmitting}) => {
+            login(values.email, values.password).then(res => {
+                if (res) {
+                    Router.replace('/dashboard')
+                } else {
+                    alert('Something went wrong {Temporary}')
+                    setSubmitting(false)
+                }
+            })
+            setSubmitting(false)
+        };
+
+        return (
+            <BoxForm
+                initialValues={initialValues}
+                validate={validateForm}
+                onSubmit={getOnSubmit}
+                render={({submitForm, isSubmitting}) => (
+                    <BoxFormContent classes={classes} title={title} disabled={isSubmitting}>
+                        <div className={classes.titleContainer}>
+                            <Typography variant='h2' component='h2'>
+                                {title.toUpperCase()}
+                            </Typography>
+                        </div>
+                        <div className={classes.inputContainer}>
+                            <div className={classes.root}>
+                                <LoginInputs className={classes.field}/>
+                            </div>
+                        </div>
+                        <div className={classes.buttonsContainer}>
+                            <div>
+                                <br/>
+                                <SubmitButton
+                                    className={classes.submitButton}
+                                    disabled={isSubmitting}
+                                    onClick={submitForm}
+                                    buttonText={buttonText}
+                                />
+                                <ForgotPassword className={classes.forgotPassword}/>
+                                <ProgressBar submitting={isSubmitting}/>
+                            </div>
+                        </div>
+                    </BoxFormContent>
+                )}
+            />
+        );
     }
-
-    const [title] = React.useState('Login');
-    const [buttonText] = React.useState('login');
-
-    const getOnSubmit = () => () => {
-        // todo
-    };
-
-    return (
-        <BoxForm
-            initialValues={initialValues}
-            validate={validateForm}
-            onSubmit={getOnSubmit()}
-            render={({submitForm, isSubmitting}) => (
-                <BoxFormContent classes={classes} title={title} disabled={isSubmitting}>
-                    <div className={classes.titleContainer}>
-                        <Typography variant='h2' component='h2'>
-                            {title.toUpperCase()}
-                        </Typography>
-                    </div>
-                    <div className={classes.inputContainer}>
-                        <div className={classes.root}>
-                            <LoginInputs className={classes.field}/>
-                        </div>
-                    </div>
-                    <div className={classes.buttonsContainer}>
-                        <div>
-                            <br/>
-                            <SubmitButton
-                                className={classes.submitButton}
-                                disabled={isSubmitting}
-                                onClick={submitForm}
-                                buttonText={buttonText}
-                            />
-                            <ForgotPassword className={classes.forgotPassword}/>
-                            <ProgressBar submitting={isSubmitting}/>
-                        </div>
-                    </div>
-                </BoxFormContent>
-            )}
-        />
-    );
-};
+}
