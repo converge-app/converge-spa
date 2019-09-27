@@ -1,4 +1,4 @@
-import { IFormValues } from './login.form.values';
+import { IFormValues } from '../../../content/login/login.form.values';
 
 export const validateEmail = (values: any, errors: Partial<IFormValues>) => {
   if (!values.email) {

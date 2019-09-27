@@ -5,7 +5,7 @@ import { INavBarLinkProps } from './nav-bar-link.props';
 
 export function NavBarLinkSignup(props: INavBarLinkProps) {
   return (
-    <NavBarLink href='/signup'>
+    <NavBarLink href='/sign-up'>
       <Button variant='contained' color='secondary' className={props.className}>
         Sign up
       </Button>

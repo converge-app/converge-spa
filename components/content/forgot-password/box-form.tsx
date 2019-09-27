@@ -1,6 +1,6 @@
 import { Formik, FormikActions } from 'formik';
 import React from 'react';
-import {IFormValues} from '../../content/login/login.form.values';
+import {IFormValues} from './forgot-passport.form.values';
 
 export const BoxForm = (props: {
   initialValues: IFormValues;

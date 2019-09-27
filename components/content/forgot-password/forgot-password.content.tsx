@@ -1,14 +1,12 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { BoxForm } from './box-form';
 import { BoxFormContent } from '../../layouts/forms/box.content';
 import { ProgressBar } from '../../styles/utility/progress-bar';
 import { SubmitButton } from '../../styles/buttons/button.submit';
 import { validateEmail } from '../../layouts/forms/validation/email.form.validation';
-import { ForgotPassword } from '../../layouts/links/forgotpassword.link';
-import {BoxForm} from './box-form';
-import { IFormValues } from './login.form.values';
-import { LoginInputs } from './login.inputs';
-import { validatePassword } from '../../layouts/forms/validation/password.form.validation';
+import { IFormValues } from './forgot-passport.form.values';
+import { ForgotPasswordInputs } from './forgot-password.inputs';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -78,23 +76,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const LoginContent: React.FunctionComponent = () => {
+export const ForgotPasswordContent: React.FunctionComponent = () => {
   const classes = useStyles();
 
   const initialValues: IFormValues = {
     email: '',
-    password: '',
   };
 
   function validateForm(values: any) {
     const errors: Partial<IFormValues> = {};
     validateEmail(values, errors);
-    validatePassword(values, errors);
     return errors;
   }
 
-  const [title] = React.useState('Login');
-  const [buttonText] = React.useState('login');
+  const [title] = React.useState('Forgot Password');
+  const [buttonText] = React.useState('Recover password');
 
   const getOnSubmit = () => () => {
     // todo
@@ -114,7 +110,7 @@ export const LoginContent: React.FunctionComponent = () => {
           </div>
           <div className={classes.inputContainer}>
             <div className={classes.root}>
-              <LoginInputs className={classes.field} />
+              <ForgotPasswordInputs className={classes.field} />
             </div>
           </div>
           <div className={classes.buttonsContainer}>
@@ -126,7 +122,6 @@ export const LoginContent: React.FunctionComponent = () => {
                 onClick={submitForm}
                 buttonText={buttonText}
               />
-              <ForgotPassword className={classes.forgotPassword} />
               <ProgressBar submitting={isSubmitting} />
             </div>
           </div>
