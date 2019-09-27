@@ -1,3 +1,3 @@
 export interface IFormValues {
-  email: string;
+    email: string;
 }

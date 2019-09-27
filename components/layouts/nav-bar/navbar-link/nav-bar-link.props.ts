@@ -1,3 +1,3 @@
 export interface INavBarLinkProps {
-  className?: any;
+    className?: any;
 }
