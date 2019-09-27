@@ -11,6 +11,7 @@ const getOrCreateStore = (initialState: any = null) => {
 
   // @ts-ignore
   if (!window[__NEXT_REDUX_STORE__]) {
+
     // @ts-ignore
     window[__NEXT_REDUX_STORE__] = initializeStore(initialState);
   }

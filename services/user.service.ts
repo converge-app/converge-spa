@@ -6,6 +6,7 @@ export interface IUser {
     token: string,
 }
 
+
 export const login = (username: string, password: string): Promise<Response> => {
     const requestOptions: AxiosRequestConfig = {
         method: 'POST',
@@ -21,7 +22,8 @@ export const login = (username: string, password: string): Promise<Response> => 
         .then((user: any) => {
             console.log(user)
             if (user.token) {
-                localStorage.setItem('user', JSON.stringify(user))
+                //localStorage.setItem('user', JSON.stringify(user))
+                console.log('User logged in')
             }
 
             return user
@@ -29,7 +31,8 @@ export const login = (username: string, password: string): Promise<Response> => 
 };
 
 export const logout = () => {
-    localStorage.removeItem('user')
+    console.log('logout called')
+    //localStorage.removeItem('user')
 }
 
 export const getAll = () => {
@@ -42,6 +45,12 @@ export const getAll = () => {
 };
 
 export const isLoggedIn = () => {
-    return localStorage.getItem('user') != null
+    //return localStorage.getItem('user') != null
 }
 
+
+export const userService = {
+    login,
+    logout,
+    getAll,
+}

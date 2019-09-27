@@ -1,14 +1,25 @@
-import { NextPage } from 'next';
-import React from 'react';
+import {connect} from 'react-redux'
+import {compose} from 'redux';
+import {LoginContent} from '../components/content/login/login.content';
 import Layout from '../components/layouts/layout';
-import { LoginContent } from '../components/content/login/login.content';
+import {userActions} from '../lib/actions/user.actions';
 
-const LoginPage: NextPage = () => {
-  return (
+// @ts-ignore
+const LoginPage = ({submitLogin}) => (
     <Layout>
-      <LoginContent />
+        <LoginContent submitLogin={submitLogin}/>
     </Layout>
-  );
-};
+);
 
-export default LoginPage;
+const mapDispatchToProps = (dispatch: any) => ({
+    submitLogin: (payload: any) => {
+        dispatch(userActions.login(payload.email, payload.password))
+    }
+})
+
+export default compose(
+    connect(
+        null,
+        mapDispatchToProps,
+    ),
+)(LoginPage)

@@ -1,11 +1,6 @@
 import {userConstants} from '../constants/user.constants';
 
-const jsonUser = localStorage.getItem('user')
-// @ts-ignore
-const user = JSON.parse(jsonUser)
-const initialState = user ? {loggedIn: true, user} : {}
-
-export const authentication = (state: any = initialState, action: any) => {
+export const authentication = (state: any = {}, action: any) => {
     switch(action.type) {
         case userConstants.LOGIN_REQUEST:
             return {

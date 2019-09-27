@@ -4,9 +4,11 @@ import {createLogger} from 'redux-logger';
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from '../reducers';
 
-export const initializeStore = () => {
+export const initializeStore = (initialState?: any) => {
 
     const loggerMiddleware = createLogger();
+
+    console.log(initialState)
 
     return createStore(
         rootReducer,
