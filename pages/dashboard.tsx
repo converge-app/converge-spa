@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 import React from 'react';
-import Layout from '../components/layouts/layout';
+import DashboardLayout from '../components/layouts/dashboard.layout';
 
 const DashboardPage: NextPage = () => {
-  return <Layout>This is dashboard yes</Layout>;
+  return <DashboardLayout>This is dashboard yes</DashboardLayout>;
 };
 
 export default DashboardPage;

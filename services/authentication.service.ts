@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { authHeader } from '../lib/helpers/auth-header';
 
 export interface IUser {
   id: string;
@@ -7,16 +6,17 @@ export interface IUser {
 }
 
 export const login = (
-  username: string,
+  email: string,
   password: string,
 ): Promise<Response> => {
   const requestOptions: AxiosRequestConfig = {
     method: 'POST',
-    url: 'https://users-service.api.converge-app.net/api/users/authenticate',
+    url:
+      'https://authentication-service.api.converge-app.net/api/authentication/authenticate',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: { username, password },
+    data: { email, password },
   };
 
   return axios(requestOptions)
@@ -40,11 +40,12 @@ export const signUp = (
 ): Promise<Response> => {
   const requestOptions: AxiosRequestConfig = {
     method: 'POST',
-    url: 'https://users-service.api.converge-app.net/api/users/register',
+    url:
+      'https://authentication-service.api.converge-app.net/api/authentication/register',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: { username: email, password, firstName, lastName },
+    data: { email, password, firstName, lastName },
   };
 
   return axios(requestOptions)
@@ -65,28 +66,12 @@ export const logout = () => {
   // localStorage.removeItem('user')
 };
 
-export const getAll = () => {
-  const requestOptions: {
-    headers: { Authorization: string } | {};
-    method: string;
-  } = {
-    method: 'GET',
-    headers: authHeader(),
-  };
-
-  return fetch(
-    'https://users-service.api.converge-app.net/api/users',
-    requestOptions,
-  );
-};
-
 export const isLoggedIn = () => {
   // return localStorage.getItem('user') != null
 };
 
-export const userService = {
+export const authenticationService = {
   login,
   logout,
   signUp,
-  getAll,
 };

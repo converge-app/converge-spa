@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { userService } from '../../services/user.service';
+import { authenticationService } from '../../services/authentication.service';
 import { userConstants } from '../constants/user.constants';
 import { alertActions } from './alert.actions';
 
@@ -7,7 +7,7 @@ const login = (email: string, password: string) => {
   return (dispatch: any) => {
     dispatch(request({ email }));
 
-    userService.login(email, password).then(
+    authenticationService.login(email, password).then(
       (user: any) => {
         dispatch(success(user));
         dispatch(alertActions.success('Logged in'));
@@ -64,7 +64,7 @@ const signUp = (
 
     dispatch(request({ email }));
 
-    userService.signUp(email, password, firstName, lastName).then(
+    authenticationService.signUp(email, password, firstName, lastName).then(
       (user: any) => {
         dispatch(success(user));
         dispatch(alertActions.success('Sign up successful!'));
@@ -79,37 +79,12 @@ const signUp = (
 };
 
 const logout = () => {
-  userService.logout();
+  authenticationService.logout();
   return { type: userConstants.LOGOUT };
-};
-
-const getAll = () => {
-  return (dispatch: any) => {
-    dispatch(request());
-
-    userService
-      .getAll()
-      .then((users: any) =>
-        dispatch(success(users), (error: any) => dispatch(failure(error))),
-      );
-  };
-
-  function request() {
-    return { type: userConstants.GET_ALL_REQUEST };
-  }
-
-  function success(users: any) {
-    return { type: userConstants.GET_ALL_SUCCESS, users };
-  }
-
-  function failure(error: any) {
-    return { type: userConstants.GET_ALL_FAILURE, error };
-  }
 };
 
 export const userActions = {
   login,
   logout,
   signUp,
-  getAll,
 };
