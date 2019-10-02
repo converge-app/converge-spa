@@ -1,10 +1,11 @@
 import {NextPage} from 'next';
 import React from 'react';
+import CreateProjectContent from '../../components/content/create-project/create.project.content';
 import DashboardLayout from '../../components/layouts/dashboard.layout';
 
 const CreateProjectPage: NextPage = () => {
     return <DashboardLayout>
-        <div>This is create project page</div>
+        <CreateProjectContent/>
     </DashboardLayout>;
 };
 
