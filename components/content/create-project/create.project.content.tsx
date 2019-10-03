@@ -1,5 +1,5 @@
 import {Button, Container, Grid, makeStyles, Typography} from '@material-ui/core';
-import {Formik} from 'formik';
+import {Form, Formik} from 'formik';
 import React from 'react';
 import CreateProjectAmount from './form/create.project.amount';
 import CreateProjectCategory from './form/create.project.category';
@@ -34,8 +34,7 @@ interface IFormValues {
     category: string;
     subCategory: string;
     description: string;
-    files: string;
-    amount: string;
+    amount: number;
 }
 
 const CreateProjectContent: React.FunctionComponent = () => {
@@ -51,43 +50,47 @@ const CreateProjectContent: React.FunctionComponent = () => {
                 subCategory: '',
                 description: '',
                 files: '',
-                amount: '',
+                amount: 0,
             }}
-            validate={values => {
-                const errors: Partial<IFormValues> = {};
-                console.log(values);
-                return errors;
-            }}
-            onSubmit={(values, {setSubmitting}) => {
-                setTimeout(() => {
-                    setSubmitting(false);
-                    alert(JSON.stringify(values, null, 2))
-                }, 500)
-            }}
+                    validate={values => {
+                        const errors: Partial<IFormValues> = {};
+                        console.log(values);
+                        return errors;
+                    }}
+                    onSubmit={(values, {setSubmitting}) => {
+                        setTimeout(() => {
+                            setSubmitting(false);
+                            alert(JSON.stringify(values, null, 2))
+                        }, 500)
+                    }}
+                    render={({submitForm, isSubmitting}) => (
+                        <Form>
+                            <CreateProjectTitle/>
+                            <Grid container>
+                                <Grid container justify={'center'} xs={12}>
+                                    <Grid item xs><CreateProjectCategory/></Grid>
+                                    <Grid item xs><CreateProjectSubCategory/></Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid container>
+                                <CreateProjectDescription/>
+                            </Grid>
+                            <Grid container>
+                                <CreateProjectFiles/>
+                            </Grid>
+                            <Grid container>
+                                <CreateProjectAmount/>
+                            </Grid>
+                            <Grid container>
+                                <Grid container justify={'center'} xs={12}>
+                                    <Grid item xs><Button disabled={isSubmitting} onClick={submitForm}
+                                                          className={classes.createButton}>Create</Button></Grid>
+                                    <Grid item xs><Button className={classes.cancelButton}>Cancel</Button></Grid>
+                                </Grid>
+                            </Grid>
+                        </Form>
+                    )}
             />
-            <CreateProjectTitle/>
-            <Grid container>
-                <Grid container justify={'center'} xs={12}>
-                    <Grid item xs><CreateProjectCategory/></Grid>
-                    <Grid item xs><CreateProjectSubCategory/></Grid>
-                </Grid>
-            </Grid>
-            <Grid container>
-                <CreateProjectDescription/>
-            </Grid>
-            <Grid container>
-                <CreateProjectFiles/>
-            </Grid>
-            <Grid container>
-                <CreateProjectAmount/>
-            </Grid>
-            <Grid container>
-                <Grid container justify={'center'} xs={12}>
-                        <Grid item xs><Button className={classes.createButton} >Create</Button></Grid>
-                        <Grid item xs><Button className={classes.cancelButton}>Cancel</Button></Grid>
-                </Grid>
-            </Grid>
-
         </Container>
     </Container>
 };

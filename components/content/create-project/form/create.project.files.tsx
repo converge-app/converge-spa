@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react';
 
 const CreateProjectFiles: FunctionComponent = () => {
-    return (<div>CreateProjectFiles</div>);
+    return (<div></div>);
 };
 
 export default CreateProjectFiles;
