@@ -1,32 +1,36 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import OpenProjectContent from "../../../components/content/project/open-project/open.project.content";
-import DashboardLayout from "../../../components/layouts/dashboard.layout";
-import { ProjectActions } from "../../../lib/actions/project.actions";
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import OpenProjectContent from '../../../components/content/project/open-project/open.project.content';
+import DashboardLayout from '../../../components/layouts/dashboard.layout';
+import { ProjectActions } from '../../../lib/actions/project.actions';
+import { IProject } from '../../../lib/models/project.model';
 
-const ProjectPage: NextPage = ({ getProject }: any) => {
+const ProjectPage: NextPage = () => {
   const router = useRouter();
   const { projectId } = router.query;
-  getProject(projectId);
-  return (
-    <DashboardLayout>
-      <OpenProjectContent projectId={""} />
-    </DashboardLayout>
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (typeof projectId === 'string') {
+      dispatch(ProjectActions.getById(projectId));
+    }
+  }, []);
+
+  const project: IProject = useSelector(
+    (state: any) => state.project.getProject.project,
   );
+
+  if (project != null) {
+    return (
+      <DashboardLayout>
+        <OpenProjectContent project={project} />
+      </DashboardLayout>
+    );
+  } else {
+    return <DashboardLayout>Spinner</DashboardLayout>;
+  }
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
-  getProject: (projectId: string) => {
-    dispatch(ProjectActions.getById(projectId));
-  }
-});
-
-export default compose(
-  connect(
-    null,
-    mapDispatchToProps
-  )(ProjectPage)
-);
+export default ProjectPage;
