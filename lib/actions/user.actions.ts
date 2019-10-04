@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { authenticationService } from '../../services/authentication.service';
+import {services} from '../../services';
 import { userConstants } from '../constants/user.constants';
 import { alertActions } from './alert.actions';
 
@@ -7,7 +7,7 @@ const login = (email: string, password: string) => {
   return (dispatch: any) => {
     dispatch(request({ email }));
 
-    authenticationService.login(email, password).then(
+    services.authentication.login(email, password).then(
       (user: any) => {
         dispatch(success(user));
         dispatch(alertActions.success('Logged in'));
@@ -64,7 +64,7 @@ const signUp = (
 
     dispatch(request({ email }));
 
-    authenticationService.signUp(email, password, firstName, lastName).then(
+    services.authentication.signUp(email, password, firstName, lastName).then(
       (user: any) => {
         dispatch(success(user));
         dispatch(alertActions.success('Sign up successful!'));
@@ -79,7 +79,7 @@ const signUp = (
 };
 
 const logout = () => {
-  authenticationService.logout();
+  services.authentication.logout();
   return { type: userConstants.LOGOUT };
 };
 

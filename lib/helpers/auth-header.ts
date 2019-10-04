@@ -1,13 +1,10 @@
-export const authHeader = () => {
-    const jsonUser = localStorage.getItem('user')
-    if (jsonUser) {
-        const user = JSON.parse(jsonUser)
+import Router from 'next/router';
+import {services} from '../../services';
 
-        if (user && user.token) {
-            return {'Authorization': 'Bearer ' + user.token}
-        } else {
-            return {}
-        }
+export const authHeader = () => {
+    if (services.authentication.isLoggedIn()) {
+        return {Authorization: 'Bearer ' + services.authentication.getToken()}
+    } else {
+        Router.push('/login')
     }
-    return {}
-}
+};
