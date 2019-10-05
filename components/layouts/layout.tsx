@@ -7,59 +7,59 @@ import {AlertComponent} from './alert.component';
 import NavBar from './nav-bar/nav-bar';
 
 interface ILayoutProps {
-  children: any;
-  title?: string;
-  alert?: any;
+    children: any;
+    title?: string;
+    alert?: any;
 }
 
 const useStyles = makeStyles(() => ({
-  background: {
-    minHeight: '100vh !important',
-  },
-  content: {
-    display: 'flex',
-    flexFlow: 'column',
-    minHeight: '100vh !important',
-  },
-  header: {},
-  main: {
-    flexGrow: 1,
-    display: 'flex',
-  },
+    background: {
+        minHeight: '100vh !important',
+    },
+    content: {
+        display: 'flex',
+        flexFlow: 'column',
+        minHeight: '100vh !important',
+    },
+    header: {},
+    main: {
+        flexGrow: 1,
+        display: 'flex',
+    },
 }));
 
 const Layout: React.FunctionComponent<ILayoutProps> = ({
-  children,
-  title = 'Converge',
-  alert,
-}) => {
-  const classes = useStyles();
-  return (
-    <div className={classes.background}>
-      <Head>
-        <title>{title}</title>
-      </Head>
-      <div className={classes.content}>
-        <header className={classes.header}>
-          <NavBar />
-        </header>
-        <main className={classes.main}>{children}</main>
-        <AlertComponent alert={alert} />
-      </div>
-    </div>
-  );
+                                                           children,
+                                                           title = 'Converge',
+                                                           alert,
+                                                       }) => {
+    const classes = useStyles();
+    return (
+        <div className={classes.background}>
+            <Head>
+                <title>{title}</title>
+            </Head>
+            <div className={classes.content}>
+                <header className={classes.header}>
+                    <NavBar/>
+                </header>
+                <main className={classes.main}>{children}</main>
+                <AlertComponent alert={alert}/>
+            </div>
+        </div>
+    );
 };
 
 const mapStateToProps = (state: any) => {
-  const { alert } = state;
-  return {
-    alert,
-  };
+    const {alert} = state;
+    return {
+        alert,
+    };
 };
 
 export default compose(
-  connect(
-    mapStateToProps,
-    null,
-  ),
+    connect(
+        mapStateToProps,
+        null,
+    ),
 )(Layout);

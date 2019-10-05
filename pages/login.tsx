@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     submitLogin: (payload: any) => {
         dispatch(userActions.login(payload.email, payload.password))
     }
-})
+});
 
 export default compose(
     connect(

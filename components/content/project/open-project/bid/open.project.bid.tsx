@@ -36,7 +36,7 @@ const OpenProjectBid = () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+          values = values;
           setSubmitting(false);
         }}
         render={({ submitForm, isSubmitting }) => (

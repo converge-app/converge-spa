@@ -19,7 +19,6 @@ export class AuthenticationService {
     return axios(requestOptions)
       .then(res => res.data)
       .then((user: any) => {
-        console.log(user);
         if (user.token) {
           Cookie.set('user', JSON.stringify(user));
         }
@@ -51,7 +50,6 @@ export class AuthenticationService {
   }
 
   public logout(): void {
-    console.log('logout called');
     Cookie.remove('user');
   }
 

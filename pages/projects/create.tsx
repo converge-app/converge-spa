@@ -13,7 +13,7 @@ const CreateProjectPage: NextPage = ({createProject}: any) => {
         <CreateProjectContent submitCreateProject={((values, setSubmitting) => {
             const project: IProject = {
                 projectContent: values,
-            }
+            };
             createProject(project, setSubmitting);
         })}/>
     </DashboardLayout>;
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     createProject: (project: IProject, setSubmitting: (value: boolean) => void) => {
         dispatch(ProjectActions.createProject(project, setSubmitting))
     }
-})
+});
 
 export default compose(
     connect(null, mapDispatchToProps)(CreateProjectPage),
