@@ -1,20 +1,23 @@
-import {applyMiddleware, createStore} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import {createLogger} from 'redux-logger';
-import thunkMiddleware from 'redux-thunk'
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers';
 
-export const initializeStore = (initialState?: any) => {
+const initialState = {
+  authentication: {},
+  signUp: {},
+  users: {},
+  alert: {},
+  project: { createProjectRequest: {}, getProjects: {}, getProject: {} },
+};
 
-    const loggerMiddleware = createLogger();
+export const initializeStore = (preloadedState = initialState) => {
+  const loggerMiddleware = createLogger();
+  console.log(preloadedState);
 
-    console.log(initialState)
-
-    return createStore(
-        rootReducer,
-        composeWithDevTools(applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware,
-        )),
-    )
-}
+  return createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware)),
+  );
+};

@@ -32,6 +32,13 @@ const theme = createMuiTheme({
         fontWeightRegular: 400,
         fontWeightLight: 200,
     },
+    overrides: {
+        MuiPaper: {
+            root: {
+                backgroundColor: '#38414d',
+            },
+        },
+    },
 });
 
 export default theme;

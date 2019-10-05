@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
-}))
+}));
 
 export const AlertComponent: React.FunctionComponent<{ alert?: any }> = ({
                                                                              alert,
@@ -29,15 +29,15 @@ export const AlertComponent: React.FunctionComponent<{ alert?: any }> = ({
     if (alert) {
         if (alert.type === 'alertSuccess') {
             return <div>
-                    <Typography variant='body1' className={classes.alertSuccess}>
-                        {alert.message}
-                    </Typography>
+                <Typography variant='body1' className={classes.alertSuccess}>
+                    {alert.message}
+                </Typography>
             </div>;
         } else if (alert.type === 'alertDanger') {
             return <div>
-                    <Typography variant='body1' className={classes.alertDanger}>
-                        {alert.message}
-                    </Typography>
+                <Typography variant='body1' className={classes.alertDanger}>
+                    {alert.message}
+                </Typography>
             </div>;
         }
 

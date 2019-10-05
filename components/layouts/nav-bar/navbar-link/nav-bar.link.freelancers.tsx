@@ -1,4 +1,5 @@
-import {Typography} from '@material-ui/core';
+import {Link, Typography} from '@material-ui/core';
+import React from 'react';
 import NavBarLink from '../../../styles/links/nav-bar.link';
 import {INavBarLinkProps} from './nav-bar-link.props';
 
@@ -11,7 +12,7 @@ export function NavBarLinkFreelancers(props: INavBarLinkProps) {
                 color='textPrimary'
                 noWrap
             >
-                Freelancers
+                <Link className={props.className}>Freelancers</Link>
             </Typography>
         </NavBarLink>
     );
