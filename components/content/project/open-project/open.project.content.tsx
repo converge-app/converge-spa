@@ -1,24 +1,25 @@
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
-import { lighten } from '@material-ui/core/styles';
-import React from 'react';
-import { IProject } from '../../../../lib/models/project.model';
-import { services } from '../../../../services';
-import OpenProjectBid from './bid/open.project.bid';
+import { Container, Grid, makeStyles, Typography } from "@material-ui/core";
+import { lighten } from "@material-ui/core/styles";
+import React from "react";
+import { IProject } from "../../../../lib/models/project.model";
+import { services } from "../../../../services";
+import OpenProjectBid from "./bid/open.project.bid";
+import {OpenProjectChooseBid} from './bid/open.project.choose-bid';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(4)
   },
   leftContainer: {},
   rightContainer: {
     borderLeftColor: lighten(theme.palette.background.default, 0.05),
     borderLeftWidth: 1.5,
-    borderLeftStyle: 'solid',
+    borderLeftStyle: "solid"
   },
   indent: {
     marginTop: theme.spacing(1),
-    paddingLeft: theme.spacing(4),
-  },
+    paddingLeft: theme.spacing(4)
+  }
 }));
 
 interface IProps {
@@ -33,10 +34,10 @@ const OpenProjectContent: React.FunctionComponent<IProps> = props => {
     if (files != null && files.length > 0) {
       return (
         <Grid item xs={12}>
-          <Typography variant={'h5'} color='primary'>
+          <Typography variant={"h5"} color="primary">
             files
           </Typography>
-          <Typography variant={'body1'} className={classes.indent}>
+          <Typography variant={"body1"} className={classes.indent}>
             {files}
           </Typography>
         </Grid>
@@ -48,6 +49,11 @@ const OpenProjectContent: React.FunctionComponent<IProps> = props => {
     if (props.project.ownerId != null) {
       if (props.project.ownerId === services.authentication.getId()) {
         return <div>Is owner</div>;
+        return (
+          <Grid item xs={12}>
+            <OpenProjectChooseBid />
+          </Grid>
+        );
       } else {
         return (
           <Grid item xs={12}>
@@ -60,36 +66,36 @@ const OpenProjectContent: React.FunctionComponent<IProps> = props => {
 
   console.log();
   return (
-    <Container maxWidth={'md'}>
+    <Container maxWidth={"md"}>
       <Grid container spacing={3}>
         <Grid item xs={8} className={classes.leftContainer}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant={'h4'} color='primary'>
+              <Typography variant={"h4"} color="primary">
                 {props.project.projectContent.title}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant={'h5'} color='primary'>
+              <Typography variant={"h5"} color="primary">
                 Description
               </Typography>
-              <Typography variant={'body1'} className={classes.indent}>
+              <Typography variant={"body1"} className={classes.indent}>
                 {props.project.projectContent.description}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant={'h5'} color='primary'>
+              <Typography variant={"h5"} color="primary">
                 Category
               </Typography>
-              <Typography variant={'body1'} className={classes.indent}>
+              <Typography variant={"body1"} className={classes.indent}>
                 {props.project.projectContent.category}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant={'h5'} color='primary'>
+              <Typography variant={"h5"} color="primary">
                 Sub Category
               </Typography>
-              <Typography variant={'body1'} className={classes.indent}>
+              <Typography variant={"body1"} className={classes.indent}>
                 {props.project.projectContent.subCategory}
               </Typography>
             </Grid>
