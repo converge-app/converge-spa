@@ -2,31 +2,8 @@ import {FormControl, InputLabel, makeStyles, MenuItem} from '@material-ui/core';
 import {Field} from 'formik';
 import {Select} from 'formik-material-ui';
 import React, {FunctionComponent} from 'react';
-
-const ranges: { [key: string]: any } = {
-    software: [
-        {
-            value: 'web-development',
-            label: 'Web development',
-        },
-        {
-            value: 'app-development',
-            label: 'App development',
-        },
-    ],
-    design: [
-        {
-            value: 'graphic-design',
-            label: 'Graphic design',
-        },
-    ],
-    writing: [
-        {
-            value: 'copy-writing',
-            label: 'Copy writing',
-        },
-    ],
-};
+import {ISubCategory} from '../../../../../lib/models/subcategory.model';
+import {CategoryService} from '../../../../../services/category.service';
 
 const useStyles = makeStyles(theme => ({
     select: {
@@ -41,14 +18,15 @@ interface IProps {
 const CreateProjectSubCategory: FunctionComponent<IProps> = props => {
     const classes = useStyles();
     const getCategory = () => {
-        if (ranges[props.category] != null) {
-            return ranges[props.category].map((option: any) => (
+        const subCategories: ISubCategory[] | null = CategoryService.getSubCategories(props.category);
+        if (subCategories != null) {
+            return subCategories.map((option: ISubCategory) => (
                 <MenuItem
                     className={classes.select}
-                    key={option.value}
-                    value={option.value}
+                    key={option.name}
+                    value={option.name}
                 >
-                    {option.label}
+                    {CategoryService.getCapilatized(option.name)}
                 </MenuItem>
             ))
         }
