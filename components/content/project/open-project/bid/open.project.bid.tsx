@@ -73,7 +73,6 @@ const OpenProjectBid: React.FunctionComponent<IProps> = props => {
 
           dispatch(BidActions.placeBid(bid, setSubmitting));
 
-          console.log(values);
           setSubmitting(false);
         }}
         render={({ submitForm, isSubmitting }) => (

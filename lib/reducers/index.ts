@@ -5,6 +5,7 @@ import { bidding } from "./bidding.reducer";
 import { project } from "./project.reducer";
 import { signUp } from "./sign-up.reducer";
 import { users } from "./user.reducer";
+import { collaboration } from "./collaboration.reducer";
 
 export const rootReducer = combineReducers({
   authentication,
@@ -12,7 +13,8 @@ export const rootReducer = combineReducers({
   users,
   alert,
   project,
-  bidding
+  bidding,
+  collaboration
 });
 
 export default rootReducer;

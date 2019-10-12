@@ -26,7 +26,6 @@ export class BidActions {
 
       try {
         const response = await BiddingService.post(values);
-        console.log(`response: ${response}`);
         const bid: IBid = await response.data;
         dispatch(success(bid));
         setSubmitting(false);
