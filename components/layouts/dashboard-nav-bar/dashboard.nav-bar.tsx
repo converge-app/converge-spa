@@ -1,15 +1,8 @@
-import {
-  AppBar,
-  Badge,
-  IconButton,
-  InputBase,
-  Toolbar
-} from "@material-ui/core";
+import { AppBar, Badge, IconButton, Toolbar } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import { NavBarLinkTitle } from "../nav-bar/navbar-link";
 import { Ruler } from "../ruler";
@@ -88,19 +81,6 @@ export const DashboardNavBar = () => {
         <AppBar position="static" className={classes.navBar}>
           <Toolbar>
             <NavBarLinkTitle className={classes.title} />
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
             <div className={classes.navBarRight} />
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">

@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardContent: React.FunctionComponent = () => {
+
     const classes = useStyles();
     return <div className={classes.container}>
         <div className={classes.leftSide}>
@@ -43,7 +44,6 @@ const DashboardContent: React.FunctionComponent = () => {
             </div>
         </div>
         <div className={classes.center}>
-            center
         </div>
         <div className={classes.rightSide}>
         </div>
