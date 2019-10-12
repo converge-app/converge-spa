@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import Cookie from 'js-cookie';
-import { IUser } from '../lib/models/user.model';
+import { IUserAuthentication } from '../lib/models/user.authentication.model';
 
 export class AuthenticationService {
   public uri: string =
@@ -58,7 +58,7 @@ export class AuthenticationService {
   }
 
   public getToken(): string {
-    const user: IUser = Cookie.getJSON('user');
+    const user: IUserAuthentication = Cookie.getJSON('user');
     if (user && user.token) {
       return user.token;
     } else {
@@ -67,7 +67,7 @@ export class AuthenticationService {
   }
 
   public getId(): string {
-    const user: IUser = Cookie.getJSON('user');
+    const user: IUserAuthentication = Cookie.getJSON('user');
     if (user && user.id) {
       return user.id;
     } else {
