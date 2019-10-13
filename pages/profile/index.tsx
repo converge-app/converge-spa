@@ -1,12 +1,15 @@
-import { NextPage } from "next";
-import React from "react";
-import DashboardLayout from "../../components/layouts/dashboard.layout";
-import ProfileContent from "../../components/content/profile/profile.content";
+import { NextPage } from 'next';
+import React from 'react';
+import ProfileContent from '../../components/content/profile/getProfile/profile.content';
+import DashboardLayout from '../../components/layouts/dashboard.layout';
+import { services } from '../../services';
 
 const ProfilePage: NextPage = () => {
   return (
     <DashboardLayout>
-      <ProfileContent></ProfileContent>
+      <ProfileContent
+        profileId={services.authentication.getId()}
+      ></ProfileContent>
     </DashboardLayout>
   );
 };
