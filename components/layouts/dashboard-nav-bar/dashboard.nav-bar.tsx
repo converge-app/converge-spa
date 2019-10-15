@@ -82,7 +82,7 @@ export const DashboardNavBar = () => {
           <Toolbar>
             <NavBarLinkTitle className={classes.title} />
             <div className={classes.navBarRight} />
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            <IconButton href="chat" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
