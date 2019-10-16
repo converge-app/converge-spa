@@ -5,39 +5,39 @@ import {
   Grid,
   makeStyles,
   TextField,
-  Typography
-} from "@material-ui/core";
-import { DropzoneArea } from "material-ui-dropzone";
-import { useEffect } from "react";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ProfileActions } from "../../../../lib/actions/profile.actions";
-import { IProfile } from "../../../../lib/models/profile.model";
-import { IUser } from "../../../../lib/models/user.model";
-import { UserService } from "../../../../services/user.service";
-import { services } from "../../../../services";
-import Router from "next/router";
+  Typography,
+} from '@material-ui/core';
+import { DropzoneArea } from 'material-ui-dropzone';
+import { useEffect } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProfileActions } from '../../../../lib/actions/profile.actions';
+import { IProfile } from '../../../../lib/models/profile.model';
+import { IUser } from '../../../../lib/models/user.model';
+import { UserService } from '../../../../services/user.service';
+import { services } from '../../../../services';
+import Router from 'next/router';
 
 interface IProps {
   userId: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   avatar: {
-    backgroundColor: theme.palette.background.paper
-  }
+    backgroundColor: theme.palette.background.paper,
+  },
 }));
 
 const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [user, setUser] = React.useState<IUser | undefined>();
-  const [skillInputValue, setSkillInputValue] = React.useState("");
-  const [experienceInputValue, setExperienceInputValue] = React.useState("");
+  const [skillInputValue, setSkillInputValue] = React.useState('');
+  const [experienceInputValue, setExperienceInputValue] = React.useState('');
   const [newProfile, setNewProfile] = React.useState(false);
 
   const initialProfile: IProfile = useSelector(
-    (state: any) => state.profile.getByUserId.profile
+    (state: any) => state.profile.getByUserId.profile,
   );
   const [profile, setProfile] = React.useState<IProfile>(initialProfile);
 
@@ -51,11 +51,11 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
       getUser(initialProfile.userId);
     } else {
       const newProfile: IProfile = {
-        title: "",
+        title: '',
         userId: services.authentication.getId(),
         rating: 0,
         skills: [],
-        experience: []
+        experience: [],
       };
       setProfile(newProfile);
     }
@@ -85,9 +85,9 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     dispatch(
       ProfileActions.update(profile, (value: boolean) => {
         if (value) {
-          Router.push("/profile", "/profile", { shallow: true });
+          Router.push('/profile', '/profile', { shallow: true });
         }
-      })
+      }),
     );
   };
 
@@ -95,44 +95,44 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     dispatch(
       ProfileActions.create(profile, (value: boolean) => {
         if (value) {
-          Router.push("/profile", "/profile", { shallow: true });
+          Router.push('/profile', '/profile', { shallow: true });
         }
-      })
+      }),
     );
   };
 
-  if (profile && typeof user !== "undefined") {
+  if (profile && typeof user !== 'undefined') {
     return (
-      <Container maxWidth="md">
+      <Container maxWidth='md'>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h5" color="primary">
+            <Typography variant='h5' color='primary'>
               Profile picture
             </Typography>
           </Grid>
-          <Grid item xs={2}>
-            <Typography variant="body1">Avatar</Typography>
+          <Grid item md={2} xs={12}>
+            <Typography variant='body1'>Avatar</Typography>
             <Avatar
               className={classes.avatar}
-              alt="profile picture"
+              alt='profile picture'
               src={profile.profilePictureUrl}
             />
           </Grid>
-          <Grid item xs={10}>
-            <Typography variant="body1">Upload file</Typography>
+          <Grid item md={10} xs={12}>
+            <Typography variant='body1'>Upload file</Typography>
             <DropzoneArea
               onChange={handleFileUpload}
-              acceptedFiles={["image/jpeg", "image/png"]}
+              acceptedFiles={['image/jpeg', 'image/png']}
               filesLimit={1}
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" color="primary">
+            <Typography variant='h5' color='primary'>
               Title
             </Typography>
             <TextField
-              label="Title"
-              placeholder={"Your title"}
+              label='Title'
+              placeholder={'Your title'}
               value={profile.title}
               fullWidth
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -141,12 +141,12 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
             ></TextField>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" color="primary">
+            <Typography variant='h5' color='primary'>
               Description
             </Typography>
             <TextField
-              label="Description"
-              placeholder={"Description"}
+              label='Description'
+              placeholder={'Description'}
               value={profile.description}
               rows={8}
               multiline
@@ -156,8 +156,8 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
               }
             ></TextField>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h5" color="primary">
+          <Grid item xs={12} md={6}>
+            <Typography variant='h5' color='primary'>
               Skills
             </Typography>
             {profile.skills.map((skill, index) => (
@@ -173,29 +173,29 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
               </div>
             ))}
             <TextField
-              label="Skill"
-              placeholder={"Skill"}
+              label='Skill'
+              placeholder={'Skill'}
               fullWidth
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSkillInputValue(e.target.value);
               }}
             ></TextField>
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={() => {
                 profile.skills.push(skillInputValue);
                 setProfile({
                   ...profile,
-                  skills: [...profile.skills]
+                  skills: [...profile.skills],
                 });
               }}
             >
               Add Skill
             </Button>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h5" color="primary">
+          <Grid item md={6} xs={12}>
+            <Typography variant='h5' color='primary'>
               Experience
             </Typography>
             {profile.experience.map((experience, index) => (
@@ -207,28 +207,28 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
                     profile.experience[index] = e.target.value;
                     setProfile({
                       ...profile,
-                      experience: [...profile.experience]
+                      experience: [...profile.experience],
                     });
                   }}
                 ></TextField>
               </div>
             ))}
             <TextField
-              label="Experience"
-              placeholder={"Experience"}
+              label='Experience'
+              placeholder={'Experience'}
               fullWidth
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setExperienceInputValue(e.target.value);
               }}
             ></TextField>
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={() => {
                 profile.experience.push(experienceInputValue);
                 setProfile({
                   ...profile,
-                  experience: [...profile.experience]
+                  experience: [...profile.experience],
                 });
               }}
             >
@@ -237,14 +237,14 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
           </Grid>
           <Grid item xs={12}>
             {newProfile ? (
-              <Button variant="contained" onClick={saveChanges} color="primary">
+              <Button variant='contained' onClick={saveChanges} color='primary'>
                 Save
               </Button>
             ) : (
               <Button
-                variant="contained"
+                variant='contained'
                 onClick={createProfile}
-                color="primary"
+                color='primary'
               >
                 Create
               </Button>
