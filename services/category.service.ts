@@ -37,6 +37,21 @@ export class CategoryService {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
+  public static getByCategoryAndString(
+    categoryValue: string,
+    subString: string,
+  ) {
+    const subCategories: ISubCategory[] = this.getSubCategories(
+      categoryValue,
+    ) as ISubCategory[];
+
+    if (subCategories) {
+      return subCategories.filter((category) =>
+        category.label.toLowerCase().includes(subString),
+      );
+    }
+  }
+
   private static categories: ICategory[] = [
     {
       label: 'Software',

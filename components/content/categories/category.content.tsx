@@ -1,4 +1,11 @@
-import { Container, Grid, Typography, List, ListItem } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  Typography,
+  List,
+  ListItem,
+  TextField,
+} from '@material-ui/core';
 import { CategoryService } from '../../../services/category.service';
 import React from 'react';
 import { ISubCategory } from '../../../lib/models/subcategory.model';
@@ -16,6 +23,12 @@ const CategoryContent = () => {
   function renderSubcategories(
     subCategories: ISubCategory[] | null,
   ): React.ReactNode {
+    if (searchContent !== '') {
+      subCategories = CategoryService.getByCategoryAndString(
+        category,
+        searchContent.toLowerCase(),
+      ) as ISubCategory[] | null;
+    }
     if (subCategories != null) {
       return subCategories.length > 0 ? (
         <Grid item md={6} xs={12}>
@@ -48,10 +61,19 @@ const CategoryContent = () => {
     });
   };
 
+  const [searchContent, setSearchContent] = React.useState('');
+
   return (
     <Container maxWidth='md'>
       <Grid container spacing={4}>
-        <Grid xs={12}>Search</Grid>
+        <Grid xs={12}>
+          <TextField
+            onChange={(e: any) => setSearchContent(e.target.value)}
+            fullWidth
+            label='Search'
+            value={searchContent}
+          ></TextField>
+        </Grid>
         <Grid item md={3} xs={12}>
           <Typography variant='h6' color='primary'>
             Categories
