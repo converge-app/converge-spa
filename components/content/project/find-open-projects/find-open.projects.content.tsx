@@ -5,6 +5,7 @@ import {
   makeStyles,
   Paper,
   Typography,
+  TextField,
 } from '@material-ui/core';
 import { lighten } from '@material-ui/core/styles';
 import React from 'react';
@@ -55,6 +56,14 @@ const FindOpenProjectsContent: React.FunctionComponent<{
     }
   }
   const renderProjects = () => {
+    if (filteredProjects) {
+      filteredProjects = filteredProjects.filter((project) =>
+        project.projectContent.title
+          .toLowerCase()
+          .includes(searchContent.toLowerCase()),
+      );
+    }
+
     const projects = filteredProjects;
     if (projects) {
       return projects.map((item: IProject) => (
@@ -120,9 +129,21 @@ const FindOpenProjectsContent: React.FunctionComponent<{
     }
   };
 
+  const [searchContent, setSearchContent] = React.useState('');
+
   return (
     <Container maxWidth={'md'} className={classes.container}>
       <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <Container maxWidth='xs'>
+            <TextField
+              value={searchContent}
+              label='Search'
+              fullWidth
+              onChange={(e: any) => setSearchContent(e.target.value)}
+            ></TextField>
+          </Container>
+        </Grid>
         {renderProjects()}
       </Grid>
     </Container>
