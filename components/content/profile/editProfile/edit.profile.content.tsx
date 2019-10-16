@@ -7,7 +7,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { DropzoneArea } from 'material-ui-dropzone';
 import { useEffect } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -66,18 +65,21 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     setUser(usr);
   };
 
-  const [, setFiles] = React.useState<File[] | undefined>();
-  const handleFileUpload = (filesIn: File[]) => {
-    setFiles(filesIn);
+  const [, setFiles] = React.useState<FileList | undefined>();
+  const handleFileUpload = (filesIn: FileList | null) => {
+    if (filesIn) {
+      console.log(filesIn);
+      setFiles(filesIn);
 
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      if (initialProfile) {
-        setProfile({ ...profile, profilePictureUrl: e.target.result });
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        if (initialProfile) {
+          setProfile({ ...profile, profilePictureUrl: e.target.result });
+        }
+      };
+      if (filesIn[0]) {
+        reader.readAsDataURL(filesIn[0]);
       }
-    };
-    if (filesIn[0]) {
-      reader.readAsDataURL(filesIn[0]);
     }
   };
 
@@ -120,11 +122,18 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
           </Grid>
           <Grid item md={10} xs={12}>
             <Typography variant='body1'>Upload file</Typography>
-            <DropzoneArea
-              onChange={handleFileUpload}
-              acceptedFiles={['image/jpeg', 'image/png']}
-              filesLimit={1}
+            <input
+              accept='image/*'
+              style={{ display: 'none' }}
+              id='raised-button-file'
+              type='file'
+              onChange={(e) => handleFileUpload(e.target.files)}
             />
+            <label htmlFor='raised-button-file'>
+              <Button variant='contained' component='span'>
+                Upload
+              </Button>
+            </label>
           </Grid>
           <Grid item xs={12}>
             <Typography variant='h5' color='primary'>

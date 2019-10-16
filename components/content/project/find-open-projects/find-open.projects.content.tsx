@@ -5,6 +5,7 @@ import {
   makeStyles,
   Paper,
   Typography,
+  TextField,
 } from '@material-ui/core';
 import { lighten } from '@material-ui/core/styles';
 import React from 'react';
@@ -12,7 +13,7 @@ import { IProject } from '../../../../lib/models/project.model';
 import { services } from '../../../../services';
 import Router from 'next/router';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     margin: '20px auto 0',
   },
@@ -35,18 +36,46 @@ const useStyles = makeStyles(theme => ({
 
 const FindOpenProjectsContent: React.FunctionComponent<{
   projects: IProject[];
-}> = (props: { projects: IProject[] }) => {
+  category?: string;
+  subCategory?: string;
+}> = (props: {
+  projects: IProject[];
+  category?: string;
+  subCategory?: string;
+}) => {
   const classes = useStyles();
+  let filteredProjects: IProject[] | null = null;
 
+  if (props.category && props.subCategory) {
+    if (props.projects) {
+      filteredProjects = props.projects.filter(
+        (project) =>
+          project.projectContent.category === props.category &&
+          project.projectContent.subCategory === props.subCategory,
+      );
+    }
+  }
   const renderProjects = () => {
-    const { projects } = props;
+    if (filteredProjects) {
+      filteredProjects = filteredProjects.filter((project) =>
+        project.projectContent.title
+          .toLowerCase()
+          .includes(searchContent.toLowerCase()),
+      );
+    }
+
+    const projects = filteredProjects;
     if (projects) {
       return projects.map((item: IProject) => (
         <Grid item xs={12} key={item.id}>
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
-              Router.push('/projects/open/[projectId]', '/projects/open/' + item.id, {shallow: true})
+              Router.push(
+                '/projects/open/[projectId]',
+                '/projects/open/' + item.id,
+                { shallow: true },
+              );
             }}
           >
             <Paper className={classes.hover}>
@@ -100,9 +129,21 @@ const FindOpenProjectsContent: React.FunctionComponent<{
     }
   };
 
+  const [searchContent, setSearchContent] = React.useState('');
+
   return (
     <Container maxWidth={'md'} className={classes.container}>
       <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <Container maxWidth='xs'>
+            <TextField
+              value={searchContent}
+              label='Search'
+              fullWidth
+              onChange={(e: any) => setSearchContent(e.target.value)}
+            ></TextField>
+          </Container>
+        </Grid>
         {renderProjects()}
       </Grid>
     </Container>
