@@ -30,7 +30,11 @@ export class ProjectActions {
         const project = await response.data;
         dispatch(success(project));
         setSubmitting(false);
-        Router.push(`/projects/open/${project.id}`);
+        Router.push(
+          'projects/open/[projectId]',
+          `/projects/open/${project.id}`,
+          { shallow: true },
+        );
       } catch (e) {
         dispatch(failure(e));
         setSubmitting(false);
@@ -54,6 +58,33 @@ export class ProjectActions {
 
       try {
         const response = await ProjectService.get();
+        const projects = await response.data;
+        dispatch(success(projects));
+        return projects;
+      } catch (e) {
+        dispatch(failure(e));
+      }
+    };
+  }
+
+  public static getOpen() {
+    const request = () => ({
+      type: projectConstants.GET_OPEN_PROJECTS_REQUEST,
+    });
+    const success = (projects: any) => ({
+      type: projectConstants.GET_OPEN_PROJECTS_SUCCESS,
+      projects,
+    });
+    const failure = (error: any) => ({
+      type: projectConstants.GET_OPEN_PROJECTS_FAILURE,
+      error,
+    });
+
+    return async (dispatch: any) => {
+      dispatch(request());
+
+      try {
+        const response = await ProjectService.getOpen();
         const projects = await response.data;
         dispatch(success(projects));
         return projects;

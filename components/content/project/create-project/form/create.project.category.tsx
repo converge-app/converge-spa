@@ -2,21 +2,8 @@ import {FormControl, InputLabel, makeStyles, MenuItem} from '@material-ui/core';
 import {Field} from 'formik';
 import {Select} from 'formik-material-ui';
 import React, {FunctionComponent} from 'react';
-
-const ranges = [
-    {
-        value: 'software',
-        label: 'Software',
-    },
-    {
-        value: 'design',
-        label: 'Design',
-    },
-    {
-        value: 'writing',
-        label: 'Writing',
-    },
-];
+import {ICategory} from '../../../../../lib/models/category.model';
+import {CategoryService} from '../../../../../services/category.service';
 
 const useStyles = makeStyles(theme => ({
     select: {
@@ -41,13 +28,13 @@ const CreateProjectCategory: FunctionComponent = () => {
                     fullWidth
                     inputProps={{name: 'category', id: 'category'}}
                 >
-                    {ranges.map(option => (
+                    {CategoryService.getAll().map((option: ICategory) => (
                         <MenuItem
                             className={classes.select}
-                            key={option.value}
-                            value={option.value}
+                            key={option.name}
+                            value={option.name}
                         >
-                            {option.label}
+                            {CategoryService.getCapilatized(option.name)}
                         </MenuItem>
                     ))}
                 </Field>
