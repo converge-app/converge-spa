@@ -12,6 +12,7 @@
     "formik": "^1.5.8",
     "formik-material-ui": "^0.0.22",
     "js-cookie": "^2.2.1",
+    "material-ui-dropzone": "^2.4.1",
     "next": "^9.0.3",
     "next-images": "^1.1.2",
     "prop-types": "^15.7.2",

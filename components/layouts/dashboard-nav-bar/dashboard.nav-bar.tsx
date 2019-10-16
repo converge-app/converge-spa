@@ -93,6 +93,7 @@ export const DashboardNavBar = () => {
               </Badge>
             </IconButton>
             <IconButton
+              href={"/profile"}
               edge="end"
               aria-label="account of current user"
               aria-haspopup="true"

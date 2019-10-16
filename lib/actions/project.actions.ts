@@ -1,24 +1,24 @@
-import Router from "next/router";
-import { ProjectService } from "../../services/project.service";
-import { projectConstants } from "../constants/project.constants";
-import { IProject } from "../models/project.model";
+import Router from 'next/router';
+import { ProjectService } from '../../services/project.service';
+import { projectConstants } from '../constants/project.constants';
+import { IProject } from '../models/project.model';
 
 export class ProjectActions {
   public static createProject(
     values: IProject,
-    setSubmitting: (value: boolean) => void
+    setSubmitting: (value: boolean) => void,
   ) {
     const request = (project: { values: IProject }) => ({
       type: projectConstants.CREATE_PROJECT_REQUEST,
-      project
+      project,
     });
     const success = (project: { values: IProject }) => ({
       type: projectConstants.CREATE_PROJECT_SUCCESS,
-      project
+      project,
     });
     const failure = (error: any) => ({
       type: projectConstants.CREATE_PROJECT_FAILURE,
-      error
+      error,
     });
 
     return async (dispatch: any) => {
@@ -30,7 +30,11 @@ export class ProjectActions {
         const project = await response.data;
         dispatch(success(project));
         setSubmitting(false);
-        Router.push(`/projects/open/${project.id}`);
+        Router.push(
+          'projects/open/[projectId]',
+          `/projects/open/${project.id}`,
+          { shallow: true },
+        );
       } catch (e) {
         dispatch(failure(e));
         setSubmitting(false);
@@ -42,11 +46,11 @@ export class ProjectActions {
     const request = () => ({ type: projectConstants.GET_PROJECTS_REQUEST });
     const success = (projects: any) => ({
       type: projectConstants.GET_PROJECTS_SUCCESS,
-      projects
+      projects,
     });
     const failure = (error: any) => ({
       type: projectConstants.GET_PROJECTS_FAILURE,
-      error
+      error,
     });
 
     return async (dispatch: any) => {
@@ -65,15 +69,15 @@ export class ProjectActions {
 
   public static getOpen() {
     const request = () => ({
-      type: projectConstants.GET_OPEN_PROJECTS_REQUEST
+      type: projectConstants.GET_OPEN_PROJECTS_REQUEST,
     });
     const success = (projects: any) => ({
       type: projectConstants.GET_OPEN_PROJECTS_SUCCESS,
-      projects
+      projects,
     });
     const failure = (error: any) => ({
       type: projectConstants.GET_OPEN_PROJECTS_FAILURE,
-      error
+      error,
     });
 
     return async (dispatch: any) => {
@@ -93,15 +97,15 @@ export class ProjectActions {
   public static getById(projectId: string) {
     const request = (project: { projectId: string }) => ({
       type: projectConstants.GET_PROJECT_REQUEST,
-      project
+      project,
     });
     const success = (project: IProject) => ({
       type: projectConstants.GET_PROJECT_SUCCESS,
-      project
+      project,
     });
     const failure = (error: any) => ({
       type: projectConstants.GET_PROJECT_FAILURE,
-      error
+      error,
     });
 
     return async (dispatch: any) => {
