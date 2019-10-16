@@ -38,7 +38,7 @@ const DashboardContent: React.FunctionComponent = () => {
         </div>
         <br />
         <div>
-          <NormalLink href={'/projects'}>
+          <NormalLink href={'/categories'}>
             <Link>Find a Project</Link>
           </NormalLink>
         </div>

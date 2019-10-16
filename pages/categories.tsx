@@ -1,13 +1,13 @@
-import { NextPage } from "next";
-import React from "react";
+import { NextPage } from 'next';
+import React from 'react';
 
-import DashboardLayout from "../components/layouts/dashboard.layout";
-import CategoriesContent from "../components/content/categories/categories.content";
+import DashboardLayout from '../components/layouts/dashboard.layout';
+import CategoryContent from '../components/content/categories/category.content';
 
 const CategoriesPage: NextPage = () => {
   return (
     <DashboardLayout>
-      <CategoriesContent></CategoriesContent>
+      <CategoryContent></CategoryContent>
     </DashboardLayout>
   );
 };

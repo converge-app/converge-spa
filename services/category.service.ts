@@ -1,61 +1,70 @@
-import {ICategory} from '../lib/models/category.model';
-import {ISubCategory} from '../lib/models/subcategory.model';
+import { ICategory } from '../lib/models/category.model';
+import { ISubCategory } from '../lib/models/subcategory.model';
 
 export class CategoryService {
+  public static getAll(): ICategory[] {
+    return this.categories;
+  }
 
-    public static getAll(): ICategory[] {
-        return this.categories;
+  public static getAllSorted(): ICategory[] {
+    const copiedCategories = [...this.categories];
+    return copiedCategories.sort((a, b) => a.value.localeCompare(b.value));
+  }
+
+  public static getSubCategories(categoryName: string): ISubCategory[] | null {
+    const category = this.categories.find(
+      (item) => item.value === categoryName,
+    );
+    if (category) {
+      return category.subCategories;
+    } else {
+      return null;
     }
+  }
 
-    public static getAllSorted(): ICategory[] {
-        const copiedCategories = [...this.categories];
-        return copiedCategories.sort((a, b) => a.name.localeCompare(b.name));
+  public static getSubCategoriesSorted(
+    categoryName: string,
+  ): ISubCategory[] | null {
+    if (this.getSubCategories(categoryName) != null) {
+      // @ts-ignore
+      const copiedSubCategories = [...this.getSubCategories(categoryName)];
+      return copiedSubCategories.sort((a, b) => a.value.localeCompare(b.value));
     }
+    return null;
+  }
 
-    public static getSubCategories(categoryName: string): ISubCategory[] | null {
-        const category =  this.categories.find((item) => item.name === categoryName)
-        if (category) {
-            return category.subCategories;
-        } else {
-            return null;
-        }
-    }
+  public static getCapilatized(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
 
-    public static getSubCategoriesSorted(categoryName: string): ISubCategory[] | null {
-        if (this.getSubCategories(categoryName) != null) {
-            // @ts-ignore
-            const copiedSubCategories = [...this.getSubCategories(categoryName)];
-            return copiedSubCategories.sort((a, b) => a.name.localeCompare(b.name));
-        }
-        return null;
-    }
-
-    public static getCapilatized(name: string): string {
-        return name.charAt(0).toUpperCase() + name.slice(1)
-    }
-
-    private static categories: ICategory[] = [
+  private static categories: ICategory[] = [
+    {
+      label: 'Software',
+      value: 'software',
+      subCategories: [
         {
-            name: 'Software',
-            subCategories: [
-                {
-                    name: 'Web development',
-                },
-                {
-                    name: 'App development',
-                },
-            ],
+          label: 'Web development',
+          value: 'web-development',
         },
         {
-            name: 'Graphic design',
-            subCategories: [
-                {
-                    name: 'Icons',
-                },
-                {
-                    name: 'Banner',
-                },
-            ],
+          label: 'App development',
+          value: 'app-development',
         },
-    ]
+      ],
+    },
+    {
+      label: 'Graphic design',
+      value: 'graphic-design',
+      subCategories: [
+        {
+          label: 'Icons',
+          value: 'icons',
+        },
+        {
+          label: 'Banner',
+          value: 'banner',
+        },
+      ],
+    },
+  ];
 }
