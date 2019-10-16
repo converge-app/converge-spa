@@ -1,12 +1,12 @@
-import { Button, Container, Grid, makeStyles } from "@material-ui/core";
-import Router from "next/router";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ProfileActions } from "../../../../lib/actions/profile.actions";
-import { IProfile } from "../../../../lib/models/profile.model";
-import { IUser } from "../../../../lib/models/user.model";
-import { UserService } from "../../../../services/user.service";
-import { ProfileCard } from "./profile.card";
+import { Button, Container, Grid, makeStyles } from '@material-ui/core';
+import Router from 'next/router';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProfileActions } from '../../../../lib/actions/profile.actions';
+import { IProfile } from '../../../../lib/models/profile.model';
+import { IUser } from '../../../../lib/models/user.model';
+import { UserService } from '../../../../services/user.service';
+import { ProfileCard } from './profile.card';
 
 const useStyles = makeStyles(() => ({}));
 
@@ -29,7 +29,7 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
   console.log(classes);
 
   const profile: IProfile = useSelector(
-    (state: any) => state.profile.getByUserId.profile
+    (state: any) => state.profile.getByUserId.profile,
   );
 
   const [user, setUser] = React.useState<IUser | undefined>();
@@ -40,23 +40,23 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
   };
 
   const handleEdit = () => {
-    Router.push("/profile/edit", "/profile/edit", { shallow: true });
+    Router.push('/profile/edit', '/profile/edit', { shallow: true });
   };
 
-  if (profile && typeof user !== "undefined") {
+  if (profile && typeof user !== 'undefined') {
     return (
-      <Container maxWidth="md">
+      <Container maxWidth='md'>
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item md={6} xs={12}>
             <ProfileCard profile={profile} user={user} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item md={6} xs={12}>
             Recent activity
           </Grid>
         </Grid>
         {profile.userId === props.profileId ? (
           <Grid item>
-            <Button color="primary" onClick={handleEdit}>
+            <Button color='primary' onClick={handleEdit}>
               Edit
             </Button>
           </Grid>
@@ -65,10 +65,10 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     );
   } else if (profile === null && user === null) {
     return (
-      <Container maxWidth="md">
+      <Container maxWidth='md'>
         <Grid container>
           <Grid item>
-            <Button color="primary" onClick={handleEdit}>
+            <Button color='primary' onClick={handleEdit}>
               Create a profile
             </Button>
           </Grid>
