@@ -67,12 +67,14 @@ const CategoryContent = () => {
     <Container maxWidth='md'>
       <Grid container spacing={4}>
         <Grid xs={12}>
-          <TextField
-            onChange={(e: any) => setSearchContent(e.target.value)}
-            fullWidth
-            label='Search'
-            value={searchContent}
-          ></TextField>
+          <Container maxWidth='xs'>
+            <TextField
+              onChange={(e: any) => setSearchContent(e.target.value)}
+              fullWidth
+              label='Search'
+              value={searchContent}
+            ></TextField>
+          </Container>
         </Grid>
         <Grid item md={3} xs={12}>
           <Typography variant='h6' color='primary'>
