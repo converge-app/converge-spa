@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { AlertComponent } from './alert.component';
 import DashboardNavBar from './dashboard-nav-bar/dashboard.nav-bar';
+import Submitting from '../content/submitting/submitting';
 
 interface ILayoutProps {
   children: any;
@@ -26,6 +27,13 @@ const useStyles = makeStyles(() => ({
     flexGrow: 1,
     display: 'flex',
   },
+  submitting: {
+    display: 'absolute',
+    position: 'sticky',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+  },
 }));
 
 const DashboardLayout: React.FunctionComponent<ILayoutProps> = ({
@@ -44,6 +52,9 @@ const DashboardLayout: React.FunctionComponent<ILayoutProps> = ({
           <DashboardNavBar />
         </header>
         <main className={classes.main}>{children}</main>
+        <div className={classes.submitting}>
+          <Submitting></Submitting>
+        </div>
         <AlertComponent alert={alert} />
       </div>
     </div>
