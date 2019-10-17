@@ -1,23 +1,23 @@
-import axios, { AxiosPromise, AxiosRequestConfig } from "axios";
-import { authHeader } from "../lib/helpers/auth-header";
-import { IProject } from "../lib/models/project.model";
-import { services } from "./index";
+import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+import { authHeader } from '../lib/helpers/auth-header';
+import { IProject } from '../lib/models/project.model';
+import { services } from './index';
 
 export class ProjectService {
   public static url: string =
-    "https://projects-service.api.converge-app.net/api/projects";
+    'https://projects-service.api.converge-app.net/api/projects';
 
   public static create(values: IProject): AxiosPromise<any> {
     values.ownerId = services.authentication.getId();
 
     const requestOptions: AxiosRequestConfig = {
-      method: "POST",
+      method: 'POST',
       url: `${this.url}`,
       headers: {
-        "Content-Type": "application/json",
-        ...authHeader()
+        'Content-Type': 'application/json',
+        ...authHeader(),
       },
-      data: values
+      data: values,
     };
 
     return axios(requestOptions);
@@ -33,5 +33,11 @@ export class ProjectService {
 
   public static async getOpen() {
     return axios.get(`${this.url}/open`);
+  }
+
+  public static async getByUserId(
+    userId: string,
+  ): Promise<IProject[] | PromiseLike<IProject[]>> {
+    return (await axios.get(`${this.url}/user/${userId}`)).data;
   }
 }
