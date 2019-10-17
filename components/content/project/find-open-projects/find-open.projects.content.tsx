@@ -44,7 +44,7 @@ const FindOpenProjectsContent: React.FunctionComponent<{
   subCategory?: string;
 }) => {
   const classes = useStyles();
-  let filteredProjects: IProject[] | null = null;
+  let filteredProjects: IProject[] | null = props.projects;
 
   if (props.category && props.subCategory) {
     if (props.projects) {

@@ -8,6 +8,9 @@ import DashboardLayout from '../../components/layouts/dashboard.layout';
 import { CollaborationActions } from '../../lib/actions/collaboration.actions';
 import { IEvent } from '../../lib/models/event.model';
 import React from 'react';
+import { ProjectActions } from '../../lib/actions/project.actions';
+import { IProject } from '../../lib/models/project.model';
+import { ProfileIntro } from '../../components/content/project/open-project/open.project.content';
 
 const CollaborationPage: NextPage = () => {
   const router = useRouter();
@@ -17,6 +20,7 @@ const CollaborationPage: NextPage = () => {
   useEffect(() => {
     if (typeof projectId === 'string') {
       dispatch(CollaborationActions.getByProjectId(projectId));
+      dispatch(ProjectActions.getById(projectId));
     }
   }, []);
 
@@ -24,7 +28,11 @@ const CollaborationPage: NextPage = () => {
     (state: any) => state.collaboration.getByProjectId.collaboration,
   );
 
-  if (collaboration) {
+  const project: IProject = useSelector(
+    (state: any) => state.project.getProject.project,
+  );
+
+  if (collaboration && project) {
     console.log(collaboration);
     return (
       <DashboardLayout>
@@ -36,7 +44,7 @@ const CollaborationPage: NextPage = () => {
               ></CollaborationContent>
             </Grid>
             <Grid item xs={12} md={3}>
-              Profile
+              <ProfileIntro userId={project.ownerId as string}></ProfileIntro>
             </Grid>
           </Grid>
         </Container>

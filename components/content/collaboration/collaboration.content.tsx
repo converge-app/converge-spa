@@ -4,8 +4,12 @@ import { useDispatch } from 'react-redux';
 import { CollaborationActions } from '../../../lib/actions/collaboration.actions';
 import { IEvent } from '../../../lib/models/event.model';
 import EventType from './event.type';
+import { useRouter } from 'next/router';
 
 const CollaborationContent = (props: { collaboration: IEvent[] }) => {
+  const router = useRouter();
+  const { projectId } = router.query;
+
   const collaboration = props.collaboration.sort((a, b) => {
     if (
       typeof a.timestamp !== 'undefined' &&
@@ -15,6 +19,7 @@ const CollaborationContent = (props: { collaboration: IEvent[] }) => {
     }
     return 0;
   });
+
   return (
     <Grid container spacing={3}>
       {collaboration.map((event: IEvent, index: number) => {
@@ -40,7 +45,7 @@ const CollaborationContent = (props: { collaboration: IEvent[] }) => {
         }
       })}
       <Grid item xs={12}>
-        <CreateEvent projectId={collaboration[0].projectId}></CreateEvent>
+        <CreateEvent projectId={projectId as string}></CreateEvent>
       </Grid>
     </Grid>
   );
