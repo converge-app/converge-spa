@@ -6,6 +6,7 @@ import { lighten, makeStyles } from '@material-ui/core/styles';
 import { IProject } from '../../../../lib/models/project.model';
 import { Grid, Typography, Button, Paper, Container } from '@material-ui/core';
 import Router from 'next/router';
+import CentralSpinner from '../../../styles/utility/spinner.central';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,7 +52,7 @@ const MyProjectsContent = () => {
       </Container>
     );
   } else {
-    return <div>spinner</div>;
+    return <CentralSpinner />;
   }
 };
 

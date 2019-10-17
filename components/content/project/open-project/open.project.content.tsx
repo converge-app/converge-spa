@@ -13,6 +13,7 @@ import OpenProjectBid from './bid/open.project.bid';
 import { OpenProjectChooseBid } from './bid/open.project.choose-bid';
 import Router from 'next/router';
 import { IProfile } from '../../../../lib/models/profile.model';
+import CentralSpinner from '../../../styles/utility/spinner.central';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -176,6 +177,6 @@ export const ProfileIntro = (props: { userId: string }) => {
       </Grid>
     );
   } else {
-    return <div>spinner</div>;
+    return <CentralSpinner></CentralSpinner>;
   }
 };

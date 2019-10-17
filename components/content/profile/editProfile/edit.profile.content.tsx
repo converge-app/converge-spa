@@ -16,6 +16,7 @@ import { IUser } from '../../../../lib/models/user.model';
 import { UserService } from '../../../../services/user.service';
 import { services } from '../../../../services';
 import Router from 'next/router';
+import CentralSpinner from '../../../styles/utility/spinner.central';
 
 interface IProps {
   userId: string;
@@ -266,7 +267,7 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     if (profile && user == null) {
       getUser(profile.userId);
     }
-    return <div>Spinner</div>;
+    return <CentralSpinner />;
   }
 };
 
