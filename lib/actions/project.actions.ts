@@ -4,6 +4,31 @@ import { projectConstants } from '../constants/project.constants';
 import { IProject } from '../models/project.model';
 
 export class ProjectActions {
+  static getByUserId(userId: string): any {
+    const request = (value: string) => ({
+      type: projectConstants.GET_MY_PROJECTS_REQUEST,
+      userId: value,
+    });
+    const success = (projects: IProject[]) => ({
+      type: projectConstants.GET_MY_PROJECTS_SUCCESS,
+      projects,
+    });
+    const failure = (error: any) => ({
+      type: projectConstants.GET_MY_PROJECTS_FAILURE,
+      error,
+    });
+
+    return async (dispatch: any) => {
+      dispatch(request(userId));
+
+      try {
+        const projects: IProject[] = await ProjectService.getByUserId(userId);
+        dispatch(success(projects));
+      } catch (error) {
+        dispatch(failure(error));
+      }
+    };
+  }
   public static createProject(
     values: IProject,
     setSubmitting: (value: boolean) => void,

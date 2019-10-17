@@ -1,51 +1,33 @@
-import { Link, makeStyles } from '@material-ui/core';
+import { Link, Grid, Container, List, ListItem } from '@material-ui/core';
 import React from 'react';
 import NormalLink from '../../styles/links/link.normal';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    width: '100%',
-    display: 'grid',
-    gridTemplateAreas: `
-        'leftside center rightside'
-        `,
-    gridTemplateColumns: '25% 50% 25%',
-    gridGap: 20,
-    padding: theme.spacing(8, 20),
-  },
-  leftSide: {
-    gridArea: 'leftside',
-  },
-  center: {
-    gridArea: 'center',
-    textAlign: 'center',
-  },
-  rightSide: {
-    gridArea: 'rightside',
-    textAlign: 'right',
-  },
-}));
-
 const DashboardContent: React.FunctionComponent = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <div className={classes.leftSide}>
-        <div>
-          <NormalLink href={'/projects/create'}>
-            <Link>Create a Project</Link>
-          </NormalLink>
-        </div>
-        <br />
-        <div>
-          <NormalLink href={'/categories'}>
-            <Link>Find a Project</Link>
-          </NormalLink>
-        </div>
-      </div>
-      <div className={classes.center}></div>
-      <div className={classes.rightSide}></div>
-    </div>
+    <Container maxWidth='lg'>
+      <Grid container>
+        <Grid item md={3} xs={12}>
+          <List>
+            <ListItem>
+              <NormalLink href={'/projects/create'}>
+                <Link>Create a Project</Link>
+              </NormalLink>
+            </ListItem>
+            <ListItem>
+              <NormalLink href={'/categories'}>
+                <Link>Find a Project</Link>
+              </NormalLink>
+            </ListItem>
+            <ListItem>
+              <NormalLink href={'/projects/mine'}>
+                <Link>My projects</Link>
+              </NormalLink>
+            </ListItem>
+          </List>
+        </Grid>
+        <Grid item md={6} xs={12}></Grid>
+      </Grid>
+    </Container>
   );
 };
 
