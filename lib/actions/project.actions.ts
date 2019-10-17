@@ -2,6 +2,7 @@ import Router from 'next/router';
 import { ProjectService } from '../../services/project.service';
 import { projectConstants } from '../constants/project.constants';
 import { IProject } from '../models/project.model';
+import { SubmitActions } from './submit.actions';
 
 export class ProjectActions {
   static getByUserId(userId: string): any {
@@ -20,6 +21,7 @@ export class ProjectActions {
 
     return async (dispatch: any) => {
       dispatch(request(userId));
+      dispatch(SubmitActions.setSubmitting(true, true));
 
       try {
         const projects: IProject[] = await ProjectService.getByUserId(userId);
@@ -27,6 +29,8 @@ export class ProjectActions {
       } catch (error) {
         dispatch(failure(error));
       }
+
+      dispatch(SubmitActions.setSubmitting(false));
     };
   }
   public static createProject(
@@ -48,6 +52,7 @@ export class ProjectActions {
 
     return async (dispatch: any) => {
       dispatch(request({ values }));
+      dispatch(SubmitActions.setSubmitting(true));
       setSubmitting(true);
 
       try {
@@ -55,6 +60,7 @@ export class ProjectActions {
         const project = await response.data;
         dispatch(success(project));
         setSubmitting(false);
+        dispatch(SubmitActions.wasSuccess('Created project'));
         Router.push(
           'projects/open/[projectId]',
           `/projects/open/${project.id}`,
@@ -63,6 +69,7 @@ export class ProjectActions {
       } catch (e) {
         dispatch(failure(e));
         setSubmitting(false);
+        dispatch(SubmitActions.wasFailure('Failed to create project'));
       }
     };
   }
@@ -80,15 +87,17 @@ export class ProjectActions {
 
     return async (dispatch: any) => {
       dispatch(request());
+      dispatch(SubmitActions.setSubmitting(true, true));
 
       try {
         const response = await ProjectService.get();
         const projects = await response.data;
         dispatch(success(projects));
-        return projects;
       } catch (e) {
         dispatch(failure(e));
       }
+
+      dispatch(SubmitActions.setSubmitting(false));
     };
   }
 
@@ -108,14 +117,17 @@ export class ProjectActions {
     return async (dispatch: any) => {
       dispatch(request());
 
+      dispatch(SubmitActions.setSubmitting(true, true));
+
       try {
         const response = await ProjectService.getOpen();
         const projects = await response.data;
         dispatch(success(projects));
-        return projects;
       } catch (e) {
         dispatch(failure(e));
       }
+
+      dispatch(SubmitActions.setSubmitting(false));
     };
   }
 
@@ -135,15 +147,17 @@ export class ProjectActions {
 
     return async (dispatch: any) => {
       dispatch(request({ projectId }));
+      dispatch(SubmitActions.setSubmitting(true, true));
 
       try {
         const response = await ProjectService.getById(projectId);
         const project = await response.data;
         dispatch(success(project));
-        return project;
       } catch (e) {
         dispatch(failure(e));
       }
+
+      dispatch(SubmitActions.setSubmitting(false));
     };
   }
 }

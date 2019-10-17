@@ -7,6 +7,7 @@ import { profile } from './profile.reducer';
 import { project } from './project.reducer';
 import { signUp } from './sign-up.reducer';
 import { users } from './user.reducer';
+import { submitting } from './submit.reducer';
 
 export const rootReducer = combineReducers({
   authentication,
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
   bidding,
   collaboration,
   profile,
+  submitting,
 });
 
 export default rootReducer;
