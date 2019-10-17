@@ -25,7 +25,6 @@ const DashboardContent: React.FunctionComponent = () => {
             </ListItem>
           </List>
         </Grid>
-        <Grid item md={6} xs={12}></Grid>
       </Grid>
     </Container>
   );

@@ -3,6 +3,7 @@ import { IEvent } from '../../../lib/models/event.model';
 import { IUser } from '../../../lib/models/user.model';
 import React, { useEffect } from 'react';
 import { UserService } from '../../../services/user.service';
+import CentralSpinner from '../../styles/utility/spinner.central';
 
 interface IEventMessage {
   message: string;
@@ -33,7 +34,7 @@ export const EventMessage = (props: { event: IEvent }) => {
       </div>
     );
   } else {
-    return <div>spinner</div>;
+    return <CentralSpinner />;
   }
 };
 

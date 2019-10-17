@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import ProfileContent from '../../components/content/profile/getProfile/profile.content';
 import DashboardLayout from '../../components/layouts/dashboard.layout';
+import CentralSpinner from '../../components/styles/utility/spinner.central';
 
 const ProfilePage: NextPage = () => {
   const router = useRouter();
@@ -15,7 +16,11 @@ const ProfilePage: NextPage = () => {
       </DashboardLayout>
     );
   } else {
-    return <DashboardLayout>Spinner</DashboardLayout>;
+    return (
+      <DashboardLayout>
+        <CentralSpinner></CentralSpinner>
+      </DashboardLayout>
+    );
   }
 };
 

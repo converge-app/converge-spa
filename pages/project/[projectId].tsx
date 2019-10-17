@@ -11,6 +11,7 @@ import React from 'react';
 import { ProjectActions } from '../../lib/actions/project.actions';
 import { IProject } from '../../lib/models/project.model';
 import { ProfileIntro } from '../../components/content/project/open-project/open.project.content';
+import CentralSpinner from '../../components/styles/utility/spinner.central';
 
 const CollaborationPage: NextPage = () => {
   const router = useRouter();
@@ -51,7 +52,11 @@ const CollaborationPage: NextPage = () => {
       </DashboardLayout>
     );
   } else {
-    return <DashboardLayout>Spinner</DashboardLayout>;
+    return (
+      <DashboardLayout>
+        <CentralSpinner></CentralSpinner>
+      </DashboardLayout>
+    );
   }
 };
 

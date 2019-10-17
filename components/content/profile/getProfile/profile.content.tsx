@@ -7,6 +7,7 @@ import { IProfile } from '../../../../lib/models/profile.model';
 import { IUser } from '../../../../lib/models/user.model';
 import { UserService } from '../../../../services/user.service';
 import { ProfileCard } from './profile.card';
+import CentralSpinner from '../../../styles/utility/spinner.central';
 
 const useStyles = makeStyles(() => ({}));
 
@@ -79,7 +80,7 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     if (profile && user == null) {
       getUser(profile.userId);
     }
-    return <div>Spinner</div>;
+    return <CentralSpinner />;
   }
 };
 
