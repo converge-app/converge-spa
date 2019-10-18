@@ -9,7 +9,7 @@ import {
   ListItemAvatar,
   Avatar,
   Divider,
-  Typography,
+
   ListItemText
 } from "@material-ui/core";
 
@@ -18,6 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ContactActions } from "../../../lib/actions/contacts.actions";
 import { services } from "../../../services";
 import { IContact } from "../../../lib/models/contact.model";
+import { MessageActions } from "../../../lib/actions/message.action";
+import { IMessage } from "../../../lib/models/message.model";
+
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -54,10 +57,19 @@ const ChatContent: React.FunctionComponent = () => {
     dispatch(ContactActions.setCurrentContact(services.authentication.getId()));
   }, []);
 
+  useEffect(() => {
+    dispatch(MessageActions.sendMessage(services.authentication.getId()));
+    dispatch(MessageActions.getMessage(services.authentication.getId()));
+  }, []);
+
+  const message: IMessage[]= useSelector(
+        (state: any) => state.message.sendMessage.msg);
+       
   const contacts: IContact[] = useSelector(
     (state: any) => state.contacts.getContacts.contacts
   );
   console.log(contacts);
+  console.log(message);
 
   if (contacts) {
     return (
@@ -81,13 +93,13 @@ const ChatContent: React.FunctionComponent = () => {
           </Grid>
           <Grid item xs={12} md={8}>
             <Box className={classes.box}>
-              <List className={classes.list}>
-                {contacts.map((contact, index) => (
-                  <ListItem key={index}>
-                    <Typography>{contact.senderId}</Typography>
-                  </ListItem>
-                ))}
-              </List>
+            {message.map((msg, index) => (
+            <li key={index}>
+              <div>{msg.senderId}</div>
+              <div>{msg.message}</div>
+              </li>
+               ))}
+              
             </Box>
             <div className={classes.inputs}>
               <MessageInputs></MessageInputs>
