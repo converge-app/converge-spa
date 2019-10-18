@@ -7,6 +7,7 @@ import { signUp } from "./sign-up.reducer";
 import { users } from "./user.reducer";
 import { collaboration } from "./collaboration.reducer";
 import { contacts } from "./contacts.reducer";
+import { message } from "./message.reducer";
 
 export const rootReducer = combineReducers({
   authentication,
@@ -16,7 +17,8 @@ export const rootReducer = combineReducers({
   project,
   bidding,
   collaboration,
-  contacts
+  contacts,
+  message
 });
 
 export default rootReducer;

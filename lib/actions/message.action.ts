@@ -1,37 +1,76 @@
 import { IMessage } from "../models/message.model";
 import { messageConstants } from "../constants/message.constants";
-import { MesssageService } from "../../services/message.service";
+import { MessageService } from "../../services/message.service";
+
+
 
 export class MessageActions {
-  public static createMessage(
-    values: IMessage,
-    setSubmitting: (value: boolean) => void
+  public static sendMessage(
+  message:any
   ) {
-    const request = (msg: IMessage) => ({
-      type: messageConstants.CREATE_MESSAGE_REQUEST,
-      msg
+    const request = (value: string) => ({
+      type: messageConstants.SEND_MESSAGE_REQUEST,
+      message: value
     });
 
     const success = (msg: IMessage[]) => ({
-      type: messageConstants.CREATE_MESSAGE_SUCCESS,
+      type: messageConstants.SEND_MESSAGE_SUCCESS,
       msg
     });
 
     const failure = (error: any) => ({
-      type: messageConstants.CREATE_MESSAGE_FAILURE,
+      type: messageConstants.SEND_MESSAGE_FAILURE,
       error
     });
 
     return async (dispatch: any) => {
-      dispatch(request(values));
-      setSubmitting(true);
+      dispatch(request(message));
+  
 
       try {
-        const response = await MesssageService.post(values);
-        dispatch(success(msg));
+        const response = MessageService.post(message);
+        dispatch(success(response));
+     
       } catch (error) {
+     
         dispatch(failure(error));
       }
     };
   }
+
+
+public static getMessage(message: any){
+
+  const request = (value: string) => ({
+    type: messageConstants.GET_MESSAGE_REQUEST,
+    message: value
+  });
+
+  const success = (msg: IMessage[]) => ({
+    type: messageConstants.GET_MESSAGE_SUCCESS,
+    msg
+  });
+
+  const failure = (error: any) => ({
+    type: messageConstants.GET_MESSAGE_FAILURE,
+    error
+  });
+
+  return async (dispatch: any) => {
+    dispatch(request(message));
+
+
+    try {
+      const response = MessageService.post(message);
+      dispatch(success(response));
+   
+    } catch (error) {
+   
+      dispatch(failure(error));
+    }
+  
+}}
+
+
+
 }

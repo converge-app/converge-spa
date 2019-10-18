@@ -1,34 +1,37 @@
 import { IMessage } from "../lib/models/message.model";
 
-export class MesssageService {
-  public static post(userId: string) {
-    console.log(userId);
+export class MessageService {
+  public static post(message: IMessage) {
+    console.log(message);
     const messages: IMessage[] = [
       {
-        id: "1",
-        senderId: "344",
-        receiverId: "5432",
-        message: "hej med dig"
-      },
-      {
-        id: "1",
-        senderId: "344",
-        receiverId: "5432"
-      },
-      {
-        id: "1",
-        senderId: "344",
-        receiverId: "5432"
-      },
-      {
-        id: "1",
-        senderId: "344",
-        receiverId: "5432"
-      },
-      {
-        id: "1",
-        senderId: "344",
-        receiverId: "5432"
+        id: "12",
+        senderId:"asdasd",
+        message: "hej med dig",
+        receiverId: "fsf",
+        timestamp:10,
+      
+      }, {
+        id: "12",
+        senderId:"asdasd",
+        message: "hej med dig",
+        receiverId: "fsf",
+        timestamp:10,
+      
+      }, {
+        id: "12",
+        senderId:"asdasd",
+        message: "hej med dig",
+        receiverId: "fsf",
+        timestamp:10,
+      
+      }, {
+        id: "12",
+        senderId:"asdasd",
+        message: "hej med dig",
+        receiverId: "fsf",
+        timestamp:10,
+      
       }
     ];
 

@@ -2,6 +2,8 @@ import React from "react";
 import { TextField, withStyles, InputAdornment } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Send from "@material-ui/icons/Send";
+import { MessageActions } from "../../../lib/actions/message.action";
+import { useDispatch } from "react-redux";
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
@@ -28,7 +30,26 @@ const CssTextField = withStyles({
   }
 })(TextField);
 
-export function MessageInputs(this: any) {
+interface State {
+  message: string;
+}
+
+export function MessageInputs() {
+
+  const [values, setValues] = React.useState<State>({
+    message: ''
+  });
+  const dispatch = useDispatch();
+
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const sendEvent = () => {
+    if (values) {
+      dispatch(MessageActions.sendMessage(values));
+    }
+  };
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -43,12 +64,14 @@ export function MessageInputs(this: any) {
         label="Type a message"
         fullWidth
         multiline
+        onChange={handleChange('message')}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
                 onMouseDown={handleMouseDownPassword}
                 aria-label="toggle password visibility"
+                onClick={sendEvent}
               >
                 <Send color="primary"></Send>
               </IconButton>
