@@ -23,6 +23,8 @@ class RootApp extends App {
       <React.Fragment>
         <Head>
           <title>Converge</title>
+
+          <script src='https://js.stripe.com/v3/'></script>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />

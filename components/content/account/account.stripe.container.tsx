@@ -1,7 +1,8 @@
 import React from 'react';
-import { CardForm } from './_CardForm';
+import { CardForm } from './account.card.form';
+import { StripeProvider, Elements } from 'react-stripe-elements';
 
-export class StripeDeposit extends React.Component<any, any> {
+export class StripeContainer extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = { stripe: null };
@@ -15,7 +16,7 @@ export class StripeDeposit extends React.Component<any, any> {
     return (
       <StripeProvider stripe={this.state.stripe}>
         <Elements>
-          <CardForm></CardForm>
+          <CardForm handleResult={(res: any) => console.log(res)}></CardForm>
         </Elements>
       </StripeProvider>
     );

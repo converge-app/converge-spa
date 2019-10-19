@@ -4,15 +4,59 @@ import {
   Grid,
   TextField,
   Typography,
+  Dialog,
+  DialogTitle,
+  makeStyles,
 } from '@material-ui/core';
 import React from 'react';
 import { ITransaction } from '../../../lib/models/transaction.model';
-import { StripeDeposit } from './StripeDeposit';
+import { StripeContainer } from './account.stripe.container';
+
+const useStyles = makeStyles((theme) => ({
+  cardInfo: {
+    padding: theme.spacing(2),
+  },
+}));
+
+export interface SimpleDialogProps {
+  open: boolean;
+  onClose: (tokenId: string) => void;
+}
+
+function SimpleDialog(props: SimpleDialogProps) {
+  const classes = useStyles();
+  const { onClose, open } = props;
+
+  const handleClose = () => {
+    onClose('');
+  };
+
+  return (
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby='simple-dialog-title'
+      fullWidth
+      open={open}
+    >
+      <DialogTitle id='simple-dialog-title'>Deposit money</DialogTitle>
+      <Container className={classes.cardInfo}>
+        <StripeContainer></StripeContainer>
+      </Container>
+    </Dialog>
+  );
+}
 
 const AccountContent = () => {
   const [amount, setAmount] = React.useState();
+  const [depositOpen, setDepositOpen] = React.useState(false);
+  const onDeposit = () => {
+    setDepositOpen(true);
+  };
 
-  const onDeposit = () => {};
+  const handleDepositClose = (tokenId: string) => {
+    setDepositOpen(false);
+    console.log(tokenId);
+  };
 
   const onWithdraw = () => {};
 
@@ -33,7 +77,7 @@ const AccountContent = () => {
             label='amount'
             value={amount}
             fullWidth
-            onChange={e => setAmount(e.target.value)}
+            onChange={(e) => setAmount(e.target.value)}
           ></TextField>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -66,10 +110,11 @@ const AccountContent = () => {
             </Grid>
           </Grid>
         ) : null}
-        <Grid item xs={12}>
-          <StripeDeposit></StripeDeposit>
-        </Grid>
       </Grid>
+      <SimpleDialog
+        open={depositOpen}
+        onClose={handleDepositClose}
+      ></SimpleDialog>
     </Container>
   );
 };
