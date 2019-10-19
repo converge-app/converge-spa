@@ -1,12 +1,13 @@
 import {
+  Button,
   Container,
   Grid,
-  Typography,
   TextField,
-  Button,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { ITransaction } from '../../../lib/models/transaction.model';
+import { StripeDeposit } from './StripeDeposit';
 
 const AccountContent = () => {
   const [amount, setAmount] = React.useState();
@@ -32,7 +33,7 @@ const AccountContent = () => {
             label='amount'
             value={amount}
             fullWidth
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={e => setAmount(e.target.value)}
           ></TextField>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -65,6 +66,9 @@ const AccountContent = () => {
             </Grid>
           </Grid>
         ) : null}
+        <Grid item xs={12}>
+          <StripeDeposit></StripeDeposit>
+        </Grid>
       </Grid>
     </Container>
   );
