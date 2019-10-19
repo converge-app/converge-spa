@@ -1,6 +1,7 @@
-import {ISubCategory} from './subcategory.model';
+import { ISubCategory } from './subcategory.model';
 
 export interface ICategory {
-    name: string
-    subCategories: ISubCategory[]
+  label: string;
+  value: string;
+  subCategories: ISubCategory[];
 }
