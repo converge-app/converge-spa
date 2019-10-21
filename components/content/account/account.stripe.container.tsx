@@ -1,6 +1,6 @@
 import React from 'react';
+import { Elements, StripeProvider } from 'react-stripe-elements';
 import { CardForm } from './account.card.form';
-import { StripeProvider, Elements } from 'react-stripe-elements';
 
 export class StripeContainer extends React.Component<any, any> {
   constructor(props: any) {
@@ -16,7 +16,10 @@ export class StripeContainer extends React.Component<any, any> {
     return (
       <StripeProvider stripe={this.state.stripe}>
         <Elements>
-          <CardForm handleResult={(res: any) => console.log(res)}></CardForm>
+          <CardForm
+            clientSecret={this.props.clientSecret}
+            handleResult={(res: any) => console.log(res)}
+          ></CardForm>
         </Elements>
       </StripeProvider>
     );

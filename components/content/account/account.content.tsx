@@ -1,24 +1,26 @@
 import {
   Button,
   Container,
-  Grid,
-  TextField,
-  Typography,
   Dialog,
   DialogTitle,
+  Grid,
   makeStyles,
+  TextField,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { ITransaction } from '../../../lib/models/transaction.model';
+import { PaymentsService } from '../../../services/payments.service';
 import { StripeContainer } from './account.stripe.container';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   cardInfo: {
     padding: theme.spacing(2),
   },
 }));
 
 export interface SimpleDialogProps {
+  clientSecret: string;
   open: boolean;
   onClose: (tokenId: string) => void;
 }
@@ -40,7 +42,7 @@ function SimpleDialog(props: SimpleDialogProps) {
     >
       <DialogTitle id='simple-dialog-title'>Deposit money</DialogTitle>
       <Container className={classes.cardInfo}>
-        <StripeContainer></StripeContainer>
+        <StripeContainer clientSecret={props.clientSecret}></StripeContainer>
       </Container>
     </Dialog>
   );
@@ -49,8 +51,14 @@ function SimpleDialog(props: SimpleDialogProps) {
 const AccountContent = () => {
   const [amount, setAmount] = React.useState();
   const [depositOpen, setDepositOpen] = React.useState(false);
+  const [clientSecret, setClientSecret] = React.useState('');
+
   const onDeposit = () => {
-    setDepositOpen(true);
+    PaymentsService.getToken(amount).then(res => {
+      setClientSecret(res.clientSecret);
+      console.log(clientSecret)
+      setDepositOpen(true);
+    });
   };
 
   const handleDepositClose = (tokenId: string) => {
@@ -77,7 +85,7 @@ const AccountContent = () => {
             label='amount'
             value={amount}
             fullWidth
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={e => setAmount(e.target.value)}
           ></TextField>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -114,6 +122,7 @@ const AccountContent = () => {
       <SimpleDialog
         open={depositOpen}
         onClose={handleDepositClose}
+        clientSecret={clientSecret}
       ></SimpleDialog>
     </Container>
   );

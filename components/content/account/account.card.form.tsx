@@ -37,13 +37,14 @@ class _CardForm extends Component<any> {
     }
   };
   public handleSubmit = (evt: any) => {
-    const clientSecret: string = 'blabla';
-
     evt.preventDefault();
     if (this.props.stripe) {
-      this.props.stripe.handleCardPayment(clientSecret, {}).then((res: any) => {
-        console.log(res);
-      });
+      console.log(this.props.clientSecret);
+      this.props.stripe
+        .handleCardPayment(this.props.clientSecret, {})
+        .then((res: any) => {
+          console.log(res);
+        });
     } else {
       console.log("Stripe.js hasn't loaded yet.");
     }
