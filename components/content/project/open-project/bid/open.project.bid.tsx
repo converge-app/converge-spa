@@ -1,62 +1,62 @@
-import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
-import { Form, Formik, Field } from "formik";
-import React from "react";
-import { TextField } from "formik-material-ui";
-import { lighten } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
-import { services } from "../../../../../services";
-import { IBid } from "../../../../../lib/models/bid.model";
-import { BidActions } from "../../../../../lib/actions/bid.actions";
+import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Form, Formik, Field } from 'formik';
+import React from 'react';
+import { TextField } from 'formik-material-ui';
+import { lighten } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { services } from '../../../../../services';
+import { IBid } from '../../../../../lib/models/bid.model';
+import { BidActions } from '../../../../../lib/actions/bid.actions';
 
 interface IFormValues {
   amount: string;
   message?: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   moveDown: {
     paddingTop: theme.spacing(4),
     borderTopColor: lighten(theme.palette.background.default, 0.05),
     borderTopWidth: 1.5,
-    borderTopStyle: "solid",
-    marginRight: theme.spacing(4)
+    borderTopStyle: 'solid',
+    marginRight: theme.spacing(4),
   },
   indent: {
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(4),
   },
   buttonContainer: {
-    display: "flex"
+    display: 'flex',
   },
   button: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     marginRight: 0,
-    flexFlow: "start-end"
-  }
+    flexFlow: 'start-end',
+  },
 }));
 
 interface IProps {
   projectId: string;
 }
 
-const OpenProjectBid: React.FunctionComponent<IProps> = props => {
+const OpenProjectBid: React.FunctionComponent<IProps> = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
   return (
     <div className={classes.moveDown}>
-      <Typography variant={"h5"} color="primary">
+      <Typography variant={'h5'} color='primary'>
         Bid
       </Typography>
       <Formik
         initialValues={{
           amount: 0,
-          message: ""
+          message: '',
         }}
-        validate={values => {
+        validate={(values) => {
           const errors: Partial<IFormValues> = {};
 
           if (!values.amount) {
-            errors.amount = "Required";
+            errors.amount = 'Required';
           }
 
           return errors;
@@ -68,7 +68,7 @@ const OpenProjectBid: React.FunctionComponent<IProps> = props => {
             projectId: props.projectId,
             freelancerId: services.authentication.getId(),
             message: values.message,
-            amount: values.amount
+            amount: values.amount,
           };
 
           dispatch(BidActions.placeBid(bid, setSubmitting));
@@ -80,15 +80,15 @@ const OpenProjectBid: React.FunctionComponent<IProps> = props => {
             <Grid
               container
               spacing={3}
-              direction="row"
-              justify="space-evenly"
-              alignItems="flex-start"
+              direction='row'
+              justify='space-evenly'
+              alignItems='flex-start'
             >
               <Grid item xs={12}>
                 <Field
-                  type={"text"}
-                  name="message"
-                  label="Message"
+                  type={'text'}
+                  name='message'
+                  label='Message'
                   component={TextField}
                   fullWidth
                   multiline
@@ -98,10 +98,10 @@ const OpenProjectBid: React.FunctionComponent<IProps> = props => {
 
               <Grid item xs={6}>
                 <Field
-                  type={"number"}
-                  name="amount"
-                  label="Amount"
-                  placeholder="Amount"
+                  type={'number'}
+                  name='amount'
+                  label='Amount'
+                  placeholder='Amount'
                   min={1}
                   required
                   component={TextField}
@@ -112,8 +112,8 @@ const OpenProjectBid: React.FunctionComponent<IProps> = props => {
                   className={classes.button}
                   disabled={isSubmitting}
                   onClick={submitForm}
-                  variant={"contained"}
-                  color="primary"
+                  variant={'contained'}
+                  color='primary'
                 >
                   BID
                 </Button>
