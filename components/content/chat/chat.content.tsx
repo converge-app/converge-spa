@@ -1,26 +1,29 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ContactActions } from "../../../lib/actions/contacts.actions";
+import { services } from "../../../services";
+import CentralSpinner from "../../styles/utility/spinner.central";
+import { IContact } from "../../../lib/models/contact.model";
 import {
-  Box,
-  makeStyles,
-  List,
   Container,
   Grid,
+  makeStyles,
+  List,
+  Box,
   ListItem,
   ListItemAvatar,
   Avatar,
   Divider,
-
   ListItemText
 } from "@material-ui/core";
-
-import { MessageInputs } from "./message.inputs";
-import { useDispatch, useSelector } from "react-redux";
-import { ContactActions } from "../../../lib/actions/contacts.actions";
-import { services } from "../../../services";
-import { IContact } from "../../../lib/models/contact.model";
-import { MessageActions } from "../../../lib/actions/message.action";
+import Spinner from "../../styles/utility/spinner";
 import { IMessage } from "../../../lib/models/message.model";
-
+import { MessageInputs } from "./message.inputs";
+import { IProfile } from "../../../lib/models/profile.model";
+import { IUser } from "../../../lib/models/user.model";
+import { UserService } from "../../../services/user.service";
+import { ProfileService } from "../../../services/profile.service";
+import { AxiosResponse } from "axios";
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -45,31 +48,87 @@ const useStyles = makeStyles(theme => ({
   },
   contacts: {
     maxHeight: 700,
-    overflow: "auto"
+    overflow: "auto",
+    maxWidth: "100%"
   }
 }));
+
+const Contact = (props: { contact: IContact; index: number }) => {
+  const [user, setUser] = React.useState<IUser>();
+  const [profile, setProfile] = React.useState<IProfile>();
+
+  useEffect(() => {
+    UserService.getByUserId(props.contact.receiverId)
+      .then((user: IUser) => {
+        setUser(user);
+      })
+      .catch(err => {
+        throw err;
+      });
+
+    ProfileService.getByUserId(props.contact.receiverId).then(
+      (response: AxiosResponse<IProfile>) => {
+        setProfile(response.data);
+      }
+    );
+  }, []);
+
+  if (user && profile) {
+    return (
+      <React.Fragment key={props.index}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar src={profile.profilePictureUrl}></Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={`${user.firstName} ${user.lastName}`}
+          ></ListItemText>
+        </ListItem>
+        <Divider></Divider>
+      </React.Fragment>
+    );
+  } else {
+    return <Spinner></Spinner>;
+  }
+};
+
 const ChatContent: React.FunctionComponent = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(ContactActions.getContacts(services.authentication.getId()));
-    dispatch(ContactActions.setCurrentContact(services.authentication.getId()));
   }, []);
 
-  useEffect(() => {
-    dispatch(MessageActions.sendMessage(services.authentication.getId()));
-    dispatch(MessageActions.getMessage(services.authentication.getId()));
-  }, []);
-
-  const message: IMessage[]= useSelector(
-        (state: any) => state.message.sendMessage.msg);
-       
   const contacts: IContact[] = useSelector(
     (state: any) => state.contacts.getContacts.contacts
   );
-  console.log(contacts);
-  console.log(message);
+
+  let message: IMessage[];
+
+  const renderMessages = () => {
+    if (message) {
+      return (
+        <Grid item xs={12} md={8}>
+          <Box className={classes.box}>
+            {message.map((msg, index) => (
+              <li key={index}>
+                <div>
+                  {msg.senderId} {msg.id}
+                </div>
+                <div>{msg.message}</div>
+              </li>
+            ))}
+          </Box>
+          <div className={classes.inputs}>
+            <MessageInputs></MessageInputs>
+          </div>
+        </Grid>
+      );
+    } else {
+      return null;
+    }
+  };
 
   if (contacts) {
     return (
@@ -78,38 +137,16 @@ const ChatContent: React.FunctionComponent = () => {
           <Grid item xs={12} md={4}>
             <List className={classes.contacts}>
               {contacts.map((contact, index) => (
-                <React.Fragment key={index}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar>{contact.receiverId}</Avatar>
-                    </ListItemAvatar>
-
-                    <ListItemText primary={contact.receiverId}></ListItemText>
-                  </ListItem>
-                  <Divider></Divider>
-                </React.Fragment>
+                <Contact contact={contact as IContact} index={index} />
               ))}
             </List>
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Box className={classes.box}>
-            {message.map((msg, index) => (
-            <li key={index}>
-              <div>{msg.senderId} {msg.id}</div>
-              <div>{msg.message}</div>
-              </li>
-               ))}
-              
-            </Box>
-            <div className={classes.inputs}>
-              <MessageInputs ></MessageInputs>
-            </div>
-          </Grid>
+          {renderMessages()}
         </Grid>
       </Container>
     );
   } else {
-    return <div>Spinner</div>;
+    return <CentralSpinner></CentralSpinner>;
   }
 };
 

@@ -1,6 +1,7 @@
 import { IContact } from "../models/contact.model";
 import { contactsConstants } from "../constants/contacts.constants";
 import { ContactsService } from "../../services/contacts.service";
+import { SubmitActions } from "./submit.actions";
 
 export class ContactActions {
   public static getContacts(userId: string) {
@@ -48,11 +49,15 @@ export class ContactActions {
 
     return async (dispatch: any)=>{
       dispatch(request(userId));
+      dispatch(SubmitActions.setSubmitting(true))
+
       try{
         const contacts = await ContactsService.addContacts(userId);
-        dispatch(success(contacts))
+        dispatch(success(contacts));
+        dispatch(SubmitActions.wasSuccess('Contact added'));
       }catch(error){
         dispatch(failure(error))
+        dispatch(SubmitActions.wasFailure('Failed to add contact'));
       }
     }
   }

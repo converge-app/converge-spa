@@ -8,6 +8,8 @@ import { IUser } from '../../../../lib/models/user.model';
 import { UserService } from '../../../../services/user.service';
 import { ProfileCard } from './profile.card';
 import CentralSpinner from '../../../styles/utility/spinner.central';
+import { ContactActions } from '../../../../lib/actions/contacts.actions';
+import { services } from '../../../../services';
 
 const useStyles = makeStyles(() => ({}));
 
@@ -44,12 +46,20 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     Router.push('/profile/edit', '/profile/edit', { shallow: true });
   };
 
+  const addContact = () => {
+    if (user && user.id !== services.authentication.getId()){
+      return <Button onClick={() => dispatch(ContactActions.addContact(user.id))}>Add contact</Button>
+    }
+    return null
+  }
+
   if (profile && typeof user !== 'undefined') {
     return (
       <Container maxWidth='md'>
         <Grid container>
           <Grid item md={6} xs={12}>
             <ProfileCard profile={profile} user={user} />
+            {addContact()}
           </Grid>
           <Grid item md={6} xs={12}>
             Recent activity
