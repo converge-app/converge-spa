@@ -1,40 +1,34 @@
+import { authHeader } from "../lib/helpers/auth-header";
+import axios, { AxiosRequestConfig } from "axios";
 import { IMessage } from "../lib/models/message.model";
 
 export class MessageService {
-  public static post(message: IMessage) {
-    console.log(message);
-    const messages: IMessage[] = [
-      {
-        id: "12",
-        senderId:"asdasd",
-        message: "hej med dig",
-        receiverId: "fsf",
-        timestamp:10,
-      
-      }, {
-        id: "12",
-        senderId:"asdasd",
-        message: "hej med dig",
-        receiverId: "fsf",
-        timestamp:10,
-      
-      }, {
-        id: "12",
-        senderId:"asdasd",
-        message: "hej med dig",
-        receiverId: "fsf",
-        timestamp:10,
-      
-      }, {
-        id: "12",
-        senderId:"asdasd",
-        message: "hej med dig",
-        receiverId: "fsf",
-        timestamp:10,
-      
-      }
-    ];
+  private static url = "http://localhost:8080/api/chats";
 
-    return messages;
+  public static async post(message: IMessage) {
+    const requestOptions: AxiosRequestConfig = {
+      method: "POST",
+      url: this.url,
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeader()
+      },
+      data: message
+    };
+
+    return (await axios(requestOptions)).data;
+  }
+
+  public static async get(contactId: string) {
+    const requestOptions: AxiosRequestConfig = {
+      method: "GET",
+      url: `${this.url}/contacts/${contactId}`,
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeader()
+      }
+    };
+
+    return (await axios(requestOptions)).data;
   }
 }

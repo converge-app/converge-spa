@@ -2,8 +2,11 @@ import React from "react";
 import { TextField, withStyles, InputAdornment } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Send from "@material-ui/icons/Send";
+import { IMessage } from "../../../lib/models/message.model";
+import { services } from "../../../services";
 import { MessageActions } from "../../../lib/actions/message.action";
 import { useDispatch } from "react-redux";
+
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
@@ -30,24 +33,27 @@ const CssTextField = withStyles({
   }
 })(TextField);
 
-interface State {
-  message: string;
-}
-
-export function MessageInputs() {
-
-  const [values, setValues] = React.useState<State>({
-    message: ''
-  });
+export function MessageInputs(props: {
+  receiverId: string;
+  contactId: string;
+}) {
+  const [value, setValue] = React.useState();
   const dispatch = useDispatch();
 
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
   const sendEvent = () => {
-    if (values) {
-      dispatch(MessageActions.sendMessage(values));
+    if (value) {
+      const message: IMessage = {
+        senderId: services.authentication.getId(),
+        receiverId: props.receiverId,
+        content: value
+      };
+      dispatch(
+        MessageActions.sendMessage(message, value => {
+          if (!value) {
+            dispatch(MessageActions.getMessages(props.contactId));
+          }
+        })
+      );
     }
   };
   const handleMouseDownPassword = (
@@ -64,7 +70,7 @@ export function MessageInputs() {
         label="Type a message"
         fullWidth
         multiline
-        onChange={handleChange('message')}
+        onChange={(e: any) => setValue(e.target.value)}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

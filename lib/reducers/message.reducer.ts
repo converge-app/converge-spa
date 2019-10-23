@@ -1,55 +1,46 @@
 import { messageConstants } from "../constants/message.constants";
 import { combineReducers } from "redux";
 
-const sendMessage = (state: any = {}, action: any) => {
+const getMessages = (state: any = {}, action: any) => {
   switch (action.type) {
-      case messageConstants.SEND_MESSAGE_REQUEST:
-          return{
-              sendMsg: true,
-              msg: action.msg
+    case messageConstants.GET_MESSAGES_REQUEST:
+      return {
+        sendMsg: true,
+        msg: action.msg
+      };
+    case messageConstants.GET_MESSAGES_SUCCESS:
+      return {
+        sendMsg: true,
+        msg: action.msg
+      };
+    case messageConstants.GET_MESSAGES_FAILURE:
+      return {};
 
-          }
-          case messageConstants.SEND_MESSAGE_SUCCESS:
-          return{
-              sendMsg: true,
-              msg: action.msg
-
-          }
-          case messageConstants.SEND_MESSAGE_FAILURE:
-                return {};
-          
-      
-  
-      default:
-          return state
+    default:
+      return state;
   }
 };
 
-const getMessage = (state: any = {}, action: any) => {
-    switch (action.type) {
-        case messageConstants.GET_MESSAGE_REQUEST:
-            return{
-                sendMsg: true,
-                msg: action.msg
-  
-            }
-            case messageConstants.GET_MESSAGE_SUCCESS:
-            return{
-                sendMsg: true,
-                msg: action.msg
-  
-            }
-            case messageConstants.GET_MESSAGE_FAILURE:
-                  return {};
-            
-        
-    
-        default:
-            return state
-    }
-  };
+const sendMessage = (state: any = {}, action: any) => {
+  switch (action.type) {
+    case messageConstants.SEND_MESSAGES_REQUEST:
+      return {
+        sendingMessage: true,
+        message: action.message
+      };
+    case messageConstants.SEND_MESSAGES_SUCCESS:
+      return {
+        sentMessage: true,
+        message: action.message
+      };
+    case messageConstants.SEND_MESSAGES_FAILURE:
+      return {};
+
+    default:
+      return state;
+  }
+};
 export const message = combineReducers({
-    sendMessage,
-    getMessage
-    
-  });
+  getMessages,
+  sendMessage
+});
