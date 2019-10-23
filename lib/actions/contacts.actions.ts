@@ -22,12 +22,39 @@ export class ContactActions {
       dispatch(request(userId));
 
       try {
-        const contacts = ContactsService.get(userId);
+        const contacts = await ContactsService.get(userId);
         dispatch(success(contacts));
       } catch (error) {
         dispatch(failure(error));
       }
     };
+  }
+
+  public static addContact(userId: string){
+
+    const request = (value: string) => ({
+      type: contactsConstants.ADD_CONTACTS_REQUEST,
+      userId: value
+    });
+
+    const success = (contacts: IContact[]) => ({
+      type: contactsConstants.ADD_CONTACTS_SUCCESS,
+      contacts: contacts
+    });
+    const failure = (error: any) => ({
+      type: contactsConstants.ADD_CONTACTS_FAILURE,
+      error
+    });
+
+    return async (dispatch: any)=>{
+      dispatch(request(userId));
+      try{
+        const contacts = await ContactsService.addContacts(userId);
+        dispatch(success(contacts))
+      }catch(error){
+        dispatch(failure(error))
+      }
+    }
   }
 
   public static setCurrentContact(userId: string) {

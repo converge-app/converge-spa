@@ -22,6 +22,27 @@ const getContacts = (state: any = {}, action: any) => {
   }
 };
 
+const addContact = (state: any = {}, action: any) => {
+  switch (action.type) {
+    case contactsConstants.ADD_CONTACTS_REQUEST:
+      return {
+        gettingContacts: true,
+        userId: action.userId
+      };
+
+    case contactsConstants.ADD_CONTACTS_SUCCESS:
+      return {
+        gotContacts: true,
+        contacts: action.contacts
+      };
+
+    case contactsConstants.ADD_CONTACTS_FAILURE:
+      return {};
+    default:
+      return state;
+  }
+};
+
 const setCurrentContact = (state: any = {}, action: any) => {
   switch (action.type) {
     case contactsConstants.SET_CURRENT_CONTACT:
@@ -35,5 +56,6 @@ const setCurrentContact = (state: any = {}, action: any) => {
 
 export const contacts = combineReducers({
   getContacts,
-  setCurrentContact
+  setCurrentContact,
+  addContact
 });

@@ -95,14 +95,14 @@ const ChatContent: React.FunctionComponent = () => {
             <Box className={classes.box}>
             {message.map((msg, index) => (
             <li key={index}>
-              <div>{msg.senderId}</div>
+              <div>{msg.senderId} {msg.id}</div>
               <div>{msg.message}</div>
               </li>
                ))}
               
             </Box>
             <div className={classes.inputs}>
-              <MessageInputs></MessageInputs>
+              <MessageInputs ></MessageInputs>
             </div>
           </Grid>
         </Grid>
