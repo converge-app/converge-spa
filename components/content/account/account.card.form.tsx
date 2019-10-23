@@ -1,11 +1,11 @@
+import { Button, Grid } from '@material-ui/core';
 import React, { Component } from 'react';
 import {
-  injectStripe,
-  CardNumberElement,
-  CardExpiryElement,
   CardCVCElement,
+  CardExpiryElement,
+  CardNumberElement,
+  injectStripe,
 } from 'react-stripe-elements';
-import { Button, Grid } from '@material-ui/core';
 
 const createOptions = () => {
   return {
@@ -39,12 +39,20 @@ class _CardForm extends Component<any> {
   public handleSubmit = (evt: any) => {
     evt.preventDefault();
     if (this.props.stripe) {
-      console.log(this.props.clientSecret);
-      this.props.stripe
-        .handleCardPayment(this.props.clientSecret, {})
-        .then((res: any) => {
-          console.log(res);
+      if (this.props.deposit) {
+        console.log('Deposit');
+        console.log(this.props.clientSecret);
+        this.props.stripe
+          .handleCardPayment(this.props.clientSecret, {})
+          .then((res: any) => {
+            console.log(res);
+          });
+      } else if (this.props.withdraw) {
+        console.log('Withdraw');
+        this.props.stripe.createToken({}).then((res: any) => {
+          this.props.handleResult(res.token.id);
         });
+      }
     } else {
       console.log("Stripe.js hasn't loaded yet.");
     }
@@ -94,7 +102,7 @@ class _CardForm extends Component<any> {
             color='primary'
             onClick={this.handleSubmit}
           >
-            Pay
+            {this.props.deposit == true ? 'Deposit' : 'Withdraw'}
           </Button>
         </form>
       </div>

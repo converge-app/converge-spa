@@ -1,64 +1,49 @@
 import {
   Button,
   Container,
-  Dialog,
-  DialogTitle,
   Grid,
+  Link,
   makeStyles,
   TextField,
   Typography,
 } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { ITransaction } from '../../../lib/models/transaction.model';
 import { PaymentsService } from '../../../services/payments.service';
-import { StripeContainer } from './account.stripe.container';
+import { TransactionDialog } from './account.transaction.dialog';
 
-const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   cardInfo: {
     padding: theme.spacing(2),
   },
 }));
 
-export interface SimpleDialogProps {
-  clientSecret: string;
-  open: boolean;
-  onClose: (tokenId: string) => void;
-}
-
-function SimpleDialog(props: SimpleDialogProps) {
-  const classes = useStyles();
-  const { onClose, open } = props;
-
-  const handleClose = () => {
-    onClose('');
-  };
-
-  return (
-    <Dialog
-      onClose={handleClose}
-      aria-labelledby='simple-dialog-title'
-      fullWidth
-      open={open}
-    >
-      <DialogTitle id='simple-dialog-title'>Deposit money</DialogTitle>
-      <Container className={classes.cardInfo}>
-        <StripeContainer clientSecret={props.clientSecret}></StripeContainer>
-      </Container>
-    </Dialog>
-  );
-}
-
 const AccountContent = () => {
+  const router = useRouter();
+  const { code } = router.query;
+
+  if (code) {
+    PaymentsService.createStripeAccount(code as string).then((res: string) => {
+      console.log(res);
+    });
+  }
+
   const [amount, setAmount] = React.useState();
   const [depositOpen, setDepositOpen] = React.useState(false);
+  const [withdrawOpen, setWithdrawOpen] = React.useState(false);
   const [clientSecret, setClientSecret] = React.useState('');
 
   const onDeposit = () => {
     PaymentsService.getToken(amount).then(res => {
       setClientSecret(res.clientSecret);
-      console.log(clientSecret)
+      console.log(clientSecret);
       setDepositOpen(true);
     });
+  };
+
+  const onWithdraw = () => {
+    setWithdrawOpen(true);
   };
 
   const handleDepositClose = (tokenId: string) => {
@@ -66,13 +51,28 @@ const AccountContent = () => {
     console.log(tokenId);
   };
 
-  const onWithdraw = () => {};
+  const handleWithdrawClose = (tokenId: string) => {
+    if (tokenId) {
+      PaymentsService.withdraw(tokenId, amount).then((res: any) => {
+        console.log(res);
+        setWithdrawOpen(false);
+      });
+    }
+    setWithdrawOpen(false);
+  };
 
   const transactions: ITransaction[] = [];
 
   return (
     <Container maxWidth='md'>
       <Grid container spacing={5}>
+        <Grid item xs={12}>
+          <Button>
+            <Link href='https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/account&client_id=ca_G2TdOPuijC1VlDzqRlrPy6K71xfr1JI0'>
+              Connect to stripe
+            </Link>
+          </Button>
+        </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant='h6'>BALANCE</Typography>
           <Typography variant='h2' color='primary'>
@@ -119,11 +119,15 @@ const AccountContent = () => {
           </Grid>
         ) : null}
       </Grid>
-      <SimpleDialog
+      <TransactionDialog
         open={depositOpen}
         onClose={handleDepositClose}
         clientSecret={clientSecret}
-      ></SimpleDialog>
+      ></TransactionDialog>
+      <TransactionDialog
+        open={withdrawOpen}
+        onClose={handleWithdrawClose}
+      ></TransactionDialog>
     </Container>
   );
 };

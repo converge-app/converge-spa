@@ -17,8 +17,10 @@ export class StripeContainer extends React.Component<any, any> {
       <StripeProvider stripe={this.state.stripe}>
         <Elements>
           <CardForm
+            deposit={this.props.deposit != null}
+            withdraw={this.props.withdraw != null}
             clientSecret={this.props.clientSecret}
-            handleResult={(res: any) => console.log(res)}
+            handleResult={(res: any) => this.props.onClose(res)}
           ></CardForm>
         </Elements>
       </StripeProvider>
