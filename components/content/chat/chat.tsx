@@ -8,11 +8,14 @@ import CentralSpinner from "../../styles/utility/spinner.central";
 import { useEffect } from "react";
 import React from "react";
 import { services } from "../../../services";
+import SentMessage from "./sendMessage";
+import ReceivingMessage from "./receivingMessage";
 const useStyles = makeStyles(theme => ({
   box: {
     width: "100%",
     minHeight: 400,
     maxHeight: 600,
+    overflow: "hidden",
     padding: theme.spacing(2, 3),
     borderWidth: 2,
     borderStyle: "solid",
@@ -35,18 +38,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: "100%"
   }
 }));
-
-const ReceivingMessage = (props: { message: IMessage }) => {
-  const { message } = props;
-
-  return <div>{message.content}</div>;
-};
-
-const SentMessage = (props: { message: IMessage }) => {
-  const { message } = props;
-
-  return <div>{message.content}</div>;
-};
 
 const Chat = (props: { currentContact: IContact }) => {
   const classes = useStyles();
