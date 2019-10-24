@@ -3,6 +3,27 @@ import { services } from '.';
 import { authHeader } from '../lib/helpers/auth-header';
 
 export class PaymentsService {
+  public static async accountExists(userId: string) {
+    const requestOptions: AxiosRequestConfig = {
+      method: 'GET',
+      url: PaymentsService.url + '/accounts/user/' + userId,
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeader(),
+      },
+    };
+
+    try {
+      const response = await axios(requestOptions);
+      if (response.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
   public static async createStripeAccount(code: string) {
     const requestOptions: AxiosRequestConfig = {
       method: 'POST',
