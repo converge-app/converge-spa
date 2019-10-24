@@ -3,7 +3,7 @@ import Layout from '../components/layouts/layout';
 
 const PrivacyPolicy = () => (
   <Layout>
-    <Container>
+    <Container maxWidth='md'>
       <h1>Privacy Policy of converge-app.net</h1>
 
       <p>
