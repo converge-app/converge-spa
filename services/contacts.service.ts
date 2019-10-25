@@ -3,7 +3,7 @@ import { authHeader } from "../lib/helpers/auth-header";
 import { services } from ".";
 
 export class ContactsService {
-  private static url = "http://localhost:8080/api/chats"
+  private static url = "http://localhost:8080/api/chats";
   public static async get(userId: string) {
     const requestOptions: AxiosRequestConfig = {
       method: "GET",
@@ -18,11 +18,10 @@ export class ContactsService {
       }
     };
 
-    return (await axios(requestOptions)).data
+    return (await axios(requestOptions)).data;
   }
 
   public static async addContacts(userId: string) {
-
     const requestOptions: AxiosRequestConfig = {
       method: "POST",
       url: `${this.url}/contacts`,
@@ -36,7 +35,6 @@ export class ContactsService {
       }
     };
 
-    return (await axios(requestOptions)).data
+    return (await axios(requestOptions)).data;
   }
 }
-

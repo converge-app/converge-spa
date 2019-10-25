@@ -10,12 +10,13 @@ import React from "react";
 import { services } from "../../../services";
 import SentMessage from "./sendMessage";
 import ReceivingMessage from "./receivingMessage";
+
 const useStyles = makeStyles(theme => ({
   box: {
     width: "100%",
-    minHeight: 400,
-    maxHeight: 600,
-    overflow: "hidden",
+    minHeight: 300,
+    maxHeight: 500,
+    overflow: "auto",
     padding: theme.spacing(2, 3),
     borderWidth: 2,
     borderStyle: "solid",
@@ -25,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     boxShadow: "2px 2px 30px rgba(0,0,0,0.15)"
   },
   list: {
-    minHeight: 400,
-    maxHeight: 600,
+    minHeight: 300,
+    maxHeight: 500,
     overflow: "auto"
   },
   inputs: {
@@ -61,9 +62,9 @@ const Chat = (props: { currentContact: IContact }) => {
           {messages.map((message, index) => (
             <div key={index}>
               {message.senderId === services.authentication.getId() ? (
-                <ReceivingMessage message={message} />
-              ) : (
                 <SentMessage message={message} />
+              ) : (
+                <ReceivingMessage message={message} />
               )}
             </div>
           ))}
