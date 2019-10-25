@@ -18,12 +18,16 @@ export const CreateEvent = (props: { projectId: string }) => {
       const formData = new FormData();
       formData.append('file', files[0]);
       axios
-        .post('http://localhost:8080/api/files', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            ...authHeader(),
+        .post(
+          'https://files-service.api.converge-app.net/api/files',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              ...authHeader(),
+            },
           },
-        })
+        )
         .then(response => {
           dispatch(
             CollaborationActions.send(response.data, props.projectId, 'file'),
