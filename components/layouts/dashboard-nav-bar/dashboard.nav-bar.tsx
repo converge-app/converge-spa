@@ -15,8 +15,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import React, { useState } from 'react';
 import { Ruler } from '../ruler';
 import { DashboardNavBarLinkTitle } from '../nav-bar/navbar-link';
+import Router from 'next/router';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -113,7 +114,11 @@ export const DashboardNavBar = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My Account</MenuItem>
+      <MenuItem
+        onClick={() => Router.push('/account', '/account', { shallow: true })}
+      >
+        Account
+      </MenuItem>
     </Menu>
   );
 
