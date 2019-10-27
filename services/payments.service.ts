@@ -40,7 +40,7 @@ export class PaymentsService {
 
     return (await axios(requestOptions)).data;
   }
-  public static async withdraw(token: any, amount: number) {
+  public static async withdraw(amount: number) {
     const requestOptions: AxiosRequestConfig = {
       method: 'POST',
       url: PaymentsService.url + '/payments/withdraw',
@@ -50,8 +50,7 @@ export class PaymentsService {
       },
       data: {
         userId: services.authentication.getId(),
-        amount: amount * 100,
-        cardToken: token,
+        amount,
       },
     };
 
@@ -74,6 +73,37 @@ export class PaymentsService {
 
     return (await axios(requestOptions)).data;
   };
+  public static getBalance = async () => {
+    const requestOptions: AxiosRequestConfig = {
+      method: 'GET',
+      url:
+        PaymentsService.url +
+        '/payments/balance/user/' +
+        services.authentication.getId(),
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeader(),
+      },
+    };
+
+    return (await axios(requestOptions)).data;
+  };
+
+  public static async getTransactions() {
+    const requestOptions: AxiosRequestConfig = {
+      method: 'GET',
+      url:
+        PaymentsService.url +
+        '/payments/transactions/user/' +
+        services.authentication.getId(),
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeader(),
+      },
+    };
+
+    return (await axios(requestOptions)).data;
+  }
 
   // private static url: string =
   //  'https://payments-service.api.converge-app.net/api';

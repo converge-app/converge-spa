@@ -6,10 +6,10 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import React from 'react';
-import { ITransaction } from '../../../lib/models/transaction.model';
+import React, { useEffect } from 'react';
 import { PaymentsService } from '../../../services/payments.service';
 import { TransactionDialog } from './account.transaction.dialog';
+import AccountTransactions from './account.transactions';
 
 export const useStyles = makeStyles(theme => ({
   cardInfo: {
@@ -20,8 +20,16 @@ export const useStyles = makeStyles(theme => ({
 const AccountContent = () => {
   const [amount, setAmount] = React.useState();
   const [depositOpen, setDepositOpen] = React.useState(false);
-  const [withdrawOpen, setWithdrawOpen] = React.useState(false);
   const [clientSecret, setClientSecret] = React.useState('');
+  const [balance, setBalance] = React.useState<any>();
+
+  useEffect(() => {
+    PaymentsService.getBalance()
+      .then(blnc => {
+        setBalance(blnc);
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const onDeposit = () => {
     PaymentsService.getToken(amount).then(res => {
@@ -31,36 +39,28 @@ const AccountContent = () => {
     });
   };
 
-  const onWithdraw = () => {
-    setWithdrawOpen(true);
-  };
-
   const handleDepositClose = (tokenId: string) => {
     setDepositOpen(false);
     console.log(tokenId);
   };
 
-  const handleWithdrawClose = (tokenId: string) => {
-    if (tokenId) {
-      PaymentsService.withdraw(tokenId, amount).then((res: any) => {
-        console.log(res);
-        setWithdrawOpen(false);
-      });
-    }
-    setWithdrawOpen(false);
+  const onWithdraw = () => {
+    PaymentsService.withdraw(amount);
   };
-
-  const transactions: ITransaction[] = [];
 
   return (
     <Container maxWidth='md'>
-      <Grid container spacing={5}>
-        <Grid item xs={12} md={4}>
-          <Typography variant='h6'>BALANCE</Typography>
-          <Typography variant='h2' color='primary'>
-            50000$
-          </Typography>
-        </Grid>
+      <Grid container spacing={3}>
+        {balance && balance.available.length > 0 ? (
+          <Grid item xs={12} md={4}>
+            <Typography variant='h6'>BALANCE</Typography>
+            <Typography variant='h2' color='primary'>
+              {balance.available[0].amount / 100}
+              {' ' + balance.available[0].currency}
+            </Typography>
+          </Grid>
+        ) : null}
+
         <Grid item xs={12} md={4}>
           <TextField
             type='number'
@@ -84,31 +84,53 @@ const AccountContent = () => {
             </Grid>
           </Grid>
         </Grid>
-        {transactions.length > 0 ? (
-          <Grid item xs={12}>
-            <Typography variant='h6'>Account transactions</Typography>
-            <Grid container direction='column' spacing={3}>
-              {transactions.map((transaction: ITransaction, index) => {
-                return (
-                  <Grid item key={index}>
-                    <Typography variant='body1'>
-                      {transaction.amount}
-                    </Typography>
-                  </Grid>
-                );
-              })}
-            </Grid>
+        <Grid item xs={12}>
+          <Typography color='primary' variant='h5'>
+            Status
+          </Typography>
+        </Grid>
+        {balance && balance.available.length > 0 ? (
+          <Grid item xs={12} md={4}>
+            <Typography variant='body1' color='textSecondary'>
+              Available {balance.available[0].amount / 100}
+              {' ' + balance.available[0].currency}
+            </Typography>
           </Grid>
         ) : null}
+
+        {balance && balance.pending.length > 0 ? (
+          <Grid item xs={12} md={4}>
+            <Typography variant='body1' color='textSecondary'>
+              Pending {balance.pending[0].amount / 100}
+              {' ' + balance.pending[0].currency}
+            </Typography>
+          </Grid>
+        ) : null}
+
+        {balance &&
+        balance.connect_reserved &&
+        balance.connect_reserved.length > 0 ? (
+          <Grid item xs={12} md={4}>
+            <Typography variant='body1' color='textSecondary'>
+              Pending {balance.connect_reserved[0].amount / 100}
+              {' ' + balance.connect_reserved[0].currency}
+            </Typography>
+          </Grid>
+        ) : null}
+
+        <Grid item xs={12}>
+          <Typography variant='h5' color='primary'>
+            Transactions
+          </Typography>
+        </Grid>
+
+        <AccountTransactions />
       </Grid>
+
       <TransactionDialog
         open={depositOpen}
         onClose={handleDepositClose}
         clientSecret={clientSecret}
-      ></TransactionDialog>
-      <TransactionDialog
-        open={withdrawOpen}
-        onClose={handleWithdrawClose}
       ></TransactionDialog>
     </Container>
   );
