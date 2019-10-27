@@ -17,12 +17,14 @@ import { UserService } from '../../../../services/user.service';
 import { services } from '../../../../services';
 import Router from 'next/router';
 import CentralSpinner from '../../../styles/utility/spinner.central';
+import axios from 'axios';
+import { authHeader } from '../../../../lib/helpers/auth-header';
 
 interface IProps {
   userId: string;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   avatar: {
     backgroundColor: theme.palette.background.paper,
   },
@@ -66,7 +68,7 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     setUser(usr);
   };
 
-  const [, setFiles] = React.useState<FileList | undefined>();
+  const [files, setFiles] = React.useState<FileList | undefined>();
   const handleFileUpload = (filesIn: FileList | null) => {
     if (filesIn) {
       console.log(filesIn);
@@ -85,6 +87,27 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
   };
 
   const saveChanges = () => {
+    if (files) {
+      const formData = new FormData();
+      formData.append('file', files[0]);
+      axios
+        .post(
+          'https://files-service.api.converge-app.net/api/files',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              ...authHeader(),
+            },
+          },
+        )
+        .then(response => {
+          let mProfile = profile;
+          mProfile.profilePictureUrl = response.data.bucketLink;
+          setProfile(mProfile);
+        });
+    }
+
     dispatch(
       ProfileActions.update(profile, (value: boolean) => {
         if (value) {
@@ -128,7 +151,7 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
               style={{ display: 'none' }}
               id='raised-button-file'
               type='file'
-              onChange={(e) => handleFileUpload(e.target.files)}
+              onChange={e => handleFileUpload(e.target.files)}
             />
             <label htmlFor='raised-button-file'>
               <Button variant='contained' component='span'>

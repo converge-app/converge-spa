@@ -1,12 +1,19 @@
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { CollaborationActions } from '../../../lib/actions/collaboration.actions';
-import { IEvent } from '../../../lib/models/event.model';
-import EventType from './event.type';
+import { Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import React from 'react';
+import { IEvent } from '../../../lib/models/event.model';
+import CreateEvent from './create.event';
+import EventType from './event.type';
+import { darken } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  divider: {
+    backgroundColor: darken(theme.palette.background.default, 0.2),
+  },
+}));
 
 const CollaborationContent = (props: { collaboration: IEvent[] }) => {
+  const classes = useStyles();
   const router = useRouter();
   const { projectId } = router.query;
 
@@ -45,6 +52,9 @@ const CollaborationContent = (props: { collaboration: IEvent[] }) => {
         }
       })}
       <Grid item xs={12}>
+        <Divider className={classes.divider} />
+      </Grid>
+      <Grid item xs={12}>
         <CreateEvent projectId={projectId as string}></CreateEvent>
       </Grid>
     </Grid>
@@ -52,30 +62,3 @@ const CollaborationContent = (props: { collaboration: IEvent[] }) => {
 };
 
 export default CollaborationContent;
-
-export const CreateEvent = (props: { projectId: string }) => {
-  const dispatch = useDispatch();
-  const [message, setMessage] = React.useState('');
-
-  const sendEvent = () => {
-    if (message) {
-      dispatch(CollaborationActions.send(message, props.projectId, 'message'));
-    }
-  };
-  return (
-    <div>
-      <TextField
-        label='Message'
-        value={message}
-        fullWidth
-        rows={6}
-        multiline
-        onChange={(e) => setMessage(e.target.value)}
-      ></TextField>
-      <br />
-      <Button onClick={() => sendEvent()} variant='contained' color='primary'>
-        Send
-      </Button>
-    </div>
-  );
-};

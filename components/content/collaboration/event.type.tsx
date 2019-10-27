@@ -1,4 +1,5 @@
 import { IEvent } from '../../../lib/models/event.model';
+import EventFile from './event.file';
 import { EventMessage } from './event.message';
 
 export function EventType(props: { event: IEvent }): any {
@@ -7,6 +8,12 @@ export function EventType(props: { event: IEvent }): any {
       return (
         <div>
           <EventMessage event={props.event} />
+        </div>
+      );
+    case 'file':
+      return (
+        <div>
+          <EventFile event={props.event}></EventFile>
         </div>
       );
     default:
