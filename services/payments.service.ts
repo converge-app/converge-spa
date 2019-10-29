@@ -105,7 +105,7 @@ export class PaymentsService {
     return (await axios(requestOptions)).data;
   }
 
-  // private static url: string =
-  //  'https://payments-service.api.converge-app.net/api';
-  private static url: string = 'http://localhost:8080/api';
+  private static url: string =
+    'https://payments-service.api.converge-app.net/api';
+  //private static url: string = 'http://localhost:8080/api';
 }
