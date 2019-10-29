@@ -1,11 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import Head from 'next/head';
 import React from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { AlertComponent } from './alert.component';
-import DashboardNavBar from './dashboard-nav-bar/dashboard.nav-bar';
 import Submitting from '../content/submitting/submitting';
+import DashboardNavBar from './dashboard-nav-bar/dashboard.nav-bar';
 
 interface ILayoutProps {
   children: any;
@@ -39,7 +36,6 @@ const useStyles = makeStyles(() => ({
 const DashboardLayout: React.FunctionComponent<ILayoutProps> = ({
   children,
   title = 'Converge | Dashboard',
-  alert,
 }) => {
   const classes = useStyles();
   return (
@@ -55,22 +51,9 @@ const DashboardLayout: React.FunctionComponent<ILayoutProps> = ({
         <div className={classes.submitting}>
           <Submitting></Submitting>
         </div>
-        <AlertComponent alert={alert} />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => {
-  const { alert } = state;
-  return {
-    alert,
-  };
-};
-
-export default compose(
-  connect(
-    mapStateToProps,
-    null,
-  ),
-)(DashboardLayout);
+export default DashboardLayout;
