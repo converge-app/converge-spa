@@ -3,11 +3,10 @@ import Router from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileActions } from '../../../../lib/actions/profile.actions';
-import { IProfile } from '../../../../lib/models/profile.model';
 import { IUser } from '../../../../lib/models/user.model';
 import { UserService } from '../../../../services/user.service';
-import { ProfileCard } from './profile.card';
 import CentralSpinner from '../../../styles/utility/spinner.central';
+import { ProfileCard } from './profile.card';
 
 const useStyles = makeStyles(() => ({}));
 
@@ -29,8 +28,8 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
   const classes = useStyles();
   console.log(classes);
 
-  const profile: IProfile = useSelector(
-    (state: any) => state.profile.getByUserId.profile,
+  const { profile, gotProfile, status } = useSelector(
+    (state: any) => state.profile.getByUserId,
   );
 
   const [user, setUser] = React.useState<IUser | undefined>();
@@ -64,7 +63,7 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
         ) : null}
       </Container>
     );
-  } else if (profile === null && user === null) {
+  } else if (gotProfile == false && status != '') {
     return (
       <Container maxWidth='md'>
         <Grid container>
