@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { alert } from './alert.reducer';
 import { authentication } from './authentication.reducer';
 import { bidding } from './bidding.reducer';
+import { broker } from './broker.reducer';
 import { collaboration } from './collaboration.reducer';
 import { payment } from './payment.reducer';
 import { profile } from './profile.reducer';
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   profile,
   submitting,
   payment,
+  broker,
 });
 
 export default rootReducer;

@@ -52,7 +52,12 @@ export const CreateEvent = (props: { projectId: string }) => {
           },
         )
         .then(response => {
-          dispatch(console.log(response));
+          dispatch(
+            CollaborationActions.submitFiles(
+              response.data.bucketLink,
+              props.projectId,
+            ),
+          );
         });
     }
   };
