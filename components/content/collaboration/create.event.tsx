@@ -36,6 +36,27 @@ export const CreateEvent = (props: { projectId: string }) => {
     }
   };
 
+  const submitFinal = () => {
+    if (files) {
+      const formData = new FormData();
+      formData.append('file', files[0]);
+      axios
+        .post(
+          'https://files-service.api.converge-app.net/api/files',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              ...authHeader(),
+            },
+          },
+        )
+        .then(response => {
+          dispatch(console.log(response));
+        });
+    }
+  };
+
   const [files, setFiles] = React.useState<FileList>();
   const handleFileUpload = (filesIn: FileList | null) => {
     if (filesIn) {
@@ -78,6 +99,15 @@ export const CreateEvent = (props: { projectId: string }) => {
             Upload file
           </Button>
         </label>
+      </Grid>
+      <Grid item>
+        <Button
+          variant='contained'
+          color='secondary'
+          onClick={() => submitFinal()}
+        >
+          Submit Results
+        </Button>
       </Grid>
     </Grid>
   );
