@@ -2,9 +2,9 @@ import {
   AppBar,
   Badge,
   IconButton,
-  Toolbar,
   Menu,
   MenuItem,
+  Toolbar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -12,10 +12,13 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/More';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import React, { useState } from 'react';
-import { Ruler } from '../ruler';
-import { DashboardNavBarLinkTitle } from '../nav-bar/navbar-link';
 import Router from 'next/router';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SubmitActions } from '../../../lib/actions/submit.actions';
+import { services } from '../../../services';
+import { DashboardNavBarLinkTitle } from '../nav-bar/navbar-link';
+import { Ruler } from '../ruler';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -74,6 +77,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const DashboardNavBar = () => {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -102,6 +107,12 @@ export const DashboardNavBar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logout = () => {
+    services.authentication.logout();
+    window.location.href = '/';
+    dispatch(SubmitActions.wasSuccess('Logged out'));
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -119,6 +130,7 @@ export const DashboardNavBar = () => {
       >
         Account
       </MenuItem>
+      <MenuItem onClick={() => logout()}>Logout</MenuItem>
     </Menu>
   );
 
