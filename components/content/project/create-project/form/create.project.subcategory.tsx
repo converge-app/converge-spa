@@ -10,7 +10,7 @@ import React, { FunctionComponent } from 'react';
 import { ISubCategory } from '../../../../../lib/models/subcategory.model';
 import { CategoryService } from '../../../../../services/category.service';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   select: {
     color: theme.palette.primary.main,
   },
@@ -20,7 +20,7 @@ interface IProps {
   category: string;
 }
 
-const CreateProjectSubCategory: FunctionComponent<IProps> = (props) => {
+const CreateProjectSubCategory: FunctionComponent<IProps> = props => {
   const classes = useStyles();
   const getCategory = () => {
     const subCategories:
@@ -31,7 +31,7 @@ const CreateProjectSubCategory: FunctionComponent<IProps> = (props) => {
         <MenuItem
           className={classes.select}
           key={option.label}
-          value={option.label}
+          value={option.value}
         >
           {CategoryService.getCapilatized(option.label)}
         </MenuItem>

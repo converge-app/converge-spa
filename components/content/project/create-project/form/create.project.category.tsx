@@ -10,7 +10,7 @@ import React, { FunctionComponent } from 'react';
 import { ICategory } from '../../../../../lib/models/category.model';
 import { CategoryService } from '../../../../../services/category.service';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   select: {
     color: theme.palette.primary.main,
   },
@@ -37,7 +37,7 @@ const CreateProjectCategory: FunctionComponent = () => {
             <MenuItem
               className={classes.select}
               key={option.label}
-              value={option.label}
+              value={option.value}
             >
               {CategoryService.getCapilatized(option.label)}
             </MenuItem>

@@ -1,15 +1,15 @@
 import {
   Container,
   Grid,
-  Typography,
   List,
   ListItem,
   TextField,
+  Typography,
 } from '@material-ui/core';
-import { CategoryService } from '../../../services/category.service';
+import Router from 'next/router';
 import React from 'react';
 import { ISubCategory } from '../../../lib/models/subcategory.model';
-import Router from 'next/router';
+import { CategoryService } from '../../../services/category.service';
 
 const CategoryContent = () => {
   const [category, setCategory] = React.useState(
@@ -52,12 +52,14 @@ const CategoryContent = () => {
   }
 
   const chooseSubcategory = (subCategory: string) => {
+    console.log(category)
+    console.log(subCategory)
     Router.push({
       pathname: '/projects/open',
       query: {
-        category: category,
-        subCategory: subCategory,
-      },
+        category,
+        subCategory,
+      }
     });
   };
 
