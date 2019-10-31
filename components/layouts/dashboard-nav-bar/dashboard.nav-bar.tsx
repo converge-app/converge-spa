@@ -180,7 +180,11 @@ export const DashboardNavBar = () => {
             <DashboardNavBarLinkTitle className={classes.title} />
             <div className={classes.navBarRight} />
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label='show 4 new mails' color='primary'>
+              <IconButton
+                aria-label='show 4 new mails'
+                color='primary'
+                onClick={() => Router.push('/chat')}
+              >
                 <MailIcon />
               </IconButton>
               <IconButton

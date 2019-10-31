@@ -1,14 +1,14 @@
-import { IMessage } from "../../../lib/models/message.model";
-import { Box, makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from '@material-ui/core';
+import { IMessage } from '../../../lib/models/message.model';
 
 const useStyles = makeStyles(theme => ({
   box: {
     padding: theme.spacing(1),
     borderWidth: 1,
     borderRadius: 10,
-    backgroundColor: "#FFF",
-    color: "#000"
-  }
+    backgroundColor: '#FFF',
+    color: '#000',
+  },
 }));
 const SentMessage = (props: { message: IMessage }) => {
   const classes = useStyles();
@@ -17,11 +17,11 @@ const SentMessage = (props: { message: IMessage }) => {
   return (
     <div>
       {message.receiverId === message.receiverId ? (
-        <Box display="flex" justifyContent="flex-start">
+        <Box display='flex' justifyContent='flex-start'>
           <Box className={classes.box}>{message.content}</Box>
         </Box>
       ) : (
-        ""
+        ''
       )}
     </div>
   );
