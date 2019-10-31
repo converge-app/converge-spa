@@ -5,7 +5,7 @@ import { IEvent } from '../models/event.model';
 import { SubmitActions } from './submit.actions';
 
 export class CollaborationActions {
-  public static send(message: string, projectId: string, type: string): any {
+  public static send(content: any, projectId: string, type: string): any {
     const request = (event: IEvent) => ({
       type: collaborationConstants.COLLABORATION_CREATE_REQUEST,
       event,
@@ -28,9 +28,18 @@ export class CollaborationActions {
           type,
           ownerId: services.authentication.getId(),
           content: JSON.stringify({
-            message,
+            message: content,
           }),
         };
+        break;
+      case 'file':
+        event = {
+          projectId,
+          type,
+          ownerId: services.authentication.getId(),
+          content: JSON.stringify(content),
+        };
+        break;
     }
 
     return async (dispatch: any) => {

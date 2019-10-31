@@ -23,8 +23,8 @@ export class SubmitActions {
       dispatch(success(message));
 
       setTimeout(() => {
-        SubmitActions.clear();
-      }, 5000);
+        dispatch(SubmitActions.clear());
+      }, 3000);
     };
   }
 
@@ -38,8 +38,8 @@ export class SubmitActions {
       dispatch(failure(message));
 
       setTimeout(() => {
-        SubmitActions.clear();
-      }, 5000);
+        dispatch(SubmitActions.clear());
+      }, 3000);
     };
   }
 

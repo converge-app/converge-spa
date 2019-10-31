@@ -1,13 +1,26 @@
-import { AppBar, Badge, IconButton, Toolbar } from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import {
+  AppBar,
+  Badge,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
+import MenuIcon from '@material-ui/icons/Menu';
+import MoreIcon from '@material-ui/icons/More';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import React from 'react';
-import { Ruler } from '../ruler';
+import Router from 'next/router';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SubmitActions } from '../../../lib/actions/submit.actions';
+import { services } from '../../../services';
 import { DashboardNavBarLinkTitle } from '../nav-bar/navbar-link';
+import { Ruler } from '../ruler';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -21,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   navBar: {
     backgroundColor: 'rgba(0,0,0,0)',
     boxShadow: 'none',
+    marginBottom: theme.spacing(3),
   },
   linkSpacing: {
     margin: theme.spacing(0.5, 6, 0, 0),
@@ -34,30 +48,6 @@ const useStyles = makeStyles((theme) => ({
   ruler: {
     marginBottom: theme.spacing(3),
   },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   inputRoot: {
     color: 'inherit',
   },
@@ -69,10 +59,117 @@ const useStyles = makeStyles((theme) => ({
       width: 200,
     },
   },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+  menuButton: {
+    marginLeft: theme.spacing(3),
+  },
 }));
 
 export const DashboardNavBar = () => {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [
+    mobileMoreAnchorEl,
+    setMobileMoreAnchorEl,
+  ] = useState<null | HTMLElement>(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const logout = () => {
+    services.authentication.logout();
+    window.location.href = '/';
+    dispatch(SubmitActions.wasSuccess('Logged out'));
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem
+        onClick={() => Router.push('/account', '/account', { shallow: true })}
+      >
+        Account
+      </MenuItem>
+      <MenuItem onClick={() => logout()}>Logout</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton color='inherit'>
+          <Badge badgeContent={4} color='secondary'>
+            <MailIcon></MailIcon>
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton color='inherit'>
+          <Badge badgeContent={4} color='secondary'>
+            <NotificationsIcon></NotificationsIcon>
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton color='inherit'>
+          <AccountCircle></AccountCircle>
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
     <div>
@@ -82,28 +179,52 @@ export const DashboardNavBar = () => {
           <Toolbar>
             <DashboardNavBarLinkTitle className={classes.title} />
             <div className={classes.navBarRight} />
-            <IconButton href="chat" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <div className={classes.sectionDesktop}>
+              <IconButton aria-label='show 4 new mails' color='primary'>
                 <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label='show 17 new notifications' color='inherit'>
-              <Badge badgeContent={17} color='secondary'>
+              </IconButton>
+              <IconButton
+                aria-label='show 17 new notifications'
+                color='primary'
+              >
                 <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              href={'/profile'}
-              edge='end'
-              aria-label='account of current user'
-              aria-haspopup='true'
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
+              </IconButton>
+              <IconButton
+                href={'/profile'}
+                edge='end'
+                aria-label='account of current user'
+                aria-haspopup='true'
+                color='primary'
+              >
+                <AccountCircle />
+              </IconButton>
+              <IconButton
+                edge='end'
+                className={classes.menuButton}
+                color='primary'
+                aria-label='open drawer'
+                onClick={handleProfileMenuOpen}
+                aria-control={menuId}
+              >
+                <MenuIcon />
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label='show more'
+                aria-control={mobileMenuId}
+                aria-haspopup='true'
+                onClick={handleMobileMenuOpen}
+                color='primary'
+              >
+                <MoreIcon></MoreIcon>
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
       </div>
+      {renderMobileMenu}
+      {renderMenu}
     </div>
   );
 };

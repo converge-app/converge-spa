@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
+import React, { useEffect } from 'react';
 import { IEvent } from '../../../lib/models/event.model';
 import { IUser } from '../../../lib/models/user.model';
-import React, { useEffect } from 'react';
 import { UserService } from '../../../services/user.service';
 import CentralSpinner from '../../styles/utility/spinner.central';
 
@@ -15,7 +15,7 @@ export const EventMessage = (props: { event: IEvent }) => {
   const [user, setUser] = React.useState<IUser>();
 
   const getUser = (userId: string) => {
-    UserService.getByUserId(userId).then((value) => {
+    UserService.getByUserId(userId).then(value => {
       setUser(value);
     });
   };
@@ -30,7 +30,9 @@ export const EventMessage = (props: { event: IEvent }) => {
         <Typography variant='h6' color='primary'>
           {user.firstName + ' ' + user.lastName}
         </Typography>
-        <Typography variant='body1'>{message.message}</Typography>
+        <Typography variant='body1' color='textSecondary'>
+          {message.message}
+        </Typography>
       </div>
     );
   } else {
