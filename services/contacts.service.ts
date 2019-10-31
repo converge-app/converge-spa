@@ -1,21 +1,20 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { authHeader } from "../lib/helpers/auth-header";
-import { services } from ".";
+import axios, { AxiosRequestConfig } from 'axios';
+import { services } from '.';
+import { authHeader } from '../lib/helpers/auth-header';
 
 export class ContactsService {
-  private static url = "http://localhost:8080/api/chats";
   public static async get(userId: string) {
     const requestOptions: AxiosRequestConfig = {
-      method: "GET",
+      method: 'GET',
       url: `${this.url}/contacts/user/${userId}`,
       headers: {
-        "Content-Type": "application/json",
-        ...authHeader()
+        'Content-Type': 'application/json',
+        ...authHeader(),
       },
       data: {
         senderId: services.authentication.getId(),
-        receiverId: userId
-      }
+        receiverId: userId,
+      },
     };
 
     return (await axios(requestOptions)).data;
@@ -23,18 +22,19 @@ export class ContactsService {
 
   public static async addContacts(userId: string) {
     const requestOptions: AxiosRequestConfig = {
-      method: "POST",
+      method: 'POST',
       url: `${this.url}/contacts`,
       headers: {
-        "Content-Type": "application/json",
-        ...authHeader()
+        'Content-Type': 'application/json',
+        ...authHeader(),
       },
       data: {
         senderId: services.authentication.getId(),
-        receiverId: userId
-      }
+        receiverId: userId,
+      },
     };
 
     return (await axios(requestOptions)).data;
   }
+  private static url = 'https://chat-service.api.converge-app.net/api/chats';
 }
