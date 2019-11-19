@@ -7,18 +7,17 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import axios from 'axios';
 import { useEffect } from 'react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileActions } from '../../../../lib/actions/profile.actions';
+import { authHeader } from '../../../../lib/helpers/auth-header';
 import { IProfile } from '../../../../lib/models/profile.model';
 import { IUser } from '../../../../lib/models/user.model';
-import { UserService } from '../../../../services/user.service';
 import { services } from '../../../../services';
-import Router from 'next/router';
+import { UserService } from '../../../../services/user.service';
 import CentralSpinner from '../../../styles/utility/spinner.central';
-import axios from 'axios';
-import { authHeader } from '../../../../lib/helpers/auth-header';
 
 interface IProps {
   userId: string;
@@ -102,27 +101,23 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
           },
         )
         .then(response => {
-          let mProfile = profile;
+          const mProfile = profile;
           mProfile.profilePictureUrl = response.data.bucketLink;
           setProfile(mProfile);
         });
     }
 
     dispatch(
-      ProfileActions.update(profile, (value: boolean) => {
-        if (value) {
-          Router.push('/profile', '/profile', { shallow: true });
-        }
+      ProfileActions.update(profile, _ => {
+        dispatch(ProfileActions.getByUserId(props.userId));
       }),
     );
   };
 
   const createProfile = () => {
     dispatch(
-      ProfileActions.create(profile, (value: boolean) => {
-        if (value) {
-          Router.push('/profile', '/profile', { shallow: true });
-        }
+      ProfileActions.create(profile, _ => {
+        dispatch(ProfileActions.getByUserId(props.userId));
       }),
     );
   };
@@ -209,11 +204,13 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
               label='Skill'
               placeholder={'Skill'}
               fullWidth
+              value={skillInputValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSkillInputValue(e.target.value);
               }}
             ></TextField>
             <Button
+              style={{ marginTop: 10 }}
               variant='contained'
               color='primary'
               onClick={() => {
@@ -222,12 +219,13 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
                   ...profile,
                   skills: [...profile.skills],
                 });
+                setSkillInputValue('');
               }}
             >
               Add Skill
             </Button>
           </Grid>
-          <Grid item md={6} xs={12}>
+          <Grid item md={6} xs={12} spacing={3}>
             <Typography variant='h5' color='primary'>
               Experience
             </Typography>
@@ -250,11 +248,13 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
               label='Experience'
               placeholder={'Experience'}
               fullWidth
+              value={experienceInputValue}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setExperienceInputValue(e.target.value);
               }}
             ></TextField>
             <Button
+              style={{ marginTop: 10 }}
               variant='contained'
               color='primary'
               onClick={() => {
@@ -263,6 +263,7 @@ const EditProfileContent: React.FunctionComponent<IProps> = (props: IProps) => {
                   ...profile,
                   experience: [...profile.experience],
                 });
+                setExperienceInputValue('');
               }}
             >
               Add Experience

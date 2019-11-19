@@ -1,12 +1,12 @@
-import { Grid, Typography } from "@material-ui/core";
-import React from "react";
-import { IProfile } from "../../../../lib/models/profile.model";
-import { IUser } from "../../../../lib/models/user.model";
-import { ProfileAvatar } from "./profile.avatar";
-import { ProfileExperience } from "./profile.experience";
-import { ProfileName } from "./profile.name";
-import { ProfileSkills } from "./profile.skills";
-import { ProfileTitle } from "./profile.title";
+import { Grid, Typography } from '@material-ui/core';
+import React from 'react';
+import { IProfile } from '../../../../lib/models/profile.model';
+import { IUser } from '../../../../lib/models/user.model';
+import { ProfileAvatar } from './profile.avatar';
+import { ProfileExperience } from './profile.experience';
+import { ProfileName } from './profile.name';
+import { ProfileSkills } from './profile.skills';
+import { ProfileTitle } from './profile.title';
 
 function ProfileRating(props: { profile: IProfile }) {
   return <Typography>Rating: {props.profile.rating}</Typography>;
@@ -14,7 +14,7 @@ function ProfileRating(props: { profile: IProfile }) {
 
 export function ProfileCard(props: { profile: IProfile; user: IUser }) {
   return (
-    <Grid container>
+    <Grid container spacing={1}>
       <Grid item xs={2}>
         <ProfileAvatar profile={props.profile} />
       </Grid>
@@ -29,7 +29,7 @@ export function ProfileCard(props: { profile: IProfile; user: IUser }) {
         <ProfileSkills
           profile={props.profile}
           renderSkill={(skill, index) => (
-            <Typography key={index} variant="body2">
+            <Typography key={index} variant='body2'>
               {skill}
             </Typography>
           )}
@@ -39,7 +39,7 @@ export function ProfileCard(props: { profile: IProfile; user: IUser }) {
         <ProfileExperience
           profile={props.profile}
           renderExperience={(experience, index) => (
-            <Typography key={index} variant="body2">
+            <Typography key={index} variant='body2'>
               {experience}
             </Typography>
           )}

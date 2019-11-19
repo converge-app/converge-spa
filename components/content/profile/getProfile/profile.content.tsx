@@ -2,12 +2,12 @@ import { Button, Container, Grid, makeStyles } from '@material-ui/core';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ContactActions } from '../../../../lib/actions/contacts.actions';
 import { ProfileActions } from '../../../../lib/actions/profile.actions';
 import { IUser } from '../../../../lib/models/user.model';
+import { services } from '../../../../services';
 import { UserService } from '../../../../services/user.service';
 import CentralSpinner from '../../../styles/utility/spinner.central';
-import { ContactActions } from '../../../../lib/actions/contacts.actions';
-import { services } from '../../../../services';
 import { ProfileCard } from './profile.card';
 
 const useStyles = makeStyles(() => ({}));
@@ -68,7 +68,7 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
             Recent activity
           </Grid>
         </Grid>
-        {profile.userId === props.profileId ? (
+        {profile.userId === services.authentication.getId() ? (
           <Grid item>
             <Button color='primary' onClick={handleEdit}>
               Edit
