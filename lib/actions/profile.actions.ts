@@ -9,6 +9,10 @@ export class ProfileActions {
       type: profileConstants.GET_BY_USER_REQUEST,
       userId,
     });
+    const notFound = (userId: string) => ({
+      type: profileConstants.GET_BY_USER_NOT_FOUND,
+      userId,
+    });
     const success = (profile: IProfile) => ({
       type: profileConstants.GET_BY_USER_SUCCESS,
       profile,
@@ -27,7 +31,11 @@ export class ProfileActions {
         const profile = await response.data;
         dispatch(success(profile));
       } catch (error) {
-        dispatch(failure(error));
+        if (error.response && error.response.status === 404) {
+          dispatch(notFound(userId));
+        } else {
+          dispatch(failure(error));
+        }
       }
 
       dispatch(SubmitActions.setSubmitting(false));

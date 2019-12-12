@@ -31,7 +31,7 @@ const CreateProjectSubCategory: FunctionComponent<IProps> = props => {
         <MenuItem
           className={classes.select}
           key={option.label}
-          value={option.label}
+          value={option.value}
         >
           {CategoryService.getCapilatized(option.label)}
         </MenuItem>

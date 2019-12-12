@@ -2,12 +2,13 @@ import { Button, Container, Grid, makeStyles } from '@material-ui/core';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ContactActions } from '../../../../lib/actions/contacts.actions';
 import { ProfileActions } from '../../../../lib/actions/profile.actions';
-import { IProfile } from '../../../../lib/models/profile.model';
 import { IUser } from '../../../../lib/models/user.model';
+import { services } from '../../../../services';
 import { UserService } from '../../../../services/user.service';
-import { ProfileCard } from './profile.card';
 import CentralSpinner from '../../../styles/utility/spinner.central';
+import { ProfileCard } from './profile.card';
 
 const useStyles = makeStyles(() => ({}));
 
@@ -29,8 +30,8 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
   const classes = useStyles();
   console.log(classes);
 
-  const profile: IProfile = useSelector(
-    (state: any) => state.profile.getByUserId.profile,
+  const { profile, gotProfile, status } = useSelector(
+    (state: any) => state.profile.getByUserId,
   );
 
   const [user, setUser] = React.useState<IUser | undefined>();
@@ -44,18 +45,30 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
     Router.push('/profile/edit', '/profile/edit', { shallow: true });
   };
 
+  const addContact = () => {
+    if (user && user.id !== services.authentication.getId()) {
+      return (
+        <Button onClick={() => dispatch(ContactActions.addContact(user.id))}>
+          Add contact
+        </Button>
+      );
+    }
+    return null;
+  };
+
   if (profile && typeof user !== 'undefined') {
     return (
       <Container maxWidth='md'>
         <Grid container>
           <Grid item md={6} xs={12}>
             <ProfileCard profile={profile} user={user} />
+            {addContact()}
           </Grid>
           <Grid item md={6} xs={12}>
             Recent activity
           </Grid>
         </Grid>
-        {profile.userId === props.profileId ? (
+        {profile.userId === services.authentication.getId() ? (
           <Grid item>
             <Button color='primary' onClick={handleEdit}>
               Edit
@@ -64,7 +77,7 @@ const profileContent: React.FunctionComponent<IProps> = (props: IProps) => {
         ) : null}
       </Container>
     );
-  } else if (profile === null && user === null) {
+  } else if (gotProfile == false && status != '') {
     return (
       <Container maxWidth='md'>
         <Grid container>

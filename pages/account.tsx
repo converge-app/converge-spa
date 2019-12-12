@@ -9,6 +9,8 @@ import CentralSpinner from '../components/styles/utility/spinner.central';
 import { PaymentActions } from '../lib/actions/payment.actions';
 import { services } from '../services';
 import { PaymentsService } from '../services/payments.service';
+import { SubmitActions } from '../lib/actions/submit.actions';
+import Router from 'next/router';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();
@@ -19,11 +21,17 @@ const AccountPage: NextPage = () => {
   useEffect(() => {
     dispatch(PaymentActions.accountExists(services.authentication.getId()));
     if (code) {
+
+      dispatch(SubmitActions.setSubmitting(true));
+
       PaymentsService.createStripeAccount(code as string).then(
         (res: string) => {
-          console.log(res);
+          dispatch(SubmitActions.wasSuccess(res));
+          Router.push("/account", "/account", {shallow: true});
         },
-      );
+      ).catch(error => {
+        dispatch(SubmitActions.wasFailure(error))
+      });
     }
   }, []);
 

@@ -12,9 +12,7 @@ export class CategoryService {
   }
 
   public static getSubCategories(categoryName: string): ISubCategory[] | null {
-    const category = this.categories.find(
-      (item) => item.value === categoryName,
-    );
+    const category = this.categories.find(item => item.value === categoryName);
     if (category) {
       return category.subCategories;
     } else {
@@ -46,8 +44,8 @@ export class CategoryService {
     ) as ISubCategory[];
 
     if (subCategories) {
-      return subCategories.filter((category) =>
-        category.label.toLowerCase().includes(subString),
+      return subCategories.filter(category =>
+        category.value.toLowerCase().includes(subString),
       );
     }
   }

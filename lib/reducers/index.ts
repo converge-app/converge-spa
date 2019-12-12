@@ -4,6 +4,8 @@ import { authentication } from './authentication.reducer';
 import { bidding } from './bidding.reducer';
 import { broker } from './broker.reducer';
 import { collaboration } from './collaboration.reducer';
+import { contacts } from './contacts.reducer';
+import { message } from './message.reducer';
 import { payment } from './payment.reducer';
 import { profile } from './profile.reducer';
 import { project } from './project.reducer';
@@ -19,6 +21,8 @@ export const rootReducer = combineReducers({
   project,
   bidding,
   collaboration,
+  contacts,
+  message,
   profile,
   submitting,
   payment,

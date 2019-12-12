@@ -32,7 +32,7 @@ export function Bid(props: { ownerId: string, item: IBid, onClick: () => void })
         {props.ownerId === services.authentication.getId() ? (
             <>
                 <Grid item xs={9}>
-                    <Link href={'/users/' + props.item.freelancerId}>
+                    <Link href={'/profile/' + props.item.freelancerId}>
                         <Typography variant={'h6'} color='primary'>
                             {email}
                         </Typography>
@@ -64,7 +64,7 @@ export function Bid(props: { ownerId: string, item: IBid, onClick: () => void })
                     <div>Is owner of bid</div>
                 ) : null}
                 <Grid item xs={12}>
-                    <Link>
+                    <Link href={'/profile/' + props.item.freelancerId}>
                         <Typography variant={'h6'} color='primary'>
                             {email}
                         </Typography>
