@@ -1,9 +1,8 @@
-import { authHeader } from "../lib/helpers/auth-header";
 import axios, { AxiosRequestConfig } from "axios";
+import { authHeader } from "../lib/helpers/auth-header";
 import { IMessage } from "../lib/models/message.model";
 
 export class MessageService {
-  private static url = "http://localhost:8080/api/chats";
 
   public static async post(message: IMessage) {
     const requestOptions: AxiosRequestConfig = {
@@ -31,4 +30,5 @@ export class MessageService {
 
     return (await axios(requestOptions)).data;
   }
+  private static url = "https://chat-service.api.converge-app.net/api/chats"
 }

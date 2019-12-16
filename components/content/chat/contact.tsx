@@ -1,19 +1,18 @@
-import { IContact } from "../../../lib/models/contact.model";
-import React, { useEffect } from "react";
-import { IUser } from "../../../lib/models/user.model";
-import { IProfile } from "../../../lib/models/profile.model";
-import { UserService } from "../../../services/user.service";
-import { ProfileService } from "../../../services/profile.service";
-import { AxiosResponse } from "axios";
 import {
+  Avatar,
+  Divider,
   ListItem,
   ListItemAvatar,
-  Avatar,
   ListItemText,
-  Divider
-} from "@material-ui/core";
-import Spinner from "../../styles/utility/spinner";
-import { services } from "../../../services";
+} from '@material-ui/core';
+import { AxiosResponse } from 'axios';
+import React, { useEffect } from 'react';
+import { IContact } from '../../../lib/models/contact.model';
+import { IProfile } from '../../../lib/models/profile.model';
+import { IUser } from '../../../lib/models/user.model';
+import { services } from '../../../services';
+import { ProfileService } from '../../../services/profile.service';
+import { UserService } from '../../../services/user.service';
 
 const Contact = (props: {
   contact: IContact;
@@ -24,7 +23,7 @@ const Contact = (props: {
   const [profile, setProfile] = React.useState<IProfile>();
 
   useEffect(() => {
-    let userId = "";
+    let userId = '';
 
     if (props.contact.senderId === services.authentication.getId()) {
       userId = props.contact.receiverId;
@@ -43,7 +42,7 @@ const Contact = (props: {
     ProfileService.getByUserId(userId).then(
       (response: AxiosResponse<IProfile>) => {
         setProfile(response.data);
-      }
+      },
     );
   }, []);
 
@@ -62,7 +61,7 @@ const Contact = (props: {
       </div>
     );
   } else {
-    return <Spinner></Spinner>;
+    return null;
   }
 };
 

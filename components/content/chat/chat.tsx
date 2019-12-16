@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
 const Chat = (props: { currentContact: IContact }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  console.log(props.currentContact);
   const { currentContact } = props;
 
   useEffect(() => {
